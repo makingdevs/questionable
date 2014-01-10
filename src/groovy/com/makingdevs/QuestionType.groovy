@@ -4,7 +4,7 @@ enum QuestionType {
 
   OPEN("question.type.open"),
   MULTIPLE_CHOICE ("question.type.multiple_choice"),
-  CLOSED("question.type.closed"),
+  TRUE_FALSE("question.type.closed"),
   MULTIPLE_RESPONSE("question.type.multiple_response")
 
   private final String code
