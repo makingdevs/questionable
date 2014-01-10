@@ -17,4 +17,9 @@ class QuestionController {
     def question = Question.get(params.id)
     [question:question]
   }
+
+  def list(){
+    def listQuestion = Question.list()
+    [listQuestion:listQuestion]
+  }
 }
