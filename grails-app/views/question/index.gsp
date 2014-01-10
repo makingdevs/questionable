@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Create question</title>
 </head>
 <body>
 	<h1>Captura pregunta</h1>
