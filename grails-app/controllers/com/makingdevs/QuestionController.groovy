@@ -4,7 +4,7 @@ class QuestionController {
 
   def index() { }
 
-  def create(){
+  def save(){
     def pregunta = new Question(params)
     if(pregunta.save(flush:true)){
       redirect action:"show", id:pregunta.id

@@ -6,7 +6,7 @@
 </head>
 <body>
 	<h1>Captura pregunta</h1>
-	<g:form name="questionForm" action="create">
+	<g:form name="questionForm" action="save">
 		<label>Description</label>
 		<g:textField name="description"/>
 		<label>QuestionType</label>
