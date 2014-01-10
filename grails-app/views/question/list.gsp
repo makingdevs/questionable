@@ -8,7 +8,7 @@
   <g:if test="${listQuestion.size() > 0}">
     <ul>
     <g:each in="${listQuestion}" var="listaDePreguntas" status="i">
-      <li>${listaDePreguntas.description}</li>
+      <g:link controller="question" action="detail" id="${listaDePreguntas.id}"><li>${listaDePreguntas.description}</li></g:link>
     </g:each> 
     </ul>
   </g:if>
