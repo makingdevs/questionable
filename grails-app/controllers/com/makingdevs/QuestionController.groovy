@@ -22,4 +22,10 @@ class QuestionController {
     def listQuestion = Question.list()
     [listQuestion:listQuestion]
   }
+
+  def detail(){
+    def question = Question.get(params.id)
+    [question:question]
+  }
+
 }
