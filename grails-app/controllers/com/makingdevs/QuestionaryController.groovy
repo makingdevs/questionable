@@ -34,4 +34,9 @@ class QuestionaryController {
     redirect(action: "showQuestionary", id:[questionary.id])
   }
 
+  def list(){
+    def questionary = Questionary.list()
+    [questionary:questionary]
+  }
+
 }
