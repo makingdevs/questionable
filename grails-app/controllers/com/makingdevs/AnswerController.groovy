@@ -10,7 +10,8 @@ class AnswerController {
     def agregar(){
       def question = Question.get(params.question)
       def answer = new Answer(description:params.description)
-      question.answers+=[answer]
+      question.addToAnswers(answer)
+      question.save()
       redirect(controller: "question", action: "show", id:question.id)
 
     }
