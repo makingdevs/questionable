@@ -14,7 +14,7 @@
   <dd>
     <ul>
     <g:each in="${question?.answers}" var="respuestas" status="i">
-      <li>${respuestas.description}</li>
+      <li>${respuestas.description} -- ${respuestas.solution}</li>
     </g:each> 
     </ul>
   </dd>
