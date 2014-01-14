@@ -35,7 +35,7 @@ class QuestionaryController {
   }
 
   def list(){
-    def questionary = Questionary.list()
+    def questionary = Questionary.list(sort: "title", order: "asc")
     [questionary:questionary]
   }
 
