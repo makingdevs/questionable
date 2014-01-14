@@ -15,6 +15,9 @@
   <g:if test="${question.questionType == QuestionType.MULTIPLE_CHOICE || question.questionType == QuestionType.MULTIPLE_RESPONSE}">
     <g:link controller="answer" action="create" id="${question.id}">Agregar respuestas</g:link>
   </g:if>
+  <g:if test="${question.questionType == QuestionType.TRUE_FALSE && question.answers.size() == 0}">
+    <g:link controller="answer" action="create" id="${question.id}">Agregar respuestas</g:link>
+  </g:if>
   <g:link action="index">Crear otra Pregunta</g:link>
 </body>
 </html>
