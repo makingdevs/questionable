@@ -25,7 +25,7 @@ class QuestionServiceSpec extends Specification{
 
   def "Evaluar una pregunta con opciones de falso o verdadero"(){
     given:
-      def question = aTrueFalseQuestion()
+      def question = aTrueFalseQuestion(rightAnswer)
     when:
       def answer = _answer
       def evaluate = service.evaluateAnswer(question.id, answer)
@@ -33,9 +33,11 @@ class QuestionServiceSpec extends Specification{
       evaluate == rating
       question.questionType == QuestionType.TRUE_FALSE
     where: 
-      _answer || rating
-      true    || 0.0
-      false   || 1.0
+      rightAnswer | _answer || rating
+      false       | true    || 0.0
+      false       | false   || 1.0
+      true        | true    || 1.0
+      true        | false   || 0.0
   }
 
   def "Evaluar una pregunta con multiples opciones siendo una la correcta"(){
@@ -50,9 +52,9 @@ class QuestionServiceSpec extends Specification{
     new Question(description:"¿Es esta una pregunta abierta?, Describa",questionType:QuestionType.OPEN).save()
   }
 
-  private Question aTrueFalseQuestion(){
+  private Question aTrueFalseQuestion(rightAnswer){
     def question = new Question(description:"¿Falso es igual a verdadero?", questionType:QuestionType.TRUE_FALSE)
-    def answer = new Answer(solution:false)
+    def answer = new Answer(solution:rightAnswer)
     question.addToAnswers(answer)
     question.save(validate:false)
     question
