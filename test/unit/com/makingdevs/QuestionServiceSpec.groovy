@@ -21,25 +21,19 @@ class QuestionServiceSpec extends Specification{
   }
 
   def "Evaluar una pregunta con opciones de falso o verdadero"(){
-    given:
-    when:
-    then:
+    
   }
 
   def "Evaluar una pregunta con multiples opciones siendo una la correcta"(){
-    given:
-    when:
-    then:
+    
   }
 
   def "Evaluar una pregunta con múltiples respuestas"(){
-    given:
-    when:
-    then:
+    
   }
 
   private Question anOpenQuestion(){
-    Question(description:"¿Es esta una pregunta abierta?, Describa",questionType:QuestionType.OPEN).save()
+    new Question(description:"¿Es esta una pregunta abierta?, Describa",questionType:QuestionType.OPEN).save()
   }
 
 }
