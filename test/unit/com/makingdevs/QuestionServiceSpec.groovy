@@ -48,16 +48,31 @@ class QuestionServiceSpec extends Specification{
       def evaluate = service.evaluateAnswer(question.id, answer.id)
     then:
       evaluate == rating
-      question.questionType == QuestionType.MULTIPLE_RESPONSE
+      question.questionType == QuestionType.MULTIPLE_CHOICE
     where:
-      _answer    || rating
-      "Dinamico" || 1.0
-      "Estatico" || 0.0
-    
+      _answer     || rating
+      "Dinamico"  || 1.0
+      "Estatico"  || 0.0
+      "Funcional" || 0.0
   }
 
-  def "Evaluar una pregunta con múltiples respuestas"(){
-    
+  def "Evaluar una pregunta de multi seleccion con 3 respuestas"(){
+    given:
+      def question = aMultipleResponse()
+    when:
+      def answers = Answer.findAllByDescriptionInList(_answer_user)
+      def evaluate = service.evaluateAnswer(question.id, answers.id)
+    then:
+      evaluate == rating
+      question.questionType == QuestionType.MULTIPLE_RESPONSE
+    where:
+                    _answer_user                                                 || rating
+      ["Lenguaje dinamico","Lenguaje orientado a objetos"]                       || 1.0
+      ["Lenguaje dinamico","Lenguaje orientado a objetos","Lenguaje funcional"]  || 0.6
+      ["Lenguaje dinamico","Lenguaje funcional"]                                 || 0.3
+      ["Lenguaje orientado a objetos","Lenguaje funcional"]                      || 0.3
+      ["Lenguaje funcional"]                                                     || 0.0
+      []                                                                         || 0.0
   }
 
   private Question anOpenQuestion(){
@@ -73,10 +88,22 @@ class QuestionServiceSpec extends Specification{
   }
 
   private Question aMultipleChoiceQuestion(){
-    def question = new Question(description:"¿Groovy es un lenguaje de tipo?", questionType:QuestionType.MULTIPLE_RESPONSE)
+    def question = new Question(description:"¿Groovy es un lenguaje de tipo?", questionType:QuestionType.MULTIPLE_CHOICE)
     def answer1 = new Answer(description:"Dinamico", solution:true)
     def answer2 = new Answer(description:"Estatico", solution:false)
     def answer3 = new Answer(description:"Funcional", solution:false)
+    question.addToAnswers(answer1)
+    question.addToAnswers(answer2)
+    question.addToAnswers(answer3)
+    question.save(validate:false)
+    question
+  }
+
+  private Question aMultipleResponse(){
+    def question =new Question(description:"¿Ques es Groovy?",questionType:QuestionType.MULTIPLE_RESPONSE)
+    def answer1 = new Answer(description:"Lenguaje dinamico", solution:true)
+    def answer2 = new Answer(description:"Lenguaje orientado a objetos", solution:true)
+    def answer3 = new Answer(description:"Lenguaje funcional", solution:false)
     question.addToAnswers(answer1)
     question.addToAnswers(answer2)
     question.addToAnswers(answer3)
