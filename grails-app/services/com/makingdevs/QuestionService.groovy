@@ -27,7 +27,7 @@ class QuestionService {
             0.0
         break
 
-        case QuestionType.MULTIPLE_RESPONSE:
+        case QuestionType.MULTIPLE_CHOICE:
         def answer_user = Answer.get(answer)
         def id_answer_solution
         int i = 0
@@ -40,6 +40,42 @@ class QuestionService {
         }else{
           return 0.0          
         }
+        break
+
+        case QuestionType.MULTIPLE_RESPONSE:
+        def answers_user = Answer.findAllByIdInList(answer)
+        def answer_solution =[]
+        def acertadas=0 
+        def noacertadas=0 
+        def evaluate
+        for(e in question.answers) {
+          if(e.solution==true){
+          answer_solution+=e
+          } 
+        }
+        for(a in answers_user.id) {
+          if (a in answer_solution.id){
+            acertadas+=1
+          }else{
+            noacertadas+=1
+          }
+        }
+        switch(acertadas) {
+          case 0:
+            evaluate=0.0
+          break
+          case 1:
+            evaluate=0.3
+          break
+          case 2:
+            if (noacertadas==0) {
+              evaluate=1.0
+            }else{
+              evaluate=0.6
+            }
+          break
+        }
+        return evaluate
         break
       }
     }
