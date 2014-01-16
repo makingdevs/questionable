@@ -41,6 +41,18 @@ class QuestionServiceSpec extends Specification{
   }
 
   def "Evaluar una pregunta con multiples opciones siendo una la correcta"(){
+    given:
+      def question = aMultipleChoiceQuestion()
+    when:
+      def answer = Answer.findByDescriptionLike("%$_answer%")
+      def evaluate = service.evaluateAnswer(question.id, answer.id)
+    then:
+      evaluate == rating
+      question.questionType == QuestionType.MULTIPLE_RESPONSE
+    where:
+      _answer    || rating
+      "Dinamico" || 1.0
+      "Estatico" || 0.0
     
   }
 
@@ -56,6 +68,18 @@ class QuestionServiceSpec extends Specification{
     def question = new Question(description:"¿Falso es igual a verdadero?", questionType:QuestionType.TRUE_FALSE)
     def answer = new Answer(solution:rightAnswer)
     question.addToAnswers(answer)
+    question.save(validate:false)
+    question
+  }
+
+  private Question aMultipleChoiceQuestion(){
+    def question = new Question(description:"¿Groovy es un lenguaje de tipo?", questionType:QuestionType.MULTIPLE_RESPONSE)
+    def answer1 = new Answer(description:"Dinamico", solution:true)
+    def answer2 = new Answer(description:"Estatico", solution:false)
+    def answer3 = new Answer(description:"Funcional", solution:false)
+    question.addToAnswers(answer1)
+    question.addToAnswers(answer2)
+    question.addToAnswers(answer3)
     question.save(validate:false)
     question
   }
