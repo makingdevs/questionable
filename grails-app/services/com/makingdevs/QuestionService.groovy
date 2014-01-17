@@ -38,8 +38,7 @@ class QuestionService {
       def acertadas = 0
 
       question.answers.each { a ->
-        def found = answersFromUser.find { au -> au.id == a.id }
-        if(found?.solution) ++acertadas
+        if(theAnswerUserMatchWithAnswerQuestion(answersFromUser,a)) ++acertadas
         if(!a.solution && !answersFromUser.any { au -> a.id == au.id }){
           ++acertadas
         }
@@ -54,5 +53,9 @@ class QuestionService {
       break
     }
     ratings
+  }
+
+  private def theAnswerUserMatchWithAnswerQuestion(answersFromUser,answerFromQuestion){
+    answersFromUser.find { au -> au.id == answerFromQuestion.id }?.solution
   }
 }
