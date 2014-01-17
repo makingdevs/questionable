@@ -34,9 +34,7 @@ class QuestionService {
       case QuestionType.MULTIPLE_RESPONSE:
 
       def answersFromUser = Answer.findAllByIdInList(answer)
-
       def checks = 0
-
       question.answers.each { answerQuestion ->
         def answersMatches = this.&theAnswerUserMatchWithAnswerQuestion.curry(answersFromUser,answerQuestion)
         if(theSolutionIsTrue(answersMatches())) ++checks
@@ -45,11 +43,10 @@ class QuestionService {
         }
       }
 
-      def point = Math.round( 1 / question.answers.size() * 100 ) / 100
       if(checks == question.answers.size())
         ratings = 1.0
       else
-        ratings = checks * point
+        ratings = checks * Math.round( 1 / question.answers.size() * 100 ) / 100
 
       break
     }
