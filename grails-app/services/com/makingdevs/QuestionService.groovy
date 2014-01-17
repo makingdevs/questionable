@@ -44,60 +44,19 @@ class QuestionService {
 
         case QuestionType.MULTIPLE_RESPONSE:
         def answers_user = Answer.findAllByIdInList(answer)
-        def answer_solution = []
-        def acertadas=0 
-        def noacertadas=0 
         def evaluate
 
-        answer_solution = question.answers.findAll { it.solution }
+        def answerSolutionTrue = question.answers.findAll { it.solution }
+        def acertadasEnTrue = (answerSolutionTrue.id.intersect(answers_user.id)).size()
+        def answerSolutionFalse = question.answers.findAll { !it.solution }
+        def acertadasEnfalse = (answerSolutionFalse.id.intersect(answers_user.id)).size()
 
-        acertadas = (answer_solution.id.intersect(answers_user.id)).size()
-        noacertadas = answers_user.size() - acertadas
+        def point = Math.round(( 1 / question.answers.size() ) * 100) / 100
+        (acertadasEnTrue + acertadasEnfalse) * point
 
-        switch(question.answers.size()) {
-          case 3:
-            switch(acertadas) {
-              case 0:
-                evaluate=0.0
-              break
-              case 1:
-                evaluate=0.3
-              break
-              case 2:
-                if (noacertadas==0) {
-                  evaluate=1.0
-                }else{
-                  evaluate=0.6
-                }
-              break
-            }
-          break
-
-          case 4:
-            switch(acertadas) {
-              case 0:
-                evaluate=0.0
-              break
-              case 1:
-                if (noacertadas==0) {
-                  evaluate=0.75
-                }else if(noacertadas==1){
-                  evaluate=0.5
-                }
-              break
-              case 2:
-                if (noacertadas==0) {
-                  evaluate=1.0
-                }else{
-                  evaluate=0.6
-                }
-              break
-            }
-          break
-
-        }
-        return evaluate
         break
+
+        
       }
     }
 }
