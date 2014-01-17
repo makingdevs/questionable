@@ -36,7 +36,7 @@ class QuestionService {
       def answersFromUser = Answer.findAllByIdInList(answer)
       def checks = 0
       question.answers.each { answerQuestion ->
-        def answersMatches = this.&theAnswerUserMatchWithAnswerQuestion.curry(answersFromUser,answerQuestion)
+        def answersMatches = this.&getIfAnswerUserMatchWithAnswerQuestion.curry(answersFromUser,answerQuestion)
         if(theSolutionIsTrue(answersMatches())) ++checks
         if(theSolutionIsFalse(answerQuestion) && !answersMatches()){
           ++checks
@@ -53,7 +53,7 @@ class QuestionService {
     ratings
   }
 
-  private def theAnswerUserMatchWithAnswerQuestion(answersFromUser,answerFromQuestion){
+  private Answer getIfAnswerUserMatchWithAnswerQuestion(answersFromUser,answerFromQuestion){
     answersFromUser.find { au -> au.id == answerFromQuestion.id }
   }
 
