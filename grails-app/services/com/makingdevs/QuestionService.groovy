@@ -35,20 +35,21 @@ class QuestionService {
 
       def answersFromUser = Answer.findAllByIdInList(answer)
 
-      def acertadas = 0
+      def checks = 0
 
       question.answers.each { a ->
-        if(theAnswerUserMatchWithAnswerQuestion(answersFromUser,a)?.solution) ++acertadas
-        if(theSolutionIsFalse(a) && !theAnswerUserMatchWithAnswerQuestion(answersFromUser,a)){
-          ++acertadas
+        def answersMatches = this.&theAnswerUserMatchWithAnswerQuestion.curry(answersFromUser,a)
+        if(answersMatches()?.solution) ++checks
+        if(theSolutionIsFalse(a) && !answersMatches()){
+          ++checks
         }
       }
 
       def point = Math.round( 1 / question.answers.size() * 100 ) / 100
-      if(acertadas == question.answers.size())
+      if(checks == question.answers.size())
         ratings = 1.0
       else
-        ratings = acertadas * point
+        ratings = checks * point
 
       break
     }
