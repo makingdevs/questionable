@@ -44,10 +44,11 @@ class QuestionService {
 
         case QuestionType.MULTIPLE_RESPONSE:
         def answers_user = Answer.findAllByIdInList(answer)
-        def answer_solution =[]
+        def answer_solution = []
         def acertadas=0 
         def noacertadas=0 
         def evaluate
+
         for(e in question.answers) {
           if(e.solution==true){
           answer_solution+=e
@@ -60,20 +61,47 @@ class QuestionService {
             noacertadas+=1
           }
         }
-        switch(acertadas) {
-          case 0:
-            evaluate=0.0
-          break
-          case 1:
-            evaluate=0.3
-          break
-          case 2:
-            if (noacertadas==0) {
-              evaluate=1.0
-            }else{
-              evaluate=0.6
+        switch(question.answers.size()) {
+          case 3:
+            switch(acertadas) {
+              case 0:
+                evaluate=0.0
+              break
+              case 1:
+                evaluate=0.3
+              break
+              case 2:
+                if (noacertadas==0) {
+                  evaluate=1.0
+                }else{
+                  evaluate=0.6
+                }
+              break
             }
           break
+
+          case 4:
+            switch(acertadas) {
+              case 0:
+                evaluate=0.0
+              break
+              case 1:
+                if (noacertadas==0) {
+                  evaluate=0.75
+                }else if(noacertadas==1){
+                  evaluate=0.5
+                }
+              break
+              case 2:
+                if (noacertadas==0) {
+                  evaluate=1.0
+                }else{
+                  evaluate=0.6
+                }
+              break
+            }
+          break
+
         }
         return evaluate
         break
