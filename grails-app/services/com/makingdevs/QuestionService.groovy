@@ -49,11 +49,8 @@ class QuestionService {
         def noacertadas=0 
         def evaluate
 
-        for(e in question.answers) {
-          if(e.solution==true){
-          answer_solution+=e
-          } 
-        }
+        answer_solution = question.answers.findAll { it.solution }
+
         for(a in answers_user.id) {
           if (a in answer_solution.id){
             acertadas+=1
