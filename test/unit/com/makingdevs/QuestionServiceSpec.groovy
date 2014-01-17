@@ -9,7 +9,8 @@ import spock.lang.*
 @Mock([Question, Answer])
 class QuestionServiceSpec extends Specification{
 
-  def "Evaluar una pregunta abierta"(){
+  @Unroll
+  def "Evaluar una pregunta abierta siendo la respuesta \"#_answer\" "(){
     given:
       def question = anOpenQuestion()
     when:
@@ -23,7 +24,9 @@ class QuestionServiceSpec extends Specification{
       ""                                            || 0.0
   }
 
-  def "Evaluar una pregunta con opciones de falso o verdadero"(){
+  @Unroll
+  def """Cuando la respuesta correcta a una pregunta F/V es "#rightAnswer" 
+      y se responde "#_answer" el puntaje debe ser "#rating" """(){
     given:
       def question = aTrueFalseQuestion(rightAnswer)
     when:
@@ -40,7 +43,9 @@ class QuestionServiceSpec extends Specification{
       true        | false   || 0.0
   }
 
-  def "Evaluar una pregunta con multiples opciones siendo una la correcta"(){
+  @Unroll
+  def """Siendo la pregunta de opción múltiple "'Groovy es un lenguaje de tipo:'" 
+      y la respuesta "#_answer" el puntaje debe ser "#rating" """(){
     given:
       def question = aMultipleChoiceQuestion()
     when:
@@ -56,7 +61,9 @@ class QuestionServiceSpec extends Specification{
       "Funcional" || 0.0
   }
 
-  def "Evaluar una pregunta de multi seleccion con 3 respuestas"(){
+  @Unroll
+  def """Siendo la pregunta de multi solución "'Groovy es:'" 
+    y las respuestas "#_answer_user" el puntaje debe ser "#rating" """(){
     given:
       def listMap = [[description:"Lenguaje dinamico",solution:true],
                     [description:"Lenguaje orientado a objetos",solution:true],
@@ -79,8 +86,9 @@ class QuestionServiceSpec extends Specification{
   }
 
   
-  
-  def "Evaluar una pregunta de multi seleccion con 4 respuestas"(){
+  @Unroll
+  def """Siendo la pregunta de multi solución "'Groovy es:'" 
+    y las respuestas "#_answer_user" el puntaje debe ser "#rating" """(){
     given:
       def listMap = [[description:"Lenguaje dinamico",solution:true],
                     [description:"Lenguaje orientado a objetos",solution:true],

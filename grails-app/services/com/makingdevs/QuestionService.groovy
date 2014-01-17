@@ -38,9 +38,7 @@ class QuestionService {
       question.answers.each { answerQuestion ->
         def answersMatches = this.&getIfAnswerUserMatchWithAnswerQuestion.curry(answersFromUser,answerQuestion)
         if(theSolutionIsTrue(answersMatches())) ++checks
-        if(theSolutionIsFalse(answerQuestion) && !answersMatches()){
-          ++checks
-        }
+        if(theSolutionIsFalse(answerQuestion) && !answersMatches()) ++checks
       }
 
       if(checks == question.answers.size())
