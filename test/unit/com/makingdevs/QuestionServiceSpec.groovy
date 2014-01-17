@@ -58,7 +58,10 @@ class QuestionServiceSpec extends Specification{
 
   def "Evaluar una pregunta de multi seleccion con 3 respuestas"(){
     given:
-      def question = aMultipleResponse()
+      def listMap = [[description:"Lenguaje dinamico",solution:true],
+                    [description:"Lenguaje orientado a objetos",solution:true],
+                    [description:"Lenguaje funcional",solution:false]]
+      def question = aMultipleResponse(listMap)
     when:
       def answers = Answer.findAllByDescriptionInList(_answer_user)
       def evaluate = service.evaluateAnswer(question.id, answers.id)
@@ -73,6 +76,39 @@ class QuestionServiceSpec extends Specification{
       ["Lenguaje orientado a objetos","Lenguaje funcional"]                      || 0.3
       ["Lenguaje funcional"]                                                     || 0.0
       []                                                                         || 0.0
+  }
+
+  def "Evaluar una pregunta de multi seleccion con 4 respuestas"(){
+    given:
+      def listMap = [[description:"Lenguaje dinamico",solution:true],
+                    [description:"Lenguaje orientado a objetos",solution:true],
+                    [description:"Lenguaje estatico",solution:false],
+                    [description:"Lenguaje funcional",solution:false]]
+      def question = aMultipleResponse(listMap)
+    when:
+      def answers = Answer.findAllByDescriptionInList(_answer_user)
+      def evaluate = service.evaluateAnswer(question.id, answers.id)
+    then:
+      evaluate == rating
+      question.questionType == QuestionType.MULTIPLE_RESPONSE
+    where:
+                    _answer_user                                                                          || rating
+      ["Lenguaje dinamico","Lenguaje orientado a objetos"]                                                || 1.0
+      ["Lenguaje dinamico","Lenguaje orientado a objetos","Lenguaje estatico","Lenguaje funcional"]       || 0.5
+      ["Lenguaje dinamico","Lenguaje orientado a objetos","Lenguaje funcional"]                           || 0.75
+      ["Lenguaje dinamico","Lenguaje orientado a objetos","Lenguaje estatico"]                            || 0.75
+      ["Lenguaje dinamico","Lenguaje estatico","Lenguaje funcional"]                                      || 0.25
+      ["Lenguaje orientado a objetos","Lenguaje estatico","Lenguaje funcional"]                           || 0.25
+      ["Lenguaje orientado a objetos","Lenguaje funcional"]                                               || 0.5
+      ["Lenguaje dinamico","Lenguaje funcional"]                                                          || 0.5
+      ["Lenguaje orientado a objetos","Lenguaje estatico"]                                                || 0.5
+      ["Lenguaje dinamico","Lenguaje estatico"]                                                           || 0.5
+      ["Lenguaje dinamico"]                                                                               || 0.75
+      ["Lenguaje orientado a objetos"]                                                                    || 0.75
+      ["Lenguaje estatico","Lenguaje funcional"]                                                          || 0.0
+      ["Lenguaje estatico" ]                                                                              || 0.0
+      ["Lenguaje funcional" ]                                                                             || 0.0
+      []                                                                                                  || 0.0
   }
 
   private Question anOpenQuestion(){
@@ -99,14 +135,12 @@ class QuestionServiceSpec extends Specification{
     question
   }
 
-  private Question aMultipleResponse(){
+  private Question aMultipleResponse(listMap){
     def question =new Question(description:"¿Ques es Groovy?",questionType:QuestionType.MULTIPLE_RESPONSE)
-    def answer1 = new Answer(description:"Lenguaje dinamico", solution:true)
-    def answer2 = new Answer(description:"Lenguaje orientado a objetos", solution:true)
-    def answer3 = new Answer(description:"Lenguaje funcional", solution:false)
-    question.addToAnswers(answer1)
-    question.addToAnswers(answer2)
-    question.addToAnswers(answer3)
+    for(i in listMap) {
+      def answer = new Answer(description:i.description, solution:i.solution)
+      question.addToAnswers(answer)
+    }
     question.save(validate:false)
     question
   }
