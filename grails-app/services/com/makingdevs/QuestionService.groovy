@@ -37,10 +37,10 @@ class QuestionService {
 
       def checks = 0
 
-      question.answers.each { a ->
-        def answersMatches = this.&theAnswerUserMatchWithAnswerQuestion.curry(answersFromUser,a)
-        if(answersMatches()?.solution) ++checks
-        if(theSolutionIsFalse(a) && !answersMatches()){
+      question.answers.each { answerQuestion ->
+        def answersMatches = this.&theAnswerUserMatchWithAnswerQuestion.curry(answersFromUser,answerQuestion)
+        if(theSolutionIsTrue(answersMatches())) ++checks
+        if(theSolutionIsFalse(answerQuestion) && !answersMatches()){
           ++checks
         }
       }
@@ -62,5 +62,9 @@ class QuestionService {
 
   private def theSolutionIsFalse(answer){
     !answer.solution
+  }
+
+  private def theSolutionIsTrue(answer){
+    answer?.solution
   }
 }
