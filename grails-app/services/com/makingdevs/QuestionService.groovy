@@ -52,7 +52,7 @@ class QuestionService {
         answer_solution = question.answers.findAll { it.solution }
 
         acertadas = (answer_solution.id.intersect(answers_user.id)).size()
-        noacertadas = answer_solution.id.size() - acertadas
+        noacertadas = answers_user.size() - acertadas
 
         switch(question.answers.size()) {
           case 3:
