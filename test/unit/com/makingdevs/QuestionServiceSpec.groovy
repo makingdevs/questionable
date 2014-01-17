@@ -2,7 +2,7 @@ package com.makingdevs
 
 import static org.junit.Assert.*
 import org.junit.*
-import spock.lang.Specification
+import spock.lang.*
 
 
 @TestFor(QuestionService)
@@ -44,7 +44,7 @@ class QuestionServiceSpec extends Specification{
     given:
       def question = aMultipleChoiceQuestion()
     when:
-      def answer = Answer.findByDescriptionLike("%$_answer%")
+      def answer = Answer.findByDescriptionLike("%${_answer}%")
       def evaluate = service.evaluateAnswer(question.id, answer.id)
     then:
       evaluate == rating
@@ -70,14 +70,16 @@ class QuestionServiceSpec extends Specification{
       question.questionType == QuestionType.MULTIPLE_RESPONSE
     where:
                     _answer_user                                                 || rating
-      ["Lenguaje dinamico","Lenguaje orientado a objetos"]                       || 1.0
-      ["Lenguaje dinamico","Lenguaje orientado a objetos","Lenguaje funcional"]  || 0.6
-      ["Lenguaje dinamico","Lenguaje funcional"]                                 || 0.3
-      ["Lenguaje orientado a objetos","Lenguaje funcional"]                      || 0.3
-      ["Lenguaje funcional"]                                                     || 0.0
-      []                                                                         || 0.0
+      ["Lenguaje dinamico","Lenguaje orientado a objetos"]                       || 1.00
+      ["Lenguaje dinamico","Lenguaje orientado a objetos","Lenguaje funcional"]  || 0.66
+      ["Lenguaje dinamico","Lenguaje funcional"]                                 || 0.33
+      ["Lenguaje orientado a objetos","Lenguaje funcional"]                      || 0.33
+      ["Lenguaje funcional"]                                                     || 0.00
+      []                                                                         || 0.33
   }
 
+  
+  
   def "Evaluar una pregunta de multi seleccion con 4 respuestas"(){
     given:
       def listMap = [[description:"Lenguaje dinamico",solution:true],
@@ -106,10 +108,11 @@ class QuestionServiceSpec extends Specification{
       ["Lenguaje dinamico"]                                                                               || 0.75
       ["Lenguaje orientado a objetos"]                                                                    || 0.75
       ["Lenguaje estatico","Lenguaje funcional"]                                                          || 0.0
-      ["Lenguaje estatico" ]                                                                              || 0.0
-      ["Lenguaje funcional" ]                                                                             || 0.0
-      []                                                                                                  || 0.0
+      ["Lenguaje estatico" ]                                                                              || 0.25
+      ["Lenguaje funcional" ]                                                                             || 0.25
+      []                                                                                                  || 0.5
   }
+  
 
   private Question anOpenQuestion(){
     new Question(description:"¿Es esta una pregunta abierta?, Describa",questionType:QuestionType.OPEN).save()

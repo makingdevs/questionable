@@ -28,15 +28,28 @@ class QuestionService {
         id_answer_solution = question.answers.getAt(i)
         i++
       }
-      if (answer_user.id==id_answer_solution.id)
-        ratings = 1.0
-
+      if (answer_user.id==id_answer_solution.id) ratings = 1.0
       break
 
       case QuestionType.MULTIPLE_RESPONSE:
 
+      def answersFromUser = Answer.findAllByIdInList(answer)
 
-      return 0
+      def acertadas = 0
+
+      question.answers.each { a ->
+        def found = answersFromUser.find { au -> au.id == a.id }
+        if(found?.solution) ++acertadas
+        if(!a.solution && !answersFromUser.any { au -> a.id == au.id }){
+          ++acertadas
+        }
+      }
+
+      def point = Math.round( 1 / question.answers.size() * 100 ) / 100
+      if(acertadas == question.answers.size())
+        ratings = 1.0
+      else
+        ratings = acertadas * point
 
       break
     }
