@@ -6,11 +6,6 @@ class EvaluateController {
 
   def questionService
 
-  def index() {
-    def questions = Question.list()
-    [questions:questions]
-  }
-
   def open(){
     def question = Question.findAllByQuestionType(QuestionType.OPEN)
     [question:question]
