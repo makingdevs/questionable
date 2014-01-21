@@ -14,6 +14,12 @@
           <g:if test="${question.questionType==QuestionType.OPEN}">
             <g:render template="/evaluate/open" collection="${question}" var="question"/>
           </g:if>
+          <g:elseif test="${question.questionType==QuestionType.MULTIPLE_CHOICE}">
+            <g:render template="/evaluate/multiple_choice" collection="${question}" var="question"/>
+          </g:elseif>
+          <g:elseif test="${question.questionType==QuestionType.TRUE_FALSE}">
+            <g:render template="/evaluate/true_false" collection="${question}" var="question"/>
+          </g:elseif>
           <g:else>
             ${pregunta}
           </g:else>
