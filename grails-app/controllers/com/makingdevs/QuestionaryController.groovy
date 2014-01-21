@@ -39,4 +39,9 @@ class QuestionaryController {
     [questionary:questionary]
   }
 
+  def answerQuestionary(){
+    def questionary=Questionary.list()
+    [questionary:questionary]
+  }
+
 }
