@@ -40,7 +40,7 @@ class QuestionaryController {
   }
 
   def answerQuestionary(){
-    def questionary=Questionary.list()
+    def questionary=Questionary.get(params.id ?: 1L)
     [questionary:questionary]
   }
 
