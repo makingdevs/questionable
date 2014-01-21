@@ -20,9 +20,9 @@
           <g:elseif test="${question.questionType==QuestionType.TRUE_FALSE}">
             <g:render template="/evaluate/true_false" collection="${question}" var="question"/>
           </g:elseif>
-          <g:else>
-            ${pregunta}
-          </g:else>
+          <g:elseif test="${question.questionType==QuestionType.MULTIPLE_RESPONSE}">
+            <g:render template="/evaluate/multiple_response" collection="${question}" var="question"/>
+          </g:elseif>
         </g:each>
       </g:form>
     </div>
