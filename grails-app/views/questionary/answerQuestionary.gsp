@@ -7,8 +7,10 @@
 </head>
 <body>
   <div class="container">
-    <h1>Responde el cuestionario</h1>
-    <div class="row">
+    <h1>${questionary.first().title}</h1>
+    <h4>${questionary.first().description} - Responde a las siguientes preguntas</h4>
+    <hr>
+    <div class="row-fluid">
       <g:form name="questionaryForm" action="">
         <g:each in="${questionary.first().questions}" var="question" status="i">
           <g:if test="${question.questionType==QuestionType.OPEN}">
@@ -23,7 +25,11 @@
           <g:elseif test="${question.questionType==QuestionType.MULTIPLE_RESPONSE}">
             <g:render template="/evaluate/multiple_response" collection="${question}" var="question"/>
           </g:elseif>
+          <hr>
         </g:each>
+        <div class="offset3 span6 offset3">
+          <input class="btn btn-large btn-block btn-primary" type="submit" value="Evaluar Cuestionario" />
+        </div>
       </g:form>
     </div>
   </div>
