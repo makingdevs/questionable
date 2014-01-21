@@ -1,6 +1,8 @@
-<label>${question.description}</label>
+<strong>${question.description}</strong>
 <g:each in="${question.answers}" var="respuesta" status="a"> 
-  <label>${respuesta.description}</label>
-  <g:radio name="description" value="${respuesta.id}"/>
+  <label class="radio">
+    ${respuesta.description}
+    <g:radio name="description" value="${respuesta.id}"/>
+  </label>
 </g:each>
 <g:hiddenField name="id" value="${question.id}" />
