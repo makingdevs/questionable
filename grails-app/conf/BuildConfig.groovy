@@ -40,6 +40,8 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
+        compile ":resources:1.2"
+        runtime ':twitter-bootstrap:2.3.0'
         runtime ":jquery:1.10.2.2"
         build(":release:3.0.1",
               ":rest-client-builder:1.0.3") {
