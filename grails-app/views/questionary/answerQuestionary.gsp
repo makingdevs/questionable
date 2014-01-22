@@ -12,7 +12,7 @@
     <hr>
     <div class="row-fluid">
       <g:form name="questionaryForm" url="[action:'evaluateQuestionary',controller:'evaluate']">
-        <g:each in="${questionary.first().questions}" var="question" status="i">
+        <g:each in="${questionary.questions}" var="question" status="i">
           <g:if test="${question.questionType==QuestionType.OPEN}">
             <g:render template="/evaluate/open" model="[question:question,index:i]"/>
           </g:if>
@@ -27,6 +27,7 @@
           </g:elseif>
           <hr>
         </g:each>
+        <g:hiddenField name="numPreguntas" value="${numPreguntas}" />
         <div class="offset3 span6 offset3">
           <input class="btn btn-large btn-block btn-primary" type="submit" value="Evaluar Cuestionario" />
         </div>
