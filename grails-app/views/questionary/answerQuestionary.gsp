@@ -11,19 +11,19 @@
     <h4>${questionary.first().description} - Responde a las siguientes preguntas</h4>
     <hr>
     <div class="row-fluid">
-      <g:form name="questionaryForm" action="">
+      <g:form name="questionaryForm" url="[action:'evaluateQuestionary',controller:'evaluate']">
         <g:each in="${questionary.first().questions}" var="question" status="i">
           <g:if test="${question.questionType==QuestionType.OPEN}">
-            <g:render template="/evaluate/open" collection="${question}" var="question"/>
+            <g:render template="/evaluate/open" model="[question:question,index:i]"/>
           </g:if>
           <g:elseif test="${question.questionType==QuestionType.MULTIPLE_CHOICE}">
-            <g:render template="/evaluate/multiple_choice" collection="${question}" var="question"/>
+            <g:render template="/evaluate/multiple_choice" model="[question:question,index:i]"/>
           </g:elseif>
           <g:elseif test="${question.questionType==QuestionType.TRUE_FALSE}">
-            <g:render template="/evaluate/true_false" collection="${question}" var="question"/>
+            <g:render template="/evaluate/true_false" model="[question:question,index:i]"/>
           </g:elseif>
           <g:elseif test="${question.questionType==QuestionType.MULTIPLE_RESPONSE}">
-            <g:render template="/evaluate/multiple_response" collection="${question}" var="question"/>
+            <g:render template="/evaluate/multiple_response" model="[question:question,index:i]"/>
           </g:elseif>
           <hr>
         </g:each>
