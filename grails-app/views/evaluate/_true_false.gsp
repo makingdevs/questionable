@@ -1,10 +1,10 @@
 <strong>${question.description}</strong>
 <label class="radio">
-  <g:radio name="description" value="false"/>
+  <g:radio name="question[${index}].description" value="false"/>
   Falso
 </label>
 <label class="radio">
-  <g:radio name="description" value="true"/>
+  <g:radio name="question[${index}].description" value="true"/>
   Cierto
 </label>
-<g:hiddenField name="id" value="${question.id}" />
+<g:hiddenField name="question[${index}].id" value="${question.id}" />
