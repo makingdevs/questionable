@@ -37,6 +37,11 @@ class EvaluateController {
     question:question]
   }
 
+  def evaluateQuestionary(){
+    println params
+  }
+
+
   private def tipoDescription(idPregunta,description){
     def question=Question.get(idPregunta)
     if (question.questionType==QuestionType.OPEN)return description
