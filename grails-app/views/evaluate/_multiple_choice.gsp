@@ -2,7 +2,7 @@
 <g:each in="${question.answers}" var="respuesta" status="a"> 
   <label class="radio">
     ${respuesta.description}
-    <g:radio name="description" value="${respuesta.id}"/>
+    <g:radio name="question[${index}].description" value="${respuesta.id}"/>
   </label>
 </g:each>
-<g:hiddenField name="id" value="${question.id}" />
+<g:hiddenField name="question[${index}].id" value="${question.id}" />
