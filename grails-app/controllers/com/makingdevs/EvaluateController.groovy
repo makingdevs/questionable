@@ -38,9 +38,10 @@ class EvaluateController {
   }
 
   def evaluateQuestionary(){
-    println params
+    for (int i = 0; i < params.numPreguntas.toLong(); i++) {
+      println params.getAt("question[${i}]")
+    } 
   }
-
 
   private def tipoDescription(idPregunta,description){
     def question=Question.get(idPregunta)
