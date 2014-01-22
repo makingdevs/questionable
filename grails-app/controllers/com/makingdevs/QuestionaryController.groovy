@@ -41,7 +41,9 @@ class QuestionaryController {
 
   def answerQuestionary(){
     def questionary=Questionary.get(params.id ?: 1L)
-    [questionary:questionary]
+    def numPreguntas=questionary.questions.size()
+    [questionary:questionary,
+    numPreguntas:numPreguntas]
   }
 
 }
