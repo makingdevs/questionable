@@ -38,9 +38,21 @@ class EvaluateController {
   }
 
   def evaluateQuestionary(){
+    def idPregunta = []
+    def respuestaUsuario =[]
+    def evaluacion=[:]
+    def listaDeEvaluaciones=[]
     for (int i = 0; i < params.numPreguntas.toLong(); i++) {
-      println params.getAt("question[${i}]")
-    } 
+       idPregunta << params.getAt("question[${i}]").id
+       respuestaUsuario << params.getAt("question[${i}]").description
+    }
+    for (int a = 0; a < params.numPreguntas.toLong(); a++) {
+      def question=Question.get(idPregunta[a])
+      evaluacion=[pregunta:question,rating:questionService.evaluateAnswer(idPregunta[a], tipoDescription(idPregunta[a],respuestaUsuario[a]))]
+      listaDeEvaluaciones<<evaluacion
+    }
+    [listaDeEvaluaciones:listaDeEvaluaciones]
+
   }
 
   private def tipoDescription(idPregunta,description){
