@@ -1,8 +1,8 @@
 <strong>${question.description}</strong>
 <g:each in="${question.answers}" var="respuesta" status="b"> 
   <label class="checkbox">
-    <g:checkBox name="description" value="${respuesta.id}" checked="false"/>
+    <g:checkBox name="question[${index}].description" value="${respuesta.id}" checked="false"/>
     ${respuesta?.description?.trim()}
   </label>
 </g:each>
-<g:hiddenField name="id" value="${question.id}" />
+<g:hiddenField name="question[${index}].id" value="${question.id}" />
