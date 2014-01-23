@@ -37,21 +37,25 @@ class EvaluateController {
     question:question]
   }
 
+  // TODO; Refactor a servicio
   def evaluateQuestionary(){
     def idPregunta = []
     def respuestaUsuario =[]
-    def evaluacion=[:]
     def listaDeEvaluaciones=[]
+    def ratingTotal=0
     for (int i = 0; i < params.numPreguntas.toLong(); i++) {
        idPregunta << params.getAt("question[${i}]").id
        respuestaUsuario << params.getAt("question[${i}]").description
     }
     for (int a = 0; a < params.numPreguntas.toLong(); a++) {
       def question=Question.get(idPregunta[a])
-      evaluacion=[pregunta:question,rating:questionService.evaluateAnswer(idPregunta[a], tipoDescription(idPregunta[a],respuestaUsuario[a]))]
+      def evaluacion=[pregunta:question,rating:questionService.evaluateAnswer(idPregunta[a], tipoDescription(idPregunta[a],respuestaUsuario[a]))]
+
       listaDeEvaluaciones<<evaluacion
+      ratingTotal+=evaluacion.rating
     }
-    [listaDeEvaluaciones:listaDeEvaluaciones]
+    [listaDeEvaluaciones:listaDeEvaluaciones,
+    ratingTotal:ratingTotal]
 
   }
 
