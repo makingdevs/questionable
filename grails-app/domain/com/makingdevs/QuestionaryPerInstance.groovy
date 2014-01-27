@@ -7,6 +7,8 @@ class QuestionaryPerInstance {
 
   static belongsTo = [questionary:Questionary]
 
+  static hasMany = [answerPerInstance : AnswerPerInstance]
+
   static constraints = {
  }
 }
