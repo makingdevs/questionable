@@ -5,11 +5,11 @@ class OpenAnswerPerUser {
   Date dateCreated
   Date lastUpdated
 
-  String answerUser
+  String userAnswer
 
   static belongsTo = [answerPerInstance:AnswerPerInstance]
 
   static constraints = {
-    answerUser size:1..200, blank:false
- }
+    userAnswer size:1..1000, blank:false
+  }
 }
