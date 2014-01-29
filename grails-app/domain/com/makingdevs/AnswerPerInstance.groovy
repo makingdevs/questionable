@@ -6,11 +6,11 @@ class AnswerPerInstance {
   Date lastUpdated
 
   Question question
-  OpenAnswerPerUser openAnswerPerUser
 
   static belongsTo = [questionaryPerInstance:QuestionaryPerInstance]
 
-  static hasMany = [answerPerUser:AnswerPerUser]
+  static hasMany = [answerPerUser:AnswerPerUser,
+                    openAnswerPerUser:OpenAnswerPerUser]
 
   static constraints = {
  }
