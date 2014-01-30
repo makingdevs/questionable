@@ -13,8 +13,10 @@ class QuestionaryPerInstanceServiceSpec extends Specification{
       def questionary=new Questionary()
       questionary.title="Cuestionario de prueba"
       questionary.description="Este es un cuestionario de prueba"
-      def question = new Question(description:"Pregunta abierta",questionType:QuestionType.OPEN)
-      questionary.addToQuestions(question)
+      questionary.addToQuestions(new Question(description:"Pregunta abierta",questionType:QuestionType.OPEN))
+      questionary.addToQuestions(new Question(description:"Pregunta falso verdadero",questionType:QuestionType.TRUE_FALSE))
+      questionary.addToQuestions(new Question(description:"Pregunta multi opcion",questionType:QuestionType.MULTIPLE_CHOICE))
+      questionary.addToQuestions(new Question(description:"Pregunta multi respuesta",questionType:QuestionType.MULTIPLE_RESPONSE))
       questionary.save(flush:true)
     when:
       def questionaryInstance=service.instanceQuestionary(questionary.id)
