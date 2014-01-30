@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="layout" content="bootstrap"/>
   <title>List Questionary</title>
 </head>
 <body>
-  <h1>Cuestionarios</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Titulo</th>
-        <th>Descripción</th>
-        <th>N. preguntas</th>
-      </tr>
-    </thead>
-    <tbody>
-      <g:each in="${questionary?}" var="questionarios" status="i">
-      <tr>
-        <td>${questionarios.title}</td>
-        <td>${questionarios.description}</td>
-        <td>${questionarios.questions.size()}</td>
-      </tr>
-    </g:each> 
-    </tbody>
-  </table>
+  <div class="container">
+    <h1>Cuestionarios</h1>
+    <div class="row-fluid">
+      <div class="span6">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Titulo</th>
+              <th>Descripción</th>
+              <th>N. preguntas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <g:each in="${questionary?}" var="questionarios" status="i">
+            <tr>
+              <td>${questionarios.title}</td>
+              <td>${questionarios.description}</td>
+              <td>${questionarios.questions.size()}</td>
+            </tr>
+          </g:each> 
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
