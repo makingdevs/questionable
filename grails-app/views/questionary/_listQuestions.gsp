@@ -1,6 +1,6 @@
 <dl>
   <dt>
-    Preguntas : 
+    Este cuestionario tiene las siguientes preguntas : 
   </dt>
   <g:each in="${questionary.questions}" var="questionario">
     <dd>
