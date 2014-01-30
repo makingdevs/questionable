@@ -6,26 +6,6 @@ class EvaluateController {
 
   def questionService
 
-  def open(){
-    def question = Question.findAllByQuestionType(QuestionType.OPEN)
-    [question:question]
-  }
-
-  def true_false(){
-    def question = Question.findAllByQuestionType(QuestionType.TRUE_FALSE)
-    [question:question]
-  }
-
-  def multiple_choice(){
-    def question = Question.findAllByQuestionType(QuestionType.MULTIPLE_CHOICE)
-    [question:question]
-  }
-
-  def multiple_response(){
-    def question = Question.findAllByQuestionType(QuestionType.MULTIPLE_RESPONSE)
-    [question:question]
-  }
-
   def evaluate(){
     def rating=questionService.evaluateAnswer(params.id, tipoDescription(params.id,params.description))
     redirect(action: "rating", id:params.id, params: [rating:rating])
