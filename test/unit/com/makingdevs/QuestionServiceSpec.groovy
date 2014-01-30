@@ -36,11 +36,11 @@ class QuestionServiceSpec extends Specification{
       evaluate == rating
       question.questionType == QuestionType.TRUE_FALSE
     where: 
-      rightAnswer | _answer || rating
-      false       | true    || 0.0
-      false       | false   || 1.0
-      true        | true    || 1.0
-      true        | false   || 0.0
+      rightAnswer   | _answer   || rating
+      "false"       | "true"    || 0.0
+      "false"       | "false"   || 1.0
+      "true"        | "true"    || 1.0
+      "true"        | "false"   || 0.0
   }
 
   @Unroll
@@ -128,7 +128,7 @@ class QuestionServiceSpec extends Specification{
 
   private Question aTrueFalseQuestion(rightAnswer){
     def question = new Question(description:"¿Falso es igual a verdadero?", questionType:QuestionType.TRUE_FALSE)
-    def answer = new Answer(solution:rightAnswer)
+    def answer = new Answer(description:rightAnswer)
     question.addToAnswers(answer)
     question.save(validate:false)
     question
