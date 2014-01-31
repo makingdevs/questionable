@@ -6,22 +6,55 @@ import spock.lang.*
 
 
 @TestFor(QuestionaryPerInstanceService)
-@Mock([Questionary, Question, QuestionaryPerInstance])
+@Mock([Questionary, Question, QuestionaryPerInstance, AnswerPerInstance, OpenAnswerPerUser])
 class QuestionaryPerInstanceServiceSpec extends Specification{
-  def "Crear una instancia de un cuestionario"(){
+  def """Crear una instancia de un cuestionario con el id del mismo 
+  y el numero de AnswerPerInstances igual al numero de questions"""(){
     given:
-      def questionary=new Questionary()
-      questionary.title="Cuestionario de prueba"
-      questionary.description="Este es un cuestionario de prueba"
-      questionary.addToQuestions(new Question(description:"Pregunta abierta",questionType:QuestionType.OPEN))
-      questionary.addToQuestions(new Question(description:"Pregunta falso verdadero",questionType:QuestionType.TRUE_FALSE))
-      questionary.addToQuestions(new Question(description:"Pregunta multi opcion",questionType:QuestionType.MULTIPLE_CHOICE))
-      questionary.addToQuestions(new Question(description:"Pregunta multi respuesta",questionType:QuestionType.MULTIPLE_RESPONSE))
-      questionary.save(flush:true)
+      def questionary=createQuestionary()
     when:
       def questionaryInstance=service.instanceQuestionary(questionary.id)
     then:
       questionaryInstance.questionary.id==questionary.id
       questionaryInstance.answerPerInstances.size()==questionary.questions.size()
+  }
+
+    def "Dada una instancia de un cuestionario agregar una respuesta ABIERTA del usaurio a la pregunta indicada"(){
+    given:
+      def questionary=createQuestionary()
+      def questionaryInstance=service.instanceQuestionary(questionary.id)
+      def preguntaId= questionary.questions.first().id
+      def respuesta="string"
+    when:
+      def res=service.addAnswer(preguntaId,respuesta,questionaryInstance.id)
+    then:
+      questionaryInstance.answerPerInstances.getAt(0).answerPerUsers==null
+      questionaryInstance.answerPerInstances.getAt(0).openAnswerPerUsers.size()==1
+      questionaryInstance.answerPerInstances.getAt(0).openAnswerPerUsers.getAt(0).userAnswer==respuesta
+  }
+
+  def "Dada una instancia de un cuestionario agregar una respuesta FALSO CIERTO del usaurio a la pregunta indicada"(){
+    given:
+      def questionary=createQuestionary()
+      def questionaryInstance=service.instanceQuestionary(questionary.id)
+      def preguntaId= questionary.questions.getAt(2).id
+      def 
+    when:
+      def res=service.addAnswer(preguntaId,respuesta,questionaryInstance.id)
+    then:
+      questionaryInstance.answerPerInstances.getAt(1).answerPerUsers.size()==1
+      questionaryInstance.answerPerInstances.getAt(1).openAnswerPerUsers==null
+  } 
+
+  private Questionary createQuestionary(){
+    def questionary=new Questionary()
+    questionary.title="Cuestionario de prueba"
+    questionary.description="Este es un cuestionario de prueba"
+    questionary.addToQuestions(new Question(description:"Pregunta abierta",questionType:QuestionType.OPEN))
+    questionary.addToQuestions(new Question(description:"Pregunta falso verdadero",questionType:QuestionType.TRUE_FALSE))
+    questionary.addToQuestions(new Question(description:"Pregunta multi opcion",questionType:QuestionType.MULTIPLE_CHOICE))
+    questionary.addToQuestions(new Question(description:"Pregunta multi respuesta",questionType:QuestionType.MULTIPLE_RESPONSE))
+    questionary.save(flush:true)
+    questionary
   }
 }
