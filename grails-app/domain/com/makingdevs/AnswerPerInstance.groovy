@@ -9,8 +9,8 @@ class AnswerPerInstance {
 
   static belongsTo = [questionaryPerInstance:QuestionaryPerInstance]
 
-  static hasMany = [answerPerUser:AnswerPerUser,
-                    openAnswerPerUser:OpenAnswerPerUser]
+  static hasMany = [answerPerUsers:AnswerPerUser,
+                    openAnswerPerUsers:OpenAnswerPerUser]
 
   static constraints = {
  }
