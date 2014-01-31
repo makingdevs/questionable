@@ -6,7 +6,7 @@ import spock.lang.*
 
 
 @TestFor(QuestionaryPerInstanceService)
-@Mock([Questionary, Question])
+@Mock([Questionary, Question, QuestionaryPerInstance])
 class QuestionaryPerInstanceServiceSpec extends Specification{
   def "Crear una instancia de un cuestionario"(){
     given:
@@ -22,5 +22,6 @@ class QuestionaryPerInstanceServiceSpec extends Specification{
       def questionaryInstance=service.instanceQuestionary(questionary.id)
     then:
       questionaryInstance.questionary.id==questionary.id
+      questionaryInstance.answerPerInstances.size()==questionary.questions.size()
   }
 }
