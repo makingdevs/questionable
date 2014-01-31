@@ -7,7 +7,7 @@ class QuestionaryPerInstance {
   Date dateCreated
   Date lastUpdated
 
-  static hasMany = [answerPerInstance : AnswerPerInstance]
+  static hasMany = [answerPerInstances : AnswerPerInstance]
 
   static constraints = {
  }
