@@ -6,7 +6,7 @@ import spock.lang.*
 
 
 @TestFor(QuestionaryPerInstanceService)
-@Mock([Questionary, Question, QuestionaryPerInstance, AnswerPerInstance, OpenAnswerPerUser])
+@Mock([Questionary, Question, QuestionaryPerInstance, AnswerPerInstance, OpenAnswerPerUser,Answer,AnswerPerUser])
 class QuestionaryPerInstanceServiceSpec extends Specification{
   def """Crear una instancia de un cuestionario con el id del mismo 
   y el numero de AnswerPerInstances igual al numero de questions"""(){
@@ -37,10 +37,10 @@ class QuestionaryPerInstanceServiceSpec extends Specification{
     given:
       def questionary=createQuestionary()
       def questionaryInstance=service.instanceQuestionary(questionary.id)
-      def preguntaId= questionary.questions.getAt(2).id
-      def 
+      def preguntaId=questionary.questions.getAt(1).id
+      def respuesta=Answer.get(1)
     when:
-      def res=service.addAnswer(preguntaId,respuesta,questionaryInstance.id)
+      def res=service.addAnswer(preguntaId,respuesta.id,questionaryInstance.id)
     then:
       questionaryInstance.answerPerInstances.getAt(1).answerPerUsers.size()==1
       questionaryInstance.answerPerInstances.getAt(1).openAnswerPerUsers==null
@@ -51,9 +51,16 @@ class QuestionaryPerInstanceServiceSpec extends Specification{
     questionary.title="Cuestionario de prueba"
     questionary.description="Este es un cuestionario de prueba"
     questionary.addToQuestions(new Question(description:"Pregunta abierta",questionType:QuestionType.OPEN))
-    questionary.addToQuestions(new Question(description:"Pregunta falso verdadero",questionType:QuestionType.TRUE_FALSE))
-    questionary.addToQuestions(new Question(description:"Pregunta multi opcion",questionType:QuestionType.MULTIPLE_CHOICE))
-    questionary.addToQuestions(new Question(description:"Pregunta multi respuesta",questionType:QuestionType.MULTIPLE_RESPONSE))
+    questionary.addToQuestions(new Question(description:"Pregunta falso verdadero",questionType:QuestionType.TRUE_FALSE)
+      .addToAnswers(new Answer(description:"true",solution:true)))
+    questionary.addToQuestions(new Question(description:"Pregunta multi opcion",questionType:QuestionType.MULTIPLE_CHOICE)
+      .addToAnswers(new Answer(description:"respuesta uno",solution:true))
+      .addToAnswers(new Answer(description:"respuesta dos",solution:false))
+      .addToAnswers(new Answer(description:"respuesta tres",solution:false)))
+    questionary.addToQuestions(new Question(description:"Pregunta multi respuesta",questionType:QuestionType.MULTIPLE_RESPONSE)
+      .addToAnswers(new Answer(description:"respuesta uno",solution:true))
+      .addToAnswers(new Answer(description:"respuesta dos",solution:true))
+      .addToAnswers(new Answer(description:"respuesta tres",solution:false)))
     questionary.save(flush:true)
     questionary
   }
