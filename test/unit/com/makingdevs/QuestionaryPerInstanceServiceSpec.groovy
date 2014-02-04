@@ -26,7 +26,7 @@ class QuestionaryPerInstanceServiceSpec extends Specification{
       def preguntaId= questionary.questions.first().id
       def respuesta="string"
     when:
-      def res=service.addAnswer(preguntaId,respuesta,questionaryInstance.id)
+      service.addAnswer(preguntaId,respuesta,questionaryInstance.id)
     then:
       questionaryInstance.answerPerInstances.getAt(0).answerPerUsers==null
       questionaryInstance.answerPerInstances.getAt(0).openAnswerPerUsers.size()==1
@@ -40,7 +40,7 @@ class QuestionaryPerInstanceServiceSpec extends Specification{
       def preguntaId=questionary.questions.getAt(1).id
       def respuesta=Answer.get(1)
     when:
-      def res=service.addAnswer(preguntaId,respuesta.id,questionaryInstance.id)
+      service.addAnswer(preguntaId,respuesta.id,questionaryInstance.id)
     then:
       questionaryInstance.answerPerInstances.getAt(1).answerPerUsers.size()==1
       questionaryInstance.answerPerInstances.getAt(1).openAnswerPerUsers==null
@@ -53,13 +53,13 @@ class QuestionaryPerInstanceServiceSpec extends Specification{
       def preguntaId=questionary.questions.getAt(2).id
       def respuesta=Answer.get(2)
     when:
-      def res=service.addAnswer(preguntaId,respuesta.id,questionaryInstance.id)
+      service.addAnswer(preguntaId,respuesta.id,questionaryInstance.id)
     then:
       questionaryInstance.answerPerInstances.getAt(2).answerPerUsers.size()==1
       questionaryInstance.answerPerInstances.getAt(2).openAnswerPerUsers==null
   }
 
-    def "Dada una instancia de un cuestionario agregar una respuesta MULTIOPCION dada por el usuario"(){
+    def "Dada una instancia de un cuestionario agregar una respuesta MULTIRESPUESTA dada por el usuario"(){
     given:
       def questionary=createQuestionary()
       def questionaryInstance=service.instanceQuestionary(questionary.id)
@@ -68,9 +68,8 @@ class QuestionaryPerInstanceServiceSpec extends Specification{
       def respuesta_1 = Answer.get(5)
       def respuesta_2 =Answer.get(6)
       respuestas << respuesta_1.id << respuesta_2.id
-      println respuestas
     when:
-      def res=service.addAnswer(preguntaId,respuestas,questionaryInstance.id)
+      service.addAnswer(preguntaId,respuestas,questionaryInstance.id)
     then:
       questionaryInstance.answerPerInstances.getAt(3).answerPerUsers.size()==2
       questionaryInstance.answerPerInstances.getAt(3).openAnswerPerUsers==null
