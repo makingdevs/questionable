@@ -5,6 +5,7 @@ import com.makingdevs.*
 class EvaluateController {
 
   def questionService
+  def questionaryPerInstanceService
 
   def evaluate(){
     def rating=questionService.evaluateAnswer(params.id, tipoDescription(params.id,params.description))
@@ -23,14 +24,15 @@ class EvaluateController {
     def respuestaUsuario =[]
     def listaDeEvaluaciones=[]
     def ratingTotal=0
+    def questionaryPerInstance=QuestionaryPerInstance.get(params.idQuestionary)
     for (int i = 0; i < params.numPreguntas.toLong(); i++) {
-       idPregunta << params.getAt("question[${i}]").id
-       respuestaUsuario << params.getAt("question[${i}]").description
+      idPregunta << params.getAt("question[${i}]").id
+      respuestaUsuario << params.getAt("question[${i}]").description
     }
     for (int a = 0; a < params.numPreguntas.toLong(); a++) {
       def question=Question.get(idPregunta[a])
+      questionaryPerInstanceService.addAnswer(idPregunta[a],tipoDescription(idPregunta[a],respuestaUsuario[a]),questionaryPerInstance.id)
       def evaluacion=[pregunta:question,rating:questionService.evaluateAnswer(idPregunta[a], tipoDescription(idPregunta[a],respuestaUsuario[a]))]
-
       listaDeEvaluaciones<<evaluacion
       ratingTotal+=evaluacion.rating
     }
