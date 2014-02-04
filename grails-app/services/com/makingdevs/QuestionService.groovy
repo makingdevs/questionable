@@ -16,7 +16,10 @@ class QuestionService {
       break
 
       case QuestionType.TRUE_FALSE:
-      question.answers.each{answerOfQuestion-> if (answerOfQuestion.description==answer) ratings=1.0}
+      def answer_user = Answer.get(answer)
+      question.answers.each{answerOfQuestion-> 
+      if (answerOfQuestion.description==answer_user.description&&answerOfQuestion.solution==true) 
+      ratings=1.0}
       break
 
       case QuestionType.MULTIPLE_CHOICE:
