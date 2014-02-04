@@ -42,7 +42,6 @@ class EvaluateController {
   private def tipoDescription(idPregunta,description){
     def question=Question.get(idPregunta)
     if (question.questionType==QuestionType.OPEN)return description
-    if (question.questionType==QuestionType.TRUE_FALSE) if (description=="true") return "true" else return "false"
-    if (question.questionType==QuestionType.MULTIPLE_CHOICE||question.questionType==QuestionType.MULTIPLE_RESPONSE) return description*.toLong()
+    else return description*.toLong()
   }
 }
