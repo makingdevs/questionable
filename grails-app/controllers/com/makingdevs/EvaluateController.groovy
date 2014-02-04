@@ -32,13 +32,25 @@ class EvaluateController {
     for (int a = 0; a < params.numPreguntas.toLong(); a++) {
       def question=Question.get(idPregunta[a])
       questionaryPerInstanceService.addAnswer(idPregunta[a],tipoDescription(idPregunta[a],respuestaUsuario[a]),questionaryPerInstance.id)
-      def evaluacion=[pregunta:question,rating:questionService.evaluateAnswer(idPregunta[a], tipoDescription(idPregunta[a],respuestaUsuario[a]))]
+    }
+
+    for(int b = 0; b < params.numPreguntas.toLong(); b++) {
+      def evaluacion=[
+      pregunta:questionaryPerInstance.answerPerInstances.getAt(b).question,
+      rating:questionService.evaluateAnswer(
+        questionaryPerInstance.answerPerInstances.getAt(b).question.id, 
+        openOrNot(questionaryPerInstance.answerPerInstances.getAt(b).id))]
       listaDeEvaluaciones<<evaluacion
       ratingTotal+=evaluacion.rating
     }
     [listaDeEvaluaciones:listaDeEvaluaciones,
     ratingTotal:ratingTotal]
+  }
 
+  private def openOrNot(idAnswerPerInstance){
+    def respuestaPersistida=AnswerPerInstance.get(idAnswerPerInstance)
+    if (respuestaPersistida.openAnswerPerUsers.size()>0){return respuestaPersistida.openAnswerPerUsers.first().userAnswer}
+    if (respuestaPersistida.answerPerUsers.size()>0){return respuestaPersistida.answerPerUsers.answer.id*.toLong()}
   }
 
   private def tipoDescription(idPregunta,description){
