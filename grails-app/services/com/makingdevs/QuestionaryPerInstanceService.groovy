@@ -20,27 +20,15 @@ class QuestionaryPerInstanceService {
     def questionaryPerInstance=QuestionaryPerInstance.get(idQuestionaryPerInstance)
     questionaryPerInstance.answerPerInstances.each{it-> 
       if(it.question.id==question.id){
-        switch(question.questionType){
-          case QuestionType.OPEN:
-            it.addToOpenAnswerPerUsers(new OpenAnswerPerUser(userAnswer:respuesta)).save(flush:true)
-          break
-          case QuestionType.TRUE_FALSE:
-            def answerUser=Answer.get(respuesta)
+        if(question.questionType==QuestionType.OPEN)
+          it.addToOpenAnswerPerUsers(new OpenAnswerPerUser(userAnswer:respuesta)).save(flush:true)
+        else
+          respuesta.each{idRespuesta -> 
+            def answerUser=Answer.get(idRespuesta)
             it.addToAnswerPerUsers(new AnswerPerUser(answer:answerUser)).save(flush:true)
-          break
-          case QuestionType.MULTIPLE_CHOICE:
-            def answerUser=Answer.get(respuesta)
-            it.addToAnswerPerUsers(new AnswerPerUser(answer:answerUser)).save(flush:true)
-          break
-          case QuestionType.MULTIPLE_RESPONSE:
-            respuesta.each{idRespuesta -> 
-              def answerUser=Answer.get(idRespuesta)
-              it.addToAnswerPerUsers(new AnswerPerUser(answer:answerUser)).save(flush:true)
-            }
-          break
+          }
         }
       }
-    }
     questionaryPerInstance.save(flush:true)
     questionaryPerInstance
   }
