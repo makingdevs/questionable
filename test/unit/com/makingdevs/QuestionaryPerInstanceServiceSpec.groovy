@@ -19,7 +19,7 @@ class QuestionaryPerInstanceServiceSpec extends Specification{
       questionaryInstance.answerPerInstances.size()==questionary.questions.size()
   }
 
-    def "Dada una instancia de un cuestionario agregar una respuesta ABIERTA del usaurio a la pregunta indicada"(){
+    def "Dada una instancia de un cuestionario agregar una respuesta ABIERTA dada por el usaurio"(){
     given:
       def questionary=createQuestionary()
       def questionaryInstance=service.instanceQuestionary(questionary.id)
@@ -33,7 +33,7 @@ class QuestionaryPerInstanceServiceSpec extends Specification{
       questionaryInstance.answerPerInstances.getAt(0).openAnswerPerUsers.getAt(0).userAnswer==respuesta
   }
 
-  def "Dada una instancia de un cuestionario agregar una respuesta FALSO CIERTO del usaurio a la pregunta indicada"(){
+  def "Dada una instancia de un cuestionario agregar una respuesta FALSO CIERTO dada por el usuario"(){
     given:
       def questionary=createQuestionary()
       def questionaryInstance=service.instanceQuestionary(questionary.id)
@@ -45,6 +45,36 @@ class QuestionaryPerInstanceServiceSpec extends Specification{
       questionaryInstance.answerPerInstances.getAt(1).answerPerUsers.size()==1
       questionaryInstance.answerPerInstances.getAt(1).openAnswerPerUsers==null
   } 
+
+  def "Dada una instancia de un cuestionario agregar una respuesta MULTIOPCION dada por el usuario"(){
+    given:
+      def questionary=createQuestionary()
+      def questionaryInstance=service.instanceQuestionary(questionary.id)
+      def preguntaId=questionary.questions.getAt(2).id
+      def respuesta=Answer.get(2)
+    when:
+      def res=service.addAnswer(preguntaId,respuesta.id,questionaryInstance.id)
+    then:
+      questionaryInstance.answerPerInstances.getAt(2).answerPerUsers.size()==1
+      questionaryInstance.answerPerInstances.getAt(2).openAnswerPerUsers==null
+  }
+
+    def "Dada una instancia de un cuestionario agregar una respuesta MULTIOPCION dada por el usuario"(){
+    given:
+      def questionary=createQuestionary()
+      def questionaryInstance=service.instanceQuestionary(questionary.id)
+      def preguntaId=questionary.questions.getAt(3).id
+      def respuestas= []
+      def respuesta_1 = Answer.get(5)
+      def respuesta_2 =Answer.get(6)
+      respuestas << respuesta_1.id << respuesta_2.id
+      println respuestas
+    when:
+      def res=service.addAnswer(preguntaId,respuestas,questionaryInstance.id)
+    then:
+      questionaryInstance.answerPerInstances.getAt(3).answerPerUsers.size()==2
+      questionaryInstance.answerPerInstances.getAt(3).openAnswerPerUsers==null
+  }
 
   private Questionary createQuestionary(){
     def questionary=new Questionary()
