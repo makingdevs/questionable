@@ -17,7 +17,11 @@
               <option value="false">False</option>
               <option value="true">True</option>
             </select>
-            <input type="hidden" value="true" name="solution" />
+            <label>¿Es la solución?:</label>
+            <select name="solution">
+              <option value="false">False</option>
+              <option value="true">True</option>
+            </select>
             <input type="hidden" value="${question.id}" name="question" />
             <br>
             <input class="btn btn-primary" type="submit" value="Enviar" />
