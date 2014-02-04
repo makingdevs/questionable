@@ -1,6 +1,10 @@
 package com.makingdevs
 
+import com.makingdevs.*
+
 class QuestionaryController {
+
+  def questionaryPerInstanceService
 
   def index() { }
 
@@ -41,8 +45,9 @@ class QuestionaryController {
 
   def answerQuestionary(){
     def questionary=Questionary.get(params.id ?: 1L)
-    def numPreguntas=questionary.questions.size()
-    [questionary:questionary,
+    def questionaryPerInstance=questionaryPerInstanceService.instanceQuestionary(questionary.id)
+    def numPreguntas=questionaryPerInstance.answerPerInstances.size()
+    [questionaryPerInstance:questionaryPerInstance,
     numPreguntas:numPreguntas]
   }
 
