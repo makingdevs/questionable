@@ -7,12 +7,12 @@
 </head>
 <body>
   <div class="container">
-    <h1>${questionary.first().title}</h1>
-    <h4>${questionary.first().description} - Responde a las siguientes preguntas</h4>
+    <h1>${questionaryPerInstance.questionary.title}</h1>
+    <h4>${questionaryPerInstance.questionary.description} - Responde a las siguientes preguntas</h4>
     <hr>
     <div class="row-fluid">
       <g:form name="questionaryForm" url="[action:'evaluateQuestionary',controller:'evaluate']">
-        <g:each in="${questionary.questions}" var="question" status="i">
+        <g:each in="${questionaryPerInstance.questionary.questions}" var="question" status="i">
           <g:if test="${question.questionType==QuestionType.OPEN}">
             <g:render template="/evaluate/open" model="[question:question,index:i]"/>
           </g:if>
