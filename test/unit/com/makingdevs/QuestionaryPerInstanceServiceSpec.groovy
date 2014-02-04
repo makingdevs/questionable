@@ -59,7 +59,7 @@ class QuestionaryPerInstanceServiceSpec extends Specification{
       questionaryInstance.answerPerInstances.getAt(2).openAnswerPerUsers==null
   }
 
-    def "Dada una instancia de un cuestionario agregar una respuesta MULTIRESPUESTA dada por el usuario"(){
+  def "Dada una instancia de un cuestionario agregar una respuesta MULTIRESPUESTA dada por el usuario"(){
     given:
       def questionary=createQuestionary()
       def questionaryInstance=service.instanceQuestionary(questionary.id)
