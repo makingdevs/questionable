@@ -28,19 +28,19 @@ class QuestionServiceSpec extends Specification{
   def """Cuando la respuesta correcta a una pregunta F/V es "#rightAnswer" 
       y se responde "#_answer" el puntaje debe ser "#rating" """(){
     given:
-      def question = aTrueFalseQuestion(rightAnswer)
+      def question = aTrueFalseQuestion(answer_1,solution_1,answer_2,solution_2)
     when:
-      def answer = _answer
-      def evaluate = service.evaluateAnswer(question.id, answer)
+      def answer = Answer.findByDescriptionLike("%${_answer}%")
+      def evaluate = service.evaluateAnswer(question.id, answer.id)
     then:
       evaluate == rating
       question.questionType == QuestionType.TRUE_FALSE
     where: 
-      rightAnswer   | _answer   || rating
-      "false"       | "true"    || 0.0
-      "false"       | "false"   || 1.0
-      "true"        | "true"    || 1.0
-      "true"        | "false"   || 0.0
+      answer_1 | solution_1 | answer_2  | solution_2  |  _answer   || rating
+      "true"   |   true     |  "false"  |  false      |  "false"   || 0.0
+      "true"   |   true     |  "false"  |  false      |  "true"    || 1.0
+      "false"  |   true     |  "true"   |  false      |  "false"   || 1.0
+      "false"  |   true     |  "true"   |  false      |  "true"    || 0.0
   }
 
   @Unroll
@@ -126,10 +126,12 @@ class QuestionServiceSpec extends Specification{
     new Question(description:"¿Es esta una pregunta abierta?, Describa",questionType:QuestionType.OPEN).save()
   }
 
-  private Question aTrueFalseQuestion(rightAnswer){
+  private Question aTrueFalseQuestion(answer_1,solution_1,answer_2,solution_2){
     def question = new Question(description:"¿Falso es igual a verdadero?", questionType:QuestionType.TRUE_FALSE)
-    def answer = new Answer(description:rightAnswer)
-    question.addToAnswers(answer)
+    def answer1 = new Answer(description:answer_1,solution:solution_1)
+    def answer2 = new Answer(description:answer_2,solution:solution_2)
+    question.addToAnswers(answer1)
+    question.addToAnswers(answer2)
     question.save(validate:false)
     question
   }
