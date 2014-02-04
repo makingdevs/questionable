@@ -28,6 +28,16 @@ class QuestionaryPerInstanceService {
             def answerUser=Answer.get(respuesta)
             it.addToAnswerPerUsers(new AnswerPerUser(answer:answerUser)).save(flush:true)
           break
+          case QuestionType.MULTIPLE_CHOICE:
+            def answerUser=Answer.get(respuesta)
+            it.addToAnswerPerUsers(new AnswerPerUser(answer:answerUser)).save(flush:true)
+          break
+          case QuestionType.MULTIPLE_RESPONSE:
+            respuesta.each{idRespuesta -> 
+              def answerUser=Answer.get(idRespuesta)
+              it.addToAnswerPerUsers(new AnswerPerUser(answer:answerUser)).save(flush:true)
+            }
+          break
         }
       }
     }
