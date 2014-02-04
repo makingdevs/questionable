@@ -23,7 +23,7 @@
         <g:if test="${question.questionType == QuestionType.MULTIPLE_CHOICE || question.questionType == QuestionType.MULTIPLE_RESPONSE}">
           <g:link class="btn btn-primary" controller="answer" action="create" id="${question.id}">Agregar respuestas</g:link>
         </g:if>
-        <g:if test="${question.questionType == QuestionType.TRUE_FALSE && question.answers.size() == 0}">
+        <g:if test="${question.questionType == QuestionType.TRUE_FALSE && question.answers.size() < 2}">
           <g:link class="btn btn-primary" controller="answer" action="create" id="${question.id}">Agregar respuestas</g:link>
         </g:if>
         <g:link class="btn btn-primary"  action="index">Crear otra Pregunta</g:link>
