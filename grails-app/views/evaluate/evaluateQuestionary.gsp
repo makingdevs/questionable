@@ -1,3 +1,4 @@
+<%@ page import="com.makingdevs.QuestionType"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,17 +14,26 @@
         <ol>
           <g:each in="${listaDeEvaluaciones}" var="evaluacion" status="a">
             <g:if test="${evaluacion.rating==1.0}">
-             <li><label class="text-success"><strong>${evaluacion.pregunta.description}</strong></label></li>
-            <label class="text-success"><strong>${evaluacion.rating} puntos</strong></label>
-           </g:if>
-           <g:elseif test="${evaluacion.rating==0.0}">
+              <li><label class="text-success"><strong>${evaluacion.pregunta.description}</strong></label></li>
+              <label class="text-success"><strong>${evaluacion.rating} puntos</strong></label>
+            </g:if>
+            <g:elseif test="${evaluacion.rating==0.0}">
               <li><label class="text-error"><strong>${evaluacion.pregunta.description}</strong></label></li>
               <label class="text-error"><strong>${evaluacion.rating} puntos</strong></label>
-           </g:elseif>
+            </g:elseif>
             <g:else>
               <li><label class="text-warning"><strong>${evaluacion.pregunta.description}</strong></label></li>
               <label class="text-warning"><strong>${evaluacion.rating} puntos</strong></label>
-           </g:else>
+            </g:else>
+            <strong>Tu respuesta</strong>
+            <g:if test="${evaluacion.answerUser.question.questionType==QuestionType.OPEN}">
+              ${evaluacion.answerUser.openAnswerPerUsers.first().userAnswer}
+            </g:if>
+            <g:else>
+              <g:each in="${evaluacion.answerUser.answerPerUsers.answer}" var="respuestas" status="b">
+                ${respuestas.description}
+              </g:each>
+            </g:else>
           </g:each>
         </ol>
         <h3>Puntuacion Global: ${ratingTotal} puntos de un total ${listaDeEvaluaciones.size()}.00 puntos</h3>
