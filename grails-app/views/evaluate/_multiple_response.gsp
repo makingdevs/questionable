@@ -1,5 +1,5 @@
 <strong>${question.description}</strong>
-<g:each in="${question.answers}" var="respuesta" status="b"> 
+<g:each in="${question.answers.sort()}" var="respuesta" status="b"> 
   <label class="checkbox">
     <g:checkBox name="question[${index}].description" value="${respuesta.id}" checked="false"/>
     ${respuesta?.description?.trim()}
