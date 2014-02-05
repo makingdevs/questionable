@@ -12,7 +12,7 @@
     <hr>
     <div class="row-fluid">
       <g:form name="questionaryForm" url="[action:'evaluateQuestionary',controller:'evaluate']">
-        <g:each in="${questionaryPerInstance.questionary.questions}" var="question" status="i">
+        <g:each in="${questionaryPerInstance.questionary.questions.sort()}" var="question" status="i">
           <g:if test="${question.questionType==QuestionType.OPEN}">
             <g:render template="/evaluate/open" model="[question:question,index:i]"/>
           </g:if>
