@@ -4,7 +4,7 @@ import grails.transaction.Transactional
 
 class QuestionaryPerInstanceLinkService {
 
-  def createQuestionaryPerInstance(def instance) {
+  def createQuestionaryPerInstance(def instance, Long questionaryId) {
 
   }
 }

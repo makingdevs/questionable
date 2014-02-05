@@ -1,6 +1,6 @@
 package com.makingdevs
 
-class UserTest {
+class UserTest implements Questionable {
 
     static constraints = {
     }
