@@ -1,6 +1,7 @@
 package com.makingdevs
 
-class Answer {
+@groovy.transform.ToString
+class Answer implements Comparable{
 
 	String description
   Boolean solution
@@ -10,4 +11,9 @@ class Answer {
  }
 
  static belongsTo = [question: Question]
+
+ int compareTo(q){
+    this.id <=> q.id
+  }
+ 
 }
