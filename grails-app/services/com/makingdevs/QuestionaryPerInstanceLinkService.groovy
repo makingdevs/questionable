@@ -8,6 +8,9 @@ class QuestionaryPerInstanceLinkService {
   def questionaryPerInstanceService
 
   def createQuestionaryPerInstance(def instance, Long questionaryId) {
+    if(!Questionable.class.isAssignableFrom(instance.class)){
+      
+    }
     def questionaryPerInstanceLink =new QuestionaryPerInstanceLink(
       questionaryPerInstance:questionaryPerInstanceService.instanceQuestionary(questionaryId),
       type:instance.class.getSimpleName(),
