@@ -4,7 +4,7 @@ import grails.test.mixin.TestFor
 import spock.lang.Specification
 
 @TestFor(QuestionaryPerInstanceLinkService)
-@Mock([UserTest,Questionary])
+@Mock([UserTest,Questionary,QuestionaryPerInstanceService,QuestionaryPerInstance,QuestionaryPerInstanceLink])
 class QuestionaryPerInstanceLinkServiceSpec extends Specification {
 
   def "Crear una instancia de cuestionario para una clase que implementa la interfaz Questionable"() {
