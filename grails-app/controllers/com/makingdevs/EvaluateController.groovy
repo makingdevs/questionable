@@ -48,9 +48,9 @@ class EvaluateController {
   }
 
   private def openOrNot(idAnswerPerInstance){
-    def respuestaPersistida=AnswerPerInstance.get(idAnswerPerInstance)
-    if (respuestaPersistida.openAnswerPerUsers.size()>0){return respuestaPersistida.openAnswerPerUsers.first().userAnswer}
-    if (respuestaPersistida.answerPerUsers.size()>0){return respuestaPersistida.answerPerUsers.answer.id*.toLong()}
+    def respuestaInstanciada=AnswerPerInstance.get(idAnswerPerInstance)
+    if (respuestaInstanciada.openAnswerPerUsers.size()>0){return respuestaInstanciada.openAnswerPerUsers.first().userAnswer}
+    if (respuestaInstanciada.answerPerUsers.size()>0){return respuestaInstanciada.answerPerUsers.answer.id*.toLong()}
   }
 
   private def tipoDescription(idPregunta,description){
