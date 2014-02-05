@@ -1,7 +1,7 @@
 package com.makingdevs
 
 import grails.test.mixin.TestFor
-import spock.lang.Specification
+import spock.lang.*
 
 @TestFor(QuestionaryPerInstanceLinkService)
 @Mock([UserTest,Questionary,QuestionaryPerInstanceService,QuestionaryPerInstance,QuestionaryPerInstanceLink,AnotherUserTest])
@@ -28,8 +28,9 @@ class QuestionaryPerInstanceLinkServiceSpec extends Specification {
     when:"Creamos asignamos una instancia de cuestionario a un usuario"
       def questionaryPerInstanceLink = service.createQuestionaryPerInstance(anotherUserTest,1L)
     then:
-      questionaryPerInstanceLink.id > 0
-      
+      Exception e = thrown()
+      e.message == "Pelaz!"
+
   }
 
 }
