@@ -36,6 +36,7 @@ class EvaluateController {
 
     for(int b = 0; b < params.numPreguntas.toLong(); b++) {
       def evaluacion=[
+      answerUser:questionaryPerInstance.answerPerInstances.getAt(b),
       pregunta:questionaryPerInstance.answerPerInstances.getAt(b).question,
       rating:questionService.evaluateAnswer(
         questionaryPerInstance.answerPerInstances.getAt(b).question.id, 
