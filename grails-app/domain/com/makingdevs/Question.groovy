@@ -1,7 +1,7 @@
 package com.makingdevs
 
 @groovy.transform.ToString
-class Question {
+class Question implements Comparable {
 
 	String description
 	QuestionType questionType 
@@ -11,4 +11,8 @@ class Question {
 	}
 
 	static hasMany = [answers : Answer]
+
+  int compareTo(q){
+    this.id <=> q.id
+  }
 }
