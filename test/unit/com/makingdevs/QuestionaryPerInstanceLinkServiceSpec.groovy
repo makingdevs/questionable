@@ -4,7 +4,7 @@ import grails.test.mixin.TestFor
 import spock.lang.Specification
 
 @TestFor(QuestionaryPerInstanceLinkService)
-@Mock([UserTest,Questionary,QuestionaryPerInstanceService,QuestionaryPerInstance,QuestionaryPerInstanceLink])
+@Mock([UserTest,Questionary,QuestionaryPerInstanceService,QuestionaryPerInstance,QuestionaryPerInstanceLink,AnotherUserTest])
 class QuestionaryPerInstanceLinkServiceSpec extends Specification {
 
   def "Crear una instancia de cuestionario para una clase que implementa la interfaz Questionable"() {
@@ -20,4 +20,16 @@ class QuestionaryPerInstanceLinkServiceSpec extends Specification {
       questionaryPerInstanceLink.type == "UserTest" // Se identifica la clase
       questionaryPerInstanceLink.questionaryPerInstanceRef == 1L // Se asigna el id de la clase asignada
   }
+
+  def "Crear una instancia de cuestionario para una clase que no implementa la interfaz Questionable"() {
+    given:"Un usuario previamente creado y un cuestionario existente"
+      def anotherUserTest = new AnotherUserTest().save()
+      new Questionary().save(validate:false)
+    when:"Creamos asignamos una instancia de cuestionario a un usuario"
+      def questionaryPerInstanceLink = service.createQuestionaryPerInstance(anotherUserTest,1L)
+    then:
+      questionaryPerInstanceLink.id > 0
+      
+  }
+
 }
