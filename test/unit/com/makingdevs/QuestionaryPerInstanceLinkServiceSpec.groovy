@@ -26,7 +26,7 @@ class QuestionaryPerInstanceLinkServiceSpec extends Specification {
       def anotherUserTest = new AnotherUserTest().save()
       new Questionary().save(validate:false)
     when:"Creamos asignamos una instancia de cuestionario a un usuario"
-      def questionaryPerInstanceLink = service.createQuestionaryPerInstance(anotherUserTest,1L)
+      def questionaryPerInstanceLink = service.findQuestionaryPerInstanceByTitle(anotherUserTest,1L)
     then:
       Exception e = thrown()
       e.message == "Pelaz!"
@@ -38,11 +38,10 @@ class QuestionaryPerInstanceLinkServiceSpec extends Specification {
      createManyQuestionaryPerInstance(userTest)
      def tituloABucar="groovy"
     when:"Buscar en la entidad el custionario con el nombre groovy"
-      def questionaryPerInstance = service.findQuestionaryPerInstance(userTest.id,tituloABucar)
+      def questionaryPerInstance = service.findQuestionaryPerInstanceByTitle(userTest.id,tituloABucar)
     then:
       questionaryPerInstance!=null
       questionaryPerInstance.questionary.title==tituloABucar
-
   }
 
   private def createManyQuestionaryPerInstance(def instance){

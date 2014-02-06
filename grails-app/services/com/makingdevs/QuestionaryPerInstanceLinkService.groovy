@@ -19,13 +19,13 @@ class QuestionaryPerInstanceLinkService {
     questionaryPerInstanceLink
   }
 
-  def findQuestionaryPerInstance(Long idInstance, String criteria){
-    def encontrado=QuestionaryPerInstanceLink.findAllByQuestionaryPerInstanceRef(idInstance)
-    def questionario
-    encontrado.questionaryPerInstance.each{it -> 
-      if(it.questionary.title==criteria)
-      questionario=it
+  def findQuestionaryPerInstanceByTitle(Long idInstance, String title){
+    def questionaryPerInstanceLinkEncontrado=QuestionaryPerInstanceLink.findAllByQuestionaryPerInstanceRef(idInstance)
+    def questionaryPerInstance
+    questionaryPerInstanceLinkEncontrado.questionaryPerInstance.each{it -> 
+      if(it.questionary.title==title)
+      questionaryPerInstance=it
     }
-    questionario
+    questionaryPerInstance
   }
 }
