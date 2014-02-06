@@ -9,7 +9,7 @@ class QuestionaryPerInstanceLinkService {
 
   def createQuestionaryPerInstance(def instance, Long questionaryId) {
     if(!Questionable.class.isAssignableFrom(instance.class)){
-      
+      throw new Exception("Pelaz!")
     }
     def questionaryPerInstanceLink =new QuestionaryPerInstanceLink(
       questionaryPerInstance:questionaryPerInstanceService.instanceQuestionary(questionaryId),
