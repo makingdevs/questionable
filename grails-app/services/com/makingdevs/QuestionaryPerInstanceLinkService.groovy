@@ -18,4 +18,14 @@ class QuestionaryPerInstanceLinkService {
       .save(flush:true)
     questionaryPerInstanceLink
   }
+
+  def findQuestionaryPerInstance(Long idInstance, String criteria){
+    def encontrado=QuestionaryPerInstanceLink.findAllByQuestionaryPerInstanceRef(idInstance)
+    def questionario
+    encontrado.questionaryPerInstance.each{it -> 
+      if(it.questionary.title==criteria)
+      questionario=it
+    }
+    questionario
+  }
 }
