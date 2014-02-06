@@ -9,7 +9,7 @@ class QuestionaryPerInstanceLinkServiceSpec extends Specification {
 
   def "Crear una instancia de cuestionario para una clase que implementa la interfaz Questionable"() {
     given:"Un usuario previamente creado y un cuestionario existente"
-      def userTest = new UserTest().save()
+      def userTest = new UserTest().save(validate:false)
       new Questionary().save(validate:false)
     when:"Creamos asignamos una instancia de cuestionario a un usuario"
       def questionaryPerInstanceLink = service.createQuestionaryPerInstance(userTest,1L)
@@ -34,7 +34,7 @@ class QuestionaryPerInstanceLinkServiceSpec extends Specification {
 
     def "Obtener el questionaryPerInstance de una entidad, mediante el titulo del cuestionario"() {
     given:"Dada una entidad con varios questionaryPerInstance"
-     def userTest = new UserTest().save()
+     def userTest = new UserTest().save(validate:false)
      createManyQuestionaryPerInstance(userTest)
      def tituloABucar="groovy"
     when:"Buscar en la entidad el custionario con el nombre groovy"
