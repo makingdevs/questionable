@@ -26,7 +26,7 @@ class QuestionaryPerInstanceLinkServiceSpec extends Specification {
       def anotherUserTest = new AnotherUserTest().save()
       new Questionary().save(validate:false)
     when:"Creamos asignamos una instancia de cuestionario a un usuario"
-      def questionaryPerInstanceLink = service.findQuestionaryPerInstanceByTitle(anotherUserTest,1L)
+      def questionaryPerInstanceLink = service.createQuestionaryPerInstance(anotherUserTest,1L)
     then:
       Exception e = thrown()
       e.message == "Pelaz!"
