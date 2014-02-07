@@ -15,6 +15,7 @@
               <th>Titulo</th>
               <th>Descripción</th>
               <th>N. preguntas</th>
+              <th>CodeName</th>
             </tr>
           </thead>
           <tbody>
@@ -23,6 +24,7 @@
               <td>${questionarios.title}</td>
               <td>${questionarios.description}</td>
               <td>${questionarios.questions.size()}</td>
+              <td>${questionarios.codeName}</td>
             </tr>
           </g:each> 
           </tbody>
