@@ -79,6 +79,7 @@ class QuestionaryPerInstanceServiceSpec extends Specification{
     def questionary=new Questionary()
     questionary.title="Cuestionario de prueba"
     questionary.description="Este es un cuestionario de prueba"
+    questionary.codeName="GROOVY-ESSENTIAL"
     questionary.addToQuestions(new Question(description:"Pregunta abierta",questionType:QuestionType.OPEN))
     questionary.addToQuestions(new Question(description:"Pregunta falso verdadero",questionType:QuestionType.TRUE_FALSE)
       .addToAnswers(new Answer(description:"true",solution:true)))
