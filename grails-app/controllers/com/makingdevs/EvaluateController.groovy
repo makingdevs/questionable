@@ -24,7 +24,7 @@ class EvaluateController {
     def respuestaUsuario =[]
     def listaDeEvaluaciones=[]
     def ratingTotal=0
-    def questionaryPerInstance=QuestionaryPerInstance.get(params.idQuestionary)
+    def questionaryPerInstance=questionaryPerInstanceService.instanceQuestionary(params.idQuestionary)
     for (int i = 0; i < params.numPreguntas.toLong(); i++) {
       idPregunta << params.getAt("question[${i}]").id
       respuestaUsuario << params.getAt("question[${i}]").description
@@ -45,12 +45,13 @@ class EvaluateController {
       ratingTotal+=evaluacion.rating
     }
     [listaDeEvaluaciones:listaDeEvaluaciones,
-    ratingTotal:ratingTotal]
+    ratingTotal:ratingTotal,
+    questionaryPerInstance:questionaryPerInstance]
   }
 
   private def openOrNot(idAnswerPerInstance){
     def respuestaInstanciada=AnswerPerInstance.get(idAnswerPerInstance)
-    if (respuestaInstanciada.openAnswerPerUsers.size()>0){return respuestaInstanciada.openAnswerPerUsers.first().userAnswer}
+    if (respuestaInstanciada.openAnswerPerUsers!=null){return respuestaInstanciada.openAnswerPerUsers.first().userAnswer}
     if (respuestaInstanciada.answerPerUsers.size()>0){return respuestaInstanciada.answerPerUsers.answer.id*.toLong()}
   }
 
