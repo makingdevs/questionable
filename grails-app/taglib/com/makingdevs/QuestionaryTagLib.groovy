@@ -7,7 +7,7 @@ class QuestionaryTagLib {
     out << "<ul>"
       listQuestioanryAvailable.each { questionary ->
         out << """\
-          <li>${g.link(controller:'questionary',action:'answerQuestionary',id:'1'){"${questionary.codeName}"}}</li>
+          <li>${g.link(controller:'questionary',action:'answerQuestionary',id:"${questionary.id}"){"${questionary.codeName}"}}</li>
         """
       }
     out << "</ul>"
