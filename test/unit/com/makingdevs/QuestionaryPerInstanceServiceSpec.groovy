@@ -19,6 +19,16 @@ class QuestionaryPerInstanceServiceSpec extends Specification{
       questionaryInstance.answerPerInstances.size()==questionary.questions.size()
   }
 
+  def "Al momento de crear una instancia de questionary el status debe de ser sin contestar"(){
+    given:"se crea un cuestionario"
+      def questionary=createQuestionary()
+    when:"se llama al servicio para crear una instancia de questionary"
+      def questionaryInstance=service.instanceQuestionary(questionary.id)
+    then:
+      questionaryInstance.questionary.id==questionary.id
+      questionaryInstance.questionaryPerInstanceStatus==QuestionaryPerInstanceStatus.SIN_CONTESTAR
+  }
+
     def "Dada una instancia de un cuestionario agregar una respuesta ABIERTA dada por el usaurio"(){
     given:
       def questionary=createQuestionary()
