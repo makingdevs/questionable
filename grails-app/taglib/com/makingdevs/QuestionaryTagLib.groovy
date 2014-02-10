@@ -3,21 +3,13 @@ package com.makingdevs
 class QuestionaryTagLib {
     
   def showQuestionaryForThisInstance = { attrs, body ->
-    println attrs.instance
-    println body
-    //def listQuestioanryAvailable=Questionary.list()
-    //listQuestioanryAvailable.each{it->
-    //  out<<"<li><input type=\"radio\" value=\"${it.id}\" name=\"questionary\"/>${it.title}</li>"
-    //}
+    def listQuestioanryAvailable=Questionary.list()
     out << "<ul>"
-      10.times { t ->
+      listQuestioanryAvailable.each { questionary ->
         out << """\
-          <li>${g.link(controller:'questionaryController'){"${t}"}}</li>
+          <li>${g.link(controller:'questionary',action:'answerQuestionary',id:'1'){"${questionary.codeName}"}}</li>
         """
       }
     out << "</ul>"
   }
-
-
-
 }
