@@ -1,10 +1,15 @@
+<%@ page import="com.makingdevs.Questionable" %>
 <ul>
-  <g:each in="${listQuestioanryAvailable}" var="questionary">
+  <g:each in="${listQuestionaryAvailable}" var="questionary">
     <li>
-      <g:link controller="questionary" action="answerQuestionary" id="${questionary.id}">${questionary.codeName}
-        <a class='btn-small btn-primary' href=''><i class='icon-plus-sign'></i>Agregar</a>
-        <a class='btn-small btn-primary' href=''><i class='icon-search'></i>Ver</a>
+      ${questionary.codeName}
+      <g:link class="btn-small btn-primary" controller="questionaryPerInstance" 
+      action="agregar" params="[questionaryId:questionary.id, instanceId : instance.id, clazz : instance.class.name]">
+        <i class='icon-plus-sign icon-white'></i>Agregar
+      </g:link> 
+      <g:link class="btn-small btn-primary" controller="questionaryPerInstance" action="agregar">
+        <i class='icon-search icon-white'></i>Ver
       </g:link>
-  </li>
+    </li>
   </g:each>
 </ul>
