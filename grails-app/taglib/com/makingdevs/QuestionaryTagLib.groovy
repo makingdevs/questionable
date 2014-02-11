@@ -6,7 +6,6 @@ class QuestionaryTagLib {
     def listQuestionaryAvailable=Questionary.list()
     def lista=[]
     lista = QuestionaryPerInstanceLink.findByType(attrs.instance.class.getSimpleName())
-    println lista.class
     out << render(template:"/questionaryPerInstance/questionaryForThisInstance", 
       model:[listQuestionaryAvailable:listQuestionaryAvailable,
             instance:attrs.instance,
