@@ -1,5 +1,6 @@
 
 <%@ page import="com.makingdevs.UserTest" %>
+<%@ page import="com.makingdevs.Questionable" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -31,7 +32,7 @@
 				</g:if>
 
 				<strong>Agrega un cuestionario</strong>
-					<g:showQuestionaryForThisInstance instance="${userTest}"/>
+				<g:showQuestionaryForThisInstance instance="${userTest}"/>
 					
 
 			</ol>
