@@ -24,7 +24,7 @@ class EvaluateController {
     def respuestaUsuario =[]
     def listaDeEvaluaciones=[]
     def ratingTotal=0
-    def questionaryPerInstance=QuestionaryPerInstance.get(params.questionaryLink)
+    def questionaryPerInstance=QuestionaryPerInstance.get(params.questionaryPerInstance)
     for (int i = 0; i < params.numPreguntas.toLong(); i++) {
       idPregunta << params.getAt("question[${i}]").id
       respuestaUsuario << params.getAt("question[${i}]").description
