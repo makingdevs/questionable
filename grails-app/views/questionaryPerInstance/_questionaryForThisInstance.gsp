@@ -10,7 +10,7 @@
         </g:if>
       </g:each>
       <g:if test="${questionaryLink?.questionaryPerInstance?.questionary?.id==questionary.id}">
-        <g:link class="btn-small btn-primary" controller="questionary" action="answerQuestionary" params="[id:questionaryLink.questionaryPerInstance.id]">
+        <g:link class="btn-small btn-primary" controller="questionary" action="answerQuestionary" params="[id:questionaryLink.questionaryPerInstance.id,idQL:questionaryLink.id]">
         <i class='icon-search icon-white'></i> Contestar
         </g:link>
       </g:if>
