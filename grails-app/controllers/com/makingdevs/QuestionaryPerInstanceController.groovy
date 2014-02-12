@@ -11,9 +11,4 @@ class QuestionaryPerInstanceController {
     def questionaryPerInstanceLink=questionaryPerInstanceLinkService.createQuestionaryPerInstance(instance,params.questionaryId.toLong())
     redirect(controller: "userTest", action: "show", id:instance.id)
   }
-
-  def ver(){
-
-  }
-
 }
