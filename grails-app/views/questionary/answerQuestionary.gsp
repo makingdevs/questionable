@@ -29,6 +29,7 @@
         </g:each>
         <g:hiddenField name="numPreguntas" value="${numPreguntas}" />
         <g:hiddenField name="questionaryPerInstance" value="${questionaryPerInstance.id}" />
+        <g:hiddenField name="questionaryPerInstanceLink" value="${questionaryPerInstanceLink}" />
         <div class="offset3 span6 offset3">
           <input class="btn btn-large btn-block btn-primary" type="submit" value="Evaluar Cuestionario" />
         </div>
