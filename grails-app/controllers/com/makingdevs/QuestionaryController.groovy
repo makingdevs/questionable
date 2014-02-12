@@ -44,7 +44,7 @@ class QuestionaryController {
   }
 
   def answerQuestionary(){
-    def questionaryPerInstance=QuestionaryPerInstance.get(params.questionaryPerInstanceId)
+    def questionaryPerInstance=QuestionaryPerInstance.get(params.id)
     def numPreguntas=questionaryPerInstance.questionary.questions.size()
     [questionaryPerInstance:questionaryPerInstance,
     numPreguntas:numPreguntas]
