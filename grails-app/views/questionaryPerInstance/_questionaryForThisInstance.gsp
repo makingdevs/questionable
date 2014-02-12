@@ -10,9 +10,16 @@
         </g:if>
       </g:each>
       <g:if test="${questionaryLink?.questionaryPerInstance?.questionary?.id==questionary.id}">
-        <g:link class="btn-small btn-primary" controller="questionary" action="answerQuestionary" params="[id:questionaryLink.questionaryPerInstance.id,idQL:questionaryLink.id]">
-        <i class='icon-search icon-white'></i> Contestar
-        </g:link>
+        <g:if test="${questionaryLink?.questionaryPerInstance?.questionaryPerInstanceStatus==QuestionaryPerInstanceStatus.CONTESTADO}">
+          <g:link class="btn-small btn-primary" controller="evaluate" action="evaluateQuestionary" params="[questionaryPerInstance:questionaryLink?.questionaryPerInstance?.id,questionaryPerInstanceLink:questionaryLink?.id]">
+          <i class='icon-search icon-white'></i> Ver
+          </g:link>
+        </g:if>
+        <g:else>
+          <g:link class="btn-small btn-primary" controller="questionary" action="answerQuestionary" params="[id:questionaryLink.questionaryPerInstance.id,idQL:questionaryLink.id]">
+          <i class='icon-pencil icon-white'></i> Contestar
+          </g:link>
+        </g:else>
       </g:if>
       <g:else>
         <g:link class="btn-small btn-primary" controller="questionaryPerInstance" 
