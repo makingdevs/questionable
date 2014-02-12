@@ -26,6 +26,8 @@ class EvaluateController {
     def ratingTotal=0
     def questionaryPerInstanceLink=QuestionaryPerInstanceLink.get(params.questionaryPerInstanceLink)
     def questionaryPerInstance=QuestionaryPerInstance.get(params.questionaryPerInstance)
+
+    if(questionaryPerInstance.questionaryPerInstanceStatus==QuestionaryPerInstanceStatus.SIN_CONTESTAR){
     for (int i = 0; i < params.numPreguntas.toLong(); i++) {
       idPregunta << params.getAt("question[${i}]").id
       respuestaUsuario << params.getAt("question[${i}]").description
@@ -33,8 +35,9 @@ class EvaluateController {
     for (int a = 0; a < params.numPreguntas.toLong(); a++) {
       def question=Question.get(idPregunta[a])
       questionaryPerInstanceService.addAnswer(idPregunta[a],tipoDescription(idPregunta[a],respuestaUsuario[a]),questionaryPerInstance.id)
-    }
-    for(int b = 0; b < params.numPreguntas.toLong(); b++) {
+    }}
+
+    for(int b = 0; b < questionaryPerInstance.questionary.questions.size(); b++) {
       def evaluacion=[
       answerUser:questionaryPerInstance.answerPerInstances.getAt(b),
       pregunta:questionaryPerInstance.answerPerInstances.getAt(b).question,
