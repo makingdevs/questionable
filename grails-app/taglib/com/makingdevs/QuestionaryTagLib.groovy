@@ -7,7 +7,6 @@ class QuestionaryTagLib {
     def questionaryLinks = QuestionaryPerInstanceLink
       .findAllWhere(type:attrs.instance.class.getSimpleName(),
       questionaryPerInstanceRef:attrs.instance.id)
-    println questionaryLinks
     out << render(template:"/questionaryPerInstance/questionaryForThisInstance", 
       model:[listQuestionaryAvailable:listQuestionaryAvailable,
             instance:attrs.instance,
