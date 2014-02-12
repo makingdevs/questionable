@@ -24,6 +24,7 @@ class EvaluateController {
     def respuestaUsuario =[]
     def listaDeEvaluaciones=[]
     def ratingTotal=0
+    def questionaryPerInstanceLink=QuestionaryPerInstanceLink.get(params.questionaryPerInstanceLink)
     def questionaryPerInstance=QuestionaryPerInstance.get(params.questionaryPerInstance)
     for (int i = 0; i < params.numPreguntas.toLong(); i++) {
       idPregunta << params.getAt("question[${i}]").id
@@ -46,7 +47,9 @@ class EvaluateController {
     questionaryPerInstance.questionaryPerInstanceStatus=QuestionaryPerInstanceStatus.CONTESTADO
     [listaDeEvaluaciones:listaDeEvaluaciones,
     ratingTotal:ratingTotal,
-    questionaryPerInstance:questionaryPerInstance]
+    questionaryPerInstance:questionaryPerInstance,
+    questionaryPerInstanceLinkclazz:questionaryPerInstanceLink.type,
+    questionaryPerInstanceLinkref:questionaryPerInstanceLink.questionaryPerInstanceRef]
   }
 
   private def openOrNot(idAnswerPerInstance){
