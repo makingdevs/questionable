@@ -37,6 +37,7 @@
           </g:each>
         </ol>
         <h3>Puntuacion Global: ${ratingTotal} puntos de un total ${listaDeEvaluaciones.size()}.00 puntos</h3>
+        <h1>${questionaryPerInstance.questionaryPerInstanceStatus}</h1>
       </div>
     </div>
   </div>  
