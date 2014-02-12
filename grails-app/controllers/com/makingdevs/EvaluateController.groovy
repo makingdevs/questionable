@@ -24,7 +24,7 @@ class EvaluateController {
     def respuestaUsuario =[]
     def listaDeEvaluaciones=[]
     def ratingTotal=0
-    def questionaryPerInstance=questionaryPerInstanceService.instanceQuestionary(params.idQuestionary)
+    def questionaryPerInstance=QuestionaryPerInstance.get(params.questionaryLink)
     for (int i = 0; i < params.numPreguntas.toLong(); i++) {
       idPregunta << params.getAt("question[${i}]").id
       respuestaUsuario << params.getAt("question[${i}]").description
@@ -33,7 +33,6 @@ class EvaluateController {
       def question=Question.get(idPregunta[a])
       questionaryPerInstanceService.addAnswer(idPregunta[a],tipoDescription(idPregunta[a],respuestaUsuario[a]),questionaryPerInstance.id)
     }
-
     for(int b = 0; b < params.numPreguntas.toLong(); b++) {
       def evaluacion=[
       answerUser:questionaryPerInstance.answerPerInstances.getAt(b),
@@ -44,6 +43,7 @@ class EvaluateController {
       listaDeEvaluaciones<<evaluacion
       ratingTotal+=evaluacion.rating
     }
+    questionaryPerInstance.questionaryPerInstanceStatus=QuestionaryPerInstanceStatus.CONTESTADO
     [listaDeEvaluaciones:listaDeEvaluaciones,
     ratingTotal:ratingTotal,
     questionaryPerInstance:questionaryPerInstance]
@@ -51,7 +51,7 @@ class EvaluateController {
 
   private def openOrNot(idAnswerPerInstance){
     def respuestaInstanciada=AnswerPerInstance.get(idAnswerPerInstance)
-    if (respuestaInstanciada.openAnswerPerUsers!=null){return respuestaInstanciada.openAnswerPerUsers.first().userAnswer}
+    if (respuestaInstanciada.openAnswerPerUsers.size()>0){return respuestaInstanciada.openAnswerPerUsers.first().userAnswer}
     if (respuestaInstanciada.answerPerUsers.size()>0){return respuestaInstanciada.answerPerUsers.answer.id*.toLong()}
   }
 
