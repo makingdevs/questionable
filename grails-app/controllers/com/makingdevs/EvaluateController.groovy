@@ -22,8 +22,7 @@ class EvaluateController {
   def evaluateQuestionary(){
     def idPregunta = []
     def respuestaUsuario =[]
-    def listaDeEvaluaciones=[]
-    def ratingTotal=0
+    
     def questionaryPerInstanceLink=QuestionaryPerInstanceLink.get(params.questionaryPerInstanceLink)
     def questionaryPerInstance=QuestionaryPerInstance.get(params.questionaryPerInstance)
 
@@ -37,28 +36,14 @@ class EvaluateController {
       questionaryPerInstanceService.addAnswer(idPregunta[a],tipoDescription(idPregunta[a],respuestaUsuario[a]),questionaryPerInstance.id)
     }}
 
-    for(int b = 0; b < questionaryPerInstance.questionary.questions.size(); b++) {
-      def evaluacion=[
-      answerUser:questionaryPerInstance.answerPerInstances.getAt(b),
-      pregunta:questionaryPerInstance.answerPerInstances.getAt(b).question,
-      rating:questionService.evaluateAnswer(
-        questionaryPerInstance.answerPerInstances.getAt(b).question.id, 
-        openOrNot(questionaryPerInstance.answerPerInstances.getAt(b).id))]
-      listaDeEvaluaciones<<evaluacion
-      ratingTotal+=evaluacion.rating
-    }
+    def resultado=questionaryPerInstanceService.evaluateQuestionary(questionaryPerInstance)
+
     questionaryPerInstance.questionaryPerInstanceStatus=QuestionaryPerInstanceStatus.CONTESTADO
-    [listaDeEvaluaciones:listaDeEvaluaciones,
-    ratingTotal:ratingTotal,
+    [listaDeEvaluaciones:resultado.listaDeEvaluaciones,
+    ratingTotal:resultado.ratingTotal,
     questionaryPerInstance:questionaryPerInstance,
     questionaryPerInstanceLinkclazz:questionaryPerInstanceLink.type,
     questionaryPerInstanceLinkref:questionaryPerInstanceLink.questionaryPerInstanceRef]
-  }
-
-  private def openOrNot(idAnswerPerInstance){
-    def respuestaInstanciada=AnswerPerInstance.get(idAnswerPerInstance)
-    if (respuestaInstanciada.openAnswerPerUsers.size()>0){return respuestaInstanciada.openAnswerPerUsers.first().userAnswer}
-    if (respuestaInstanciada.answerPerUsers.size()>0){return respuestaInstanciada.answerPerUsers.answer.id*.toLong()}
   }
 
   private def tipoDescription(idPregunta,description){
