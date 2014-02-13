@@ -3,6 +3,8 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
+  <r:require module="validation"/>
+
   <title>Answer Questionary</title>
 </head>
 <body>
@@ -11,7 +13,7 @@
     <h4>${questionaryPerInstance.questionary.description} - Responde a las siguientes preguntas</h4>
     <hr>
     <div class="row-fluid">
-      <g:form name="questionaryForm" url="[action:'evaluateQuestionary',controller:'evaluate']">
+      <g:form name="questionaryForm" id="questionaryForm" url="[action:'evaluateQuestionary',controller:'evaluate']">
         <g:each in="${questionaryPerInstance.questionary.questions.sort()}" var="question" status="i">
           <g:if test="${question.questionType==QuestionType.OPEN}">
             <g:render template="/evaluate/open" model="[question:question,index:i]"/>
