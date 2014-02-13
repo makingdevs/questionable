@@ -1,10 +1,10 @@
 package com.makingdevs
 
 import com.makingdevs.*
-import grails.transaction.Transactional
 
-@Transactional
 class QuestionaryPerInstanceService {
+
+  def questionService
 
   def instanceQuestionary(questionaryId){
     def questionary=Questionary.get(questionaryId)
@@ -34,4 +34,29 @@ class QuestionaryPerInstanceService {
     questionaryPerInstance.save(flush:true)
     questionaryPerInstance
   }
+
+  def evaluateQuestionary(def questionaryPerInstance){
+    def listaDeEvaluaciones=[]
+    def ratingTotal=0
+
+    for(int b = 0; b < questionaryPerInstance.questionary.questions.size(); b++) {
+      def evaluacion=[
+      answerUser:questionaryPerInstance.answerPerInstances.getAt(b),
+      pregunta:questionaryPerInstance.answerPerInstances.getAt(b).question,
+      rating:questionService.evaluateAnswer(
+        questionaryPerInstance.answerPerInstances.getAt(b).question.id, 
+        openOrNot(questionaryPerInstance.answerPerInstances.getAt(b).id))]
+      listaDeEvaluaciones<<evaluacion
+      ratingTotal+=evaluacion.rating
+    }
+    [listaDeEvaluaciones:listaDeEvaluaciones,
+    ratingTotal:ratingTotal]
+  }
+
+  private def openOrNot(idAnswerPerInstance){
+    def respuestaInstanciada=AnswerPerInstance.get(idAnswerPerInstance)
+    if (respuestaInstanciada.openAnswerPerUsers.size()>0){return respuestaInstanciada.openAnswerPerUsers.first().userAnswer}
+    if (respuestaInstanciada.answerPerUsers.size()>0){return respuestaInstanciada.answerPerUsers.answer.id*.toLong()}
+  }
+
 }
