@@ -18,12 +18,9 @@ class EvaluateController {
     question:question]
   }
 
-  // TODO; Refactor a servicio
   def evaluateQuestionary(){
     def idPregunta = []
     def respuestaUsuario =[]
-    
-    def questionaryPerInstanceLink=QuestionaryPerInstanceLink.get(params.questionaryPerInstanceLink)
     def questionaryPerInstance=QuestionaryPerInstance.get(params.questionaryPerInstance)
 
     if(questionaryPerInstance.questionaryPerInstanceStatus==QuestionaryPerInstanceStatus.SIN_CONTESTAR){
@@ -35,15 +32,12 @@ class EvaluateController {
       def question=Question.get(idPregunta[a])
       questionaryPerInstanceService.addAnswer(idPregunta[a],tipoDescription(idPregunta[a],respuestaUsuario[a]),questionaryPerInstance.id)
     }}
-
-    def resultado=questionaryPerInstanceService.evaluateQuestionary(questionaryPerInstance)
-
-    questionaryPerInstance.questionaryPerInstanceStatus=QuestionaryPerInstanceStatus.CONTESTADO
-    [listaDeEvaluaciones:resultado.listaDeEvaluaciones,
-    ratingTotal:resultado.ratingTotal,
+    def evaluateQuestionary=questionaryPerInstanceService.evaluateQuestionary(questionaryPerInstance,params.questionaryPerInstanceLink)
+    [listaDeEvaluaciones:evaluateQuestionary.listaDeEvaluaciones,
+    ratingTotal:evaluateQuestionary.ratingTotal,
     questionaryPerInstance:questionaryPerInstance,
-    questionaryPerInstanceLinkclazz:questionaryPerInstanceLink.type,
-    questionaryPerInstanceLinkref:questionaryPerInstanceLink.questionaryPerInstanceRef]
+    questionaryPerInstanceLinkclazz:evaluateQuestionary.questionaryPerInstanceLinkclazz,
+    questionaryPerInstanceLinkref:evaluateQuestionary.questionaryPerInstanceLinkref]
   }
 
   private def tipoDescription(idPregunta,description){
