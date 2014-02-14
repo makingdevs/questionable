@@ -21,7 +21,9 @@
           <tbody>
             <g:each in="${questionary?}" var="questionarios" status="i">
             <tr>
-              <td>${questionarios.title}</td>
+              <td>
+                <g:link controller="questionary" action="showQuestionary" id="${questionarios.id}">${questionarios.title}</g:link>
+              </td>
               <td>${questionarios.description}</td>
               <td>${questionarios.questions.size()}</td>
               <td>${questionarios.codeName}</td>
