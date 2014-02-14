@@ -35,9 +35,10 @@ class QuestionaryPerInstanceService {
     questionaryPerInstance
   }
 
-  def evaluateQuestionary(def questionaryPerInstance){
+  def evaluateQuestionary(def questionaryPerInstance, def idQuestionaryPerInstanceLink){
     def listaDeEvaluaciones=[]
     def ratingTotal=0
+    def questionaryPerInstanceLink=QuestionaryPerInstanceLink.get(idQuestionaryPerInstanceLink)
 
     for(int b = 0; b < questionaryPerInstance.questionary.questions.size(); b++) {
       def evaluacion=[
@@ -49,8 +50,11 @@ class QuestionaryPerInstanceService {
       listaDeEvaluaciones<<evaluacion
       ratingTotal+=evaluacion.rating
     }
+    questionaryPerInstance.questionaryPerInstanceStatus=QuestionaryPerInstanceStatus.CONTESTADO
     [listaDeEvaluaciones:listaDeEvaluaciones,
-    ratingTotal:ratingTotal]
+    ratingTotal:ratingTotal,
+    questionaryPerInstanceLinkclazz:questionaryPerInstanceLink.type,
+    questionaryPerInstanceLinkref:questionaryPerInstanceLink.questionaryPerInstanceRef]
   }
 
   private def openOrNot(idAnswerPerInstance){
