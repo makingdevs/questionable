@@ -9,7 +9,7 @@
     <h1>Agrege preguntas para "${questionary.title}"</h1>
     <div class="row-fluid">
       <div class="span6">
-        <g:formRemote name="myForm" update="updateMe" url="[controller:'questionary', action: 'buscar']">
+        <g:form name="myForm" url="[controller:'questionary', action: 'buscar']">
           <ul>
             <g:each in="${questions?}" var="preguntas" status="i">
               <li>${preguntas.description}: <input name="id" value="${preguntas.id}" type="checkbox" /></li>
@@ -17,10 +17,10 @@
           </ul>
           <input type="hidden" value="${questionary.id}" name="questionary" />
           <input class="btn btn-primary" type="submit" value="Agregar">
-        </g:formRemote>
-        <div id="updateMe"></div>
-          <g:render template="listQuestions"/>
-        </div>
+        </g:form>
+        <g:link class="btn btn-info" action="list">Todos los Cuestionarios</g:link>
+        <g:link class="btn btn-info" action="create">Crear Cuestionario</g:link>
+        <g:render template="listQuestions" model="[questionary:questionary]"/>
     </div>
   </div>
 </body>
