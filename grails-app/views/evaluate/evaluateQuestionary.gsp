@@ -39,7 +39,7 @@
         <h3>Puntuacion Global: ${ratingTotal} puntos de un total ${listaDeEvaluaciones.size()}.00 puntos</h3>
       </div>
       <div class="offset9 span3">
-        <g:link class="btn btn-success" controller="${questionaryPerInstanceLinkclazz}" action="show" id="${questionaryPerInstanceLinkref}"><i class="icon-arrow-left icon-white"></i> Regresar</g:link>
+        <a class="btn btn-success" href="${url}"><i class="icon-arrow-left icon-white"></i> Regresar</a>
       </div>
     </div>
   </div>  
