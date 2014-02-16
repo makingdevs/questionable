@@ -9,6 +9,7 @@ class QuestionaryPerInstanceController {
     def clazzIntance = Class.forName(params.clazz).newInstance()
     def instance = clazzIntance.get(params.instanceId)
     def questionaryPerInstanceLink=questionaryPerInstanceLinkService.createQuestionaryPerInstance(instance,params.questionaryId.toLong())
-    redirect(controller: "userTest", action: "show", id:instance.id)
+    def url=params.url-grailsApplication.metadata.'app.name'-'/'
+    redirect(url:url)
   }
 }
