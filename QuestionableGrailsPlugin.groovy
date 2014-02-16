@@ -6,13 +6,16 @@ class QuestionableGrailsPlugin {
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
         "grails-app/views/error.gsp",
-        "grails-app/views/layouts/bootstrap.gsp"
+        "grails-app/controllers/com/makingdevs/UserTestController.groovy",
+        "grails-app/domain/com/makingdevs/UserTest.groovy",
+        "grails-app/domain/com/makingdevs/AnotherUserTest.groovy",
+        "grails-app/views/userTest/*"
     ]
 
     // TODO Fill in these fields
     def title = "Questionable Plugin" // Headline display name of the plugin
-    def author = "Your name"
-    def authorEmail = ""
+    def author = "Jorge Acosta Lemus"
+    def authorEmail = "jorge@makingdevs.com"
     def description = '''\
 Brief summary/description of the plugin.
 '''
