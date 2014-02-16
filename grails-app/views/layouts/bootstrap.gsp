@@ -1,7 +1,7 @@
 <html>
 <head>
   <title>Questionable</title>
-  <r:require modules="bootstrap"/>
+  <r:require module="estilos"/>
   <g:layoutHead/>
   <r:layoutResources />
 </head>
