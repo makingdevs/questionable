@@ -44,16 +44,16 @@ class QuestionaryPerInstanceLinkServiceSpec extends Specification {
       questionaryPerInstance.questionary.title==tituloABucar
   }
 
-  def "Obtener el questionaryPerInstance de una entidad, mediante el codeName del cuestionario"() {
+  def "Obtener el questionaryPerInstanceLink de una entidad, mediante el codeName del cuestionario"() {
     given:"Dada una entidad con varios questionaryPerInstance"
      def userTest = new UserTest().save(validate:false)
      createManyQuestionaryPerInstance(userTest)
      def codeNameABucar="groovy-initial"
     when:"Buscar en la entidad el custionario con el codeName groovy-initial"
-      def questionaryPerInstance = service.findQuestionaryPerInstanceByCodeName(userTest.id,codeNameABucar)
+      def questionaryPerInstanceLink = service.findQuestionaryPerInstanceByCodeName(userTest.id,codeNameABucar)
     then:
-      questionaryPerInstance!=null
-      questionaryPerInstance.questionary.codeName==codeNameABucar
+      questionaryPerInstanceLink.questionaryPerInstance!=null
+      questionaryPerInstanceLink.questionaryPerInstance.questionary.codeName==codeNameABucar 
   }
 
   private def createManyQuestionaryPerInstance(def instance){
