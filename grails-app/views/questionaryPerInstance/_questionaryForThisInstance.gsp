@@ -6,7 +6,7 @@
       ${questionary.codeName}
       <g:each in="${questionaryLinks}" var="a">
         <g:if test="${a?.questionaryPerInstance?.questionary?.id==questionary.id}">
-        <g:set var="questionaryLink" value="${a}" />
+          <g:set var="questionaryLink" value="${a}" />
         </g:if>
       </g:each>
       <g:if test="${questionaryLink?.questionaryPerInstance?.questionary?.id==questionary.id}">
@@ -39,6 +39,6 @@
         <span class="label">SIN_AGREGAR</span>
       </g:else>
     </li>
-    <g:set var="questionaryLink" value="${}" />
+    <g:set var="questionaryLink" value="${null}" />
   </g:each>
 </ul>
