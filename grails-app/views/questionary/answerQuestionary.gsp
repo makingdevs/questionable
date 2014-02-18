@@ -10,6 +10,7 @@
 <body>
   <div class="container">
     <h1>${questionaryPerInstance.questionary.title}</h1>
+    <h1>${questionaryPerInstance.questionary.codeName}</h1>
     <h4>${questionaryPerInstance.questionary.description} - Responde a las siguientes preguntas</h4>
     <hr>
     <div class="row-fluid">
