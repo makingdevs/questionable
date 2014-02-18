@@ -2,6 +2,10 @@ grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 
+grails.project.repos.md.url = "http://makingdevs.com:8081/nexus/content/repositories/thirdparty"
+grails.project.repos.md.username = "deployment"
+grails.project.repos.md.password = "d3pl0ym3nt"
+
 grails.project.fork = [
     // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
     //  compile: [maxMemory: 256, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
@@ -40,15 +44,11 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
-        compile ":resources:1.2"
-        runtime ':twitter-bootstrap:2.3.0'
-        runtime ":jquery:1.10.2.2"
         build(":release:3.0.1",
               ":rest-client-builder:1.0.3") {
             export = false
         }
-        build ':tomcat:7.0.47'
-        compile ":hibernate:3.6.10.6"
-        compile ":scaffolding:2.0.1"
+        //build ':tomcat:7.0.47'
+        //compile ":hibernate:3.6.10.6"
     }
 }

@@ -10,6 +10,6 @@ class QuestionaryTagLib {
     out << render(template:"/questionaryPerInstance/questionaryForThisInstance", 
       model:[listQuestionaryAvailable:listQuestionaryAvailable,
             instance:attrs.instance,
-            questionaryLinks:questionaryLinks])
+            questionaryLinks:questionaryLinks], plugin:"questionable")
   }
 }

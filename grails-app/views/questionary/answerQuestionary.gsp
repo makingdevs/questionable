@@ -10,6 +10,7 @@
 <body>
   <div class="container">
     <h1>${questionaryPerInstance.questionary.title}</h1>
+    <h1>${questionaryPerInstance.questionary.codeName}</h1>
     <h4>${questionaryPerInstance.questionary.description} - Responde a las siguientes preguntas</h4>
     <hr>
     <div class="row-fluid">
@@ -31,6 +32,7 @@
         </g:each>
         <g:hiddenField name="numPreguntas" value="${numPreguntas}" />
         <g:hiddenField name="questionaryPerInstance" value="${questionaryPerInstance.id}" />
+        <g:hiddenField name="url" value="${url}" />
         <g:hiddenField name="questionaryPerInstanceLink" value="${questionaryPerInstanceLink}" />
         <div class="offset3 span6 offset3">
           <input class="btn btn-large btn-block btn-primary" type="submit" value="Evaluar Cuestionario" />
@@ -38,5 +40,15 @@
       </g:form>
     </div>
   </div>
+  <r:script>
+      $("#questionaryForm").validate({
+      errorPlacement: function(error, element) {
+        error.addClass("help-inline"));
+      },
+      submitHandler: function(form) {
+        form.submit();
+      }
+    });
+  </r:script>
 </body>
 </html>

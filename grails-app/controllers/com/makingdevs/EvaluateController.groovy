@@ -36,8 +36,7 @@ class EvaluateController {
     [listaDeEvaluaciones:evaluateQuestionary.listaDeEvaluaciones,
     ratingTotal:evaluateQuestionary.ratingTotal,
     questionaryPerInstance:questionaryPerInstance,
-    questionaryPerInstanceLinkclazz:evaluateQuestionary.questionaryPerInstanceLinkclazz,
-    questionaryPerInstanceLinkref:evaluateQuestionary.questionaryPerInstanceLinkref]
+    url:params.url]
   }
 
   private def tipoDescription(idPregunta,description){

@@ -28,4 +28,15 @@ class QuestionaryPerInstanceLinkService {
     }
     questionaryPerInstance
   }
+
+  def findQuestionaryPerInstanceByCodeName(Long idInstance, String codeName){
+    def questionaryPerInstanceLinkEncontrado=QuestionaryPerInstanceLink.findAllByQuestionaryPerInstanceRef(idInstance)
+    def questionaryPerInstanceLinkReturn
+    questionaryPerInstanceLinkEncontrado.each{it -> 
+      if(it.questionaryPerInstance.questionary.codeName.equalsIgnoreCase(codeName)){
+        questionaryPerInstanceLinkReturn=it
+      }
+    }
+  questionaryPerInstanceLinkReturn
+  }
 }
