@@ -39,9 +39,10 @@ class EvaluateController {
     url:params.url]
   }
 
-  private def tipoDescription(idPregunta,description){
+  private def tipoDescription(idPregunta,respuesta){
     def question=Question.get(idPregunta)
-    if (question.questionType==QuestionType.OPEN)return description
-    else return description*.toLong()
+    if (question.questionType==QuestionType.OPEN)return respuesta
+    else if (question.questionType==QuestionType.MULTIPLE_RESPONSE) return respuesta*.toLong()
+    else respuesta.toLong()
   }
 }
