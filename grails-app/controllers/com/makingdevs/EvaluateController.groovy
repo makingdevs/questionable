@@ -19,6 +19,7 @@ class EvaluateController {
   }
 
   def evaluateQuestionary(){
+
     def idPregunta = []
     def respuestaUsuario =[]
     def questionaryPerInstance=QuestionaryPerInstance.get(params.questionaryPerInstance)
@@ -42,7 +43,12 @@ class EvaluateController {
   private def tipoDescription(idPregunta,respuesta){
     def question=Question.get(idPregunta)
     if (question.questionType==QuestionType.OPEN)return respuesta
-    else if (question.questionType==QuestionType.MULTIPLE_RESPONSE) return respuesta*.toLong()
+    else if (question.questionType==QuestionType.MULTIPLE_RESPONSE){
+      if(respuesta==null) return respuesta
+      else {
+      if (respuesta.class==java.lang.String) return respuesta.toLong()
+      else return respuesta
+      }}
     else respuesta.toLong()
   }
 }
