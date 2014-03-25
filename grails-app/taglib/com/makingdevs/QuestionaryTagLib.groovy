@@ -23,11 +23,13 @@ class QuestionaryTagLib {
       questionaryPerInstanceRef:attrs.instance.id)
     def cuestionarios = []
     def ratingUser = []
-    def ratingTotal = [] 
+    def ratingTotal = []
     questionaryLinks.each { cuestionariosLinks ->
-      cuestionarios += cuestionariosLinks.questionaryPerInstance.questionary.codeName
-      ratingUser += questionaryPerInstanceService.evaluateQuestionary(cuestionariosLinks.questionaryPerInstance,cuestionariosLinks.id).ratingTotal
-      ratingTotal += cuestionariosLinks.questionaryPerInstance.questionary.questions.size()
+      if (cuestionariosLinks.questionaryPerInstance.questionaryPerInstanceStatus==QuestionaryPerInstanceStatus.CONTESTADO) {
+        cuestionarios += cuestionariosLinks.questionaryPerInstance.questionary.codeName
+        ratingUser += questionaryPerInstanceService.evaluateQuestionary(cuestionariosLinks.questionaryPerInstance,cuestionariosLinks.id).ratingTotal
+        ratingTotal += cuestionariosLinks.questionaryPerInstance.questionary.questions.size()
+      }
     }
     out << render(template:"/questionaryPerInstance/showListQuestionaryRating",
       model:[cuestionarios:cuestionarios,
