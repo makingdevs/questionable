@@ -4,10 +4,12 @@
 <head>
   <title>Create answer</title>
   <meta name="layout" content="bootstrap"/>
+  <r:require module="syntaxhighlighter"/>
+  <script src='http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js' type='text/javascript'></script>
 </head>
 <body>
   <div class="container">
-    <h1>Captura respuesta para "${question.description}"</h1>
+    <h3>Captura respuesta para: ${question.description}</h3>
     <div class="row-fluid">
       <div class="span6">
         <g:if test="${question.questionType == QuestionType.TRUE_FALSE}">
@@ -30,7 +32,7 @@
         <g:else>
           <g:form name="answerForm" action="agregar">
             <label>Descripción:</label>
-            <textarea class="field span12" rows="4" name="description"></textarea>
+            <g:textArea name="description" class="span12" rows="10" maxlength="1000" required=""></g:textArea>
             <label>¿Es la solución?:</label>
             <select name="solution">
               <option value="false">False</option>
