@@ -3,6 +3,7 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
+  <r:require modules="validation, syntaxhighlighter"/>
 	<title>Create question</title>
 </head>
 <body>
@@ -12,7 +13,7 @@
       <g:form name="questionForm" action="save">
         <div class="span6">
           <label>Description</label>
-          <textarea class="field span12" rows="4" name="description"></textarea>
+          <g:textArea name="description" class="span12" rows="10" maxlength="1000" required=""></g:textArea>
         </div>
         <div class="span6">
           <label>QuestionType</label>
