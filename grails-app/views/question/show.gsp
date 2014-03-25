@@ -3,12 +3,14 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
+  <r:require module="syntaxhighlighter"/>
+  <script src='http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js' type='text/javascript'></script>
   <title>Show Question </title>
 </head>
 <body>
   <div class="container">
-    <h1>${question.description}</h1>
-    <h3>${question.questionType}</h3>
+    <h3>${question.description}</h3>
+    <h3>Tipo de Pregunta: ${question.questionType}</h3>
     <div class="row-fluid">
       <div class="span12">
         <g:if test="${question.answers.size() > 0}">
