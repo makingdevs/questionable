@@ -2,6 +2,8 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
+  <r:require module="syntaxhighlighter"/>
+  <script src='http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js' type='text/javascript'></script>
   <title>Add Questions</title>
 </head>
 <body>
