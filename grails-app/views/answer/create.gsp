@@ -5,11 +5,10 @@
   <title>Create answer</title>
   <meta name="layout" content="bootstrap"/>
   <r:require module="syntaxhighlighter"/>
-  <script src='http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js' type='text/javascript'></script>
 </head>
 <body>
   <div class="container">
-    <h3>Captura respuesta para: ${question.description}</h3>
+    <h4>Captura respuesta para: ${question.description}</h4>
     <div class="row-fluid">
       <div class="span6">
         <g:if test="${question.questionType == QuestionType.TRUE_FALSE}">
