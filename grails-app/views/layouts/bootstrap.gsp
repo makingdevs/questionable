@@ -1,7 +1,7 @@
 <html>
 <head>
   <title>Questionable</title>
-  <r:require module="estilos"/>
+  <r:require module="${session.questionableTheme ?: 'questionable'}"/>
   <g:layoutHead/>
   <r:layoutResources />
 </head>
