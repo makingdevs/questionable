@@ -8,7 +8,7 @@
   <div class="container">
     <h1>Lista de preguntas</h1>
     <div class="row-fluid">
-      <div class="span6">
+      <div class="span12">
         <g:if test="${listQuestion.size() > 0}">
           <ul>
           <g:each in="${listQuestion}" var="listaDePreguntas" status="i">
