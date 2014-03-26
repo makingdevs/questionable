@@ -2,7 +2,8 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
-  <title>Show Question </title>
+  <r:require module="syntaxhighlighter"/>
+  <title>Show List Question </title>
 </head>
 <body>
   <div class="container">
