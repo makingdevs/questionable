@@ -5,7 +5,6 @@
   <meta name="layout" content="bootstrap"/>
   <r:require modules="validation, syntaxhighlighter"/>
   <title>Answer Questionary</title>
-  <script src='http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js' type='text/javascript'></script>
 </head>
 <body>
   <div class="container">
