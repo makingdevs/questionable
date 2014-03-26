@@ -4,12 +4,11 @@
 <head>
   <meta name="layout" content="bootstrap"/>
   <r:require module="syntaxhighlighter"/>
-  <script src='http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js' type='text/javascript'></script>
   <title>Show Question </title>
 </head>
 <body>
   <div class="container">
-    <h3>${question.description}</h3>
+    <h4>${question.description}</h4>
     <h3>Tipo de Pregunta: ${question.questionType}</h3>
     <div class="row-fluid">
       <div class="span12">
