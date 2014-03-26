@@ -2,13 +2,13 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
+  <r:require modules="syntaxhighlighter"/>
   <title>Detail Question</title>
 </head>
 <body>
   <div class="container">
-    <h1>${question.description}</h1>
     <div  class="row-fluid">
-      <div class="span6">
+      <div class="span12">
         <dl>
           <dt>Pregunta</dt>
           <dd>${question.description}</dd>
