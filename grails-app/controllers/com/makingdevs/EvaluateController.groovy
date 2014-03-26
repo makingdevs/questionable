@@ -12,12 +12,6 @@ class EvaluateController {
     redirect(action: "rating", id:params.id, params: [rating:rating])
   }
 
-  def rating (){
-    def question= Question.get(params.id)
-    [params:params,
-    question:question]
-  }
-
   def evaluateQuestionary(){
 
     def idPregunta = []
