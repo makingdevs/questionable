@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
-  <r:require modules="validation, syntaxhighlighter"/>
+  <r:require modules="validation"/>
 	<title>Create question</title>
 </head>
 <body>
