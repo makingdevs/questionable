@@ -3,6 +3,7 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
+  <r:require module="syntaxhighlighter"/>
   <title>Evaluación</title>
 </head>
 <body>
