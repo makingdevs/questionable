@@ -37,4 +37,12 @@ class QuestionaryTagLib {
             ratingTotal:ratingTotal], plugin:"questionable")
   }
 
+  def showQuestionaryForThisInstanceInTable = {attrs, body ->
+    def questionaryPerInstanceLinks = QuestionaryPerInstanceLink.findAllByQuestionaryPerInstanceRef(attrs.instance.id)
+    out << render(template:"/questionaryPerInstance/showQuestionarysInTable", 
+      model:[questionaryPerInstanceLinks:questionaryPerInstanceLinks],plugin:"questionable")
+  }
+
+
+
 }
