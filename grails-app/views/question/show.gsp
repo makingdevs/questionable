@@ -13,10 +13,17 @@
     <div class="row-fluid">
       <div class="span12">
         <g:if test="${question.answers.size() > 0}">
-          <g:each in="${question.answers}" var="answers" status="i">
+          <g:each in="${question.answers}" var="answer" status="i">
           <ul>
             <li>
-              <p>${answers.description}</p>
+              <p>
+                <g:if test="${answer.solution}">
+                  ${answer.description} - <span class="badge badge-success">The solution</span>
+                </g:if>
+                <g:else>
+                  ${answer.description} - <span class="badge badge-important">Not the solution</span>
+                </g:else>
+              </p>
             </li>
           </ul>
           </g:each>
