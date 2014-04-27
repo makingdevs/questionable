@@ -16,4 +16,17 @@ class AnswerController {
 
     }
 
+    def edit(){
+      def answer = Answer.get(params.id)
+      [answer:answer,
+      question:params.question]
+    }
+
+    def update(){
+      def answer = Answer.get(params.id)
+      answer.description=params.description
+      answer.save(flush:true)
+      redirect(controller: "question", action: "detail", id:params.question) 
+    }
+
 }
