@@ -18,6 +18,18 @@ class QuestionController {
     [question:question]
   }
 
+  def edit(){
+    def question = Question.get(params.id)
+    [question:question]
+  }
+
+  def update(){
+    def question = Question.get(params.id)
+    question.description=params.description
+    question.save(flush:true)
+    redirect(action: "detail", id:question.id)
+  }
+
   def list(){
     def listQuestion = Question.list()
     [listQuestion:listQuestion]
