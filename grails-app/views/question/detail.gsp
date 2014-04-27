@@ -1,3 +1,4 @@
+<%@ page import="com.makingdevs.QuestionType"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,14 +16,29 @@
           <dt>Tipo de Respuesta</dt>
           <dd>${question.questionType}</dd>
           <dt>Respuestas</dt>
-          <dd>
-            <ul>
-            <g:each in="${question?.answers}" var="respuestas" status="i">
-              <li>${respuestas.description} -- ${respuestas.solution}</li>
-            </g:each> 
-            </ul>
-          </dd>
+          <g:if test="${question.questionType==QuestionType.MULTIPLE_CHOICE || question.questionType==QuestionType.MULTIPLE_RESPONSE}">
+            <dd>
+              <ul>
+              <g:each in="${question?.answers}" var="respuestas" status="i">
+                <li>
+                  <g:link action="edit" controller="answer" id="${respuestas.id}" params="[question:question.id]">${respuestas.description} -- ${respuestas.solution}</g:link>
+                </li>
+              </g:each> 
+              </ul>
+            </dd>
+          </g:if>
+          <g:else>
+            <dd>
+              <ul>
+              <g:each in="${question?.answers}" var="respuestas" status="i">
+                <li>${respuestas.description} -- ${respuestas.solution}</li>
+              </g:each> 
+              </ul>
+            </dd>
+          </g:else>
         </dl>
+        <g:link class="btn btn-info" action="list" controller="question"><i class="icon-arrow-left icon-white"></i> Regresar</g:link>
+        <g:link class="btn btn-info" action="edit" controller="question" id="${question.id}"><i class=" icon-edit icon-white"></i> Editar</g:link>
       </div>
     </div>
   </div>
