@@ -8,9 +8,9 @@
 		<dt>
 	    Este cuestionario tiene las siguientes preguntas : 
   	</dt>
- 		<g:each in="${questionary.questions}" var="questionario">
+ 		<g:each status="i" in="${questionary.questions}" var="questionario">
     	<dd>
-      	${questionario.description} 
+      	<span class="badge badge-info">${i+1} </span>- ${questionario.description} 
     	</dd>
   	</g:each>
 	</g:else>
