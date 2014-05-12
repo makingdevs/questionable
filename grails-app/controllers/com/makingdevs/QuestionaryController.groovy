@@ -28,14 +28,14 @@ class QuestionaryController {
     def questionary = Questionary.get(params.questionary)
       def answer = new Answer(description:params.description)
       question.answers+=[answer]
-      redirect(controller: "question", action: "show", id:[question.id])
+      redirect(controller: "question", action: "show", id:question.id)
   }
 
   def buscar(){
     def questionary = Questionary.get(params.questionary)
     def question= Question.getAll(params.id)
     questionary.questions+=question
-    redirect(action: "showQuestionary", id:[questionary.id])
+    redirect(action: "showQuestionary", id:questionary.id)
   }
 
   def list(){
