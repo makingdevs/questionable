@@ -10,7 +10,7 @@
   <div class="container">
     <h1>Agrege preguntas para "${questionary.title}"</h1>
     <div class="row-fluid">
-      <div class="span6">
+      <div class="span12">
         <g:form name="myForm" url="[controller:'questionary', action: 'buscar']">
           <ul>
             <g:each in="${questions?}" var="preguntas" status="i">
