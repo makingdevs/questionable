@@ -13,14 +13,14 @@ class QuestionAndAnswerService {
     	def question
         def answers = []
     	if(questionsAndAnswersList){
-				questionsAndAnswersList.each{
-    			if(it.trim()){
-    				if(it.trim()[0]=="#")
-            	       question = questionService.buildQuestionFromText(it.trim())
-        		else	
-        				 answers << answerService.buildAnswerFromText(it.trim())
-					}
-    		}
+		  questionsAndAnswersList.each{
+            if(it.trim()){
+              if(it.trim()[0]=="#")
+                question = questionService.buildQuestionFromText(it.trim())
+        	  else	
+                answers << answerService.buildAnswerFromText(it.trim())
+			}
+    	  }
     	}
         answers.each { question.addToAnswers(it) }
         question.save()
