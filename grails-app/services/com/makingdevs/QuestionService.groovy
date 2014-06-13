@@ -46,21 +46,16 @@ class QuestionService {
     ratings
   }
 
-  def createQuestionFromText(simpleText){
-    def question = new Question()
-
-    def stringSplittedBySpaces = simpleText.split(" ")
-    def typeQuestionInString = stringSplittedBySpaces[0].substring(1,stringSplittedBySpaces[0].size())
+  def createQuestionFromText(simpleText){    
+    simpleText -= simpleText[0]
+    def typeQuestionInString = simpleText.split(" ")[0]      
     def questionType = QuestionType.valueOf(typeQuestionInString)
     if(questionType){
-      question.questionType = questionType
-      question.description = stringSplittedBySpaces.minus("#"+typeQuestionInString).join(' ')
-      question.save()
-    }else{
-      throw new RuntimeException("Cannot parse question '$simpleText'")
-    }
-     
-    question
+      def question = new Question(questionType:questionType,
+                                  description:(simpleText-questionType).trim()).save()
+      return question
+    }else
+        throw new RuntimeException("Cannot parse question '$simpleText'")
   }
 
   private Answer getIfAnswerUserMatchWithAnswerQuestion(answersFromUser,answerFromQuestion){
