@@ -9,21 +9,23 @@ class QuestionAndAnswerService {
     def answerService
 
     def createQuestionWithAnswersFromSimpleText(fullQuestion){
-    	def questionsAndAnswersList = (fullQuestion =~ /#\w+[\s\w+]+\??[\n\w+]*\n|[^#].+/)
+      def questionsAndAnswersList = (fullQuestion =~ /#\w+[\s\w+]+\??[\n\w+]*\n|[^#].+/)
     	def question
-        def answers = []
-    	if(questionsAndAnswersList){
-		  questionsAndAnswersList.each{
-            if(it.trim()){
-              if(it.trim()[0]=="#")
-                question = questionService.buildQuestionFromText(it.trim())
-        	  else	
-                answers << answerService.buildAnswerFromText(it.trim())
-			}
+      def answers = []
+    	
+      if(questionsAndAnswersList){
+		    questionsAndAnswersList.each{
+          if(it.trim()){
+            if(it.trim()[0]=="#")
+              question = questionService.buildQuestionFromText(it.trim())
+        	 else	
+            answers << answerService.buildAnswerFromText(it.trim())
+			   }
     	  }
     	}
-        answers.each { question.addToAnswers(it) }
-        question.save()
+      
+      answers.each { question.addToAnswers(it) }
+      question.save()
     	question
     }
 }
