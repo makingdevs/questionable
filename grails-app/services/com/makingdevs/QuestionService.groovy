@@ -46,16 +46,17 @@ class QuestionService {
     ratings
   }
 
-  def createQuestionFromText(simpleText){    
+  def buildQuestionFromText(simpleText){    
+    Question question
     simpleText -= simpleText[0]
     def typeQuestionInString = simpleText.split(" ")[0]      
     def questionType = QuestionType.valueOf(typeQuestionInString)
     if(questionType){
-      def question = new Question(questionType:questionType,
-                                  description:(simpleText-questionType).trim()).save()
-      return question
+      question = new Question(questionType:questionType,
+                                  description:(simpleText-questionType).trim())
     }else
         throw new RuntimeException("Cannot parse question '$simpleText'")
+    question
   }
 
   private Answer getIfAnswerUserMatchWithAnswerQuestion(answersFromUser,answerFromQuestion){
