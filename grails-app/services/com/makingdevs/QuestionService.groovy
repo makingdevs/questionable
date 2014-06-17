@@ -50,7 +50,7 @@ class QuestionService {
     Question question
     simpleText -= simpleText[0]
     def typeQuestionInString = simpleText.split(" ")[0]      
-    def questionType = QuestionType.valueOf(typeQuestionInString)
+    def questionType = QuestionType.valueOf(typeQuestionInString.trim())
     if(questionType){
       question = new Question(questionType:questionType,
                               description:(simpleText-questionType).trim())
