@@ -63,6 +63,8 @@ class CreateQuestionWithAnswersFromTextSpec extends Specification {
         def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestions)
         questionServiceMock.verify()        
     	then:
-        questions.size() == 2    	
+        questions.size() == 2
+        questions[0].answers.size() == 3 
+        questions[1].answers.size() == 2
     }
 }

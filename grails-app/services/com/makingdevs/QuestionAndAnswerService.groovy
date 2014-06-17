@@ -38,11 +38,9 @@ class QuestionAndAnswerService {
         questionsAndAnswersList.each{
           if(it.trim()){
             if(it.trim()[0]=="#"){
-              if(answers){
-                if(questions){
-                  answers.each{ answer -> questions.last().addToAnswers(answer) }
-                  answers.clear()
-                }
+              if(answers && questions){                
+                answers.each{ answer -> questions.last().addToAnswers(answer) }
+                answers.clear()
               }
               def question = questionService.buildQuestionFromText(it.trim())
               questions << question
@@ -50,7 +48,7 @@ class QuestionAndAnswerService {
             else
               answers << answerService.buildAnswerFromText(it.trim())
           }
-        }      
+        }   
       }
 
       answers.each { questions.last().addToAnswers(it) }
