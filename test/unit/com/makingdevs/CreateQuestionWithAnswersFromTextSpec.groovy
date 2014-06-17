@@ -11,7 +11,7 @@ class CreateQuestionWithAnswersFromTextSpec extends Specification {
     @Unroll
     def "Given a full text generate the question and answers"() {
     	given:
-    	def fullQuestion = """ #MULTIPLE_CHOICE What is Groovy?
+    	def fullQuestion = """#MULTIPLE_CHOICE What is Groovy?
     	(*) un fw
     	() un lenguaje
     	( ) una herramienta
@@ -38,7 +38,7 @@ class CreateQuestionWithAnswersFromTextSpec extends Specification {
     @Unroll
     void "Given a full text generate the questions with their answers"() {
     	given:
-    	def fullQuestions = """ #MULTIPLE_CHOICE What is Groovy?
+    	def fullQuestions = """#MULTIPLE_CHOICE What is Groovy?
         (*) un fw
         () un lenguaje
         ( ) una herramienta
@@ -46,6 +46,30 @@ class CreateQuestionWithAnswersFromTextSpec extends Specification {
         [*] un framework
         [] una herramienta del sistema operativo
     	"""
+    	and:
+        def questionServiceMock = mockFor(QuestionService)
+        def answerServiceMock = mockFor(AnswerService)
+        questionServiceMock.demand.buildQuestionFromText(2..2){ t -> 
+          new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
+        }
+        answerServiceMock.demand.buildAnswerFromText(5..5){ t -> 
+          new Answer(description:"X",solution:false)
+        }
+        service.questionService = questionServiceMock.createMock()
+        service.answerService = answerServiceMock.createMock()
+    	when:
+        def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestions)
+        questionServiceMock.verify()        
+    	then:
+        questions.size() == 2
+        questions[0].answers.size() == 3 
+        questions[1].answers.size() == 2
+    }
+    
+    @Unroll
+    void "Test creation with simple String"() {
+    	given:
+    	def fullQuestions = "#MULTIPLE_CHOICE What is Groovy?\n(*) un fw\n() un lenguaje\n( ) una herramienta\n#MULTIPLE_RESPONSE What is Grails?\n[*] un framework\n[] una herramienta del sistema operativo"
     	and:
         def questionServiceMock = mockFor(QuestionService)
         def answerServiceMock = mockFor(AnswerService)
