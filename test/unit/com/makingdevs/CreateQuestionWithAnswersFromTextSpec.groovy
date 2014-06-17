@@ -11,8 +11,7 @@ class CreateQuestionWithAnswersFromTextSpec extends Specification {
     @Unroll
     def "Given a full text generate the question and answers"() {
     	given:
-    	def fullQuestion = """\
-    	#MULTIPLE_CHOICE What is Groovy?
+    	def fullQuestion = """ #MULTIPLE_CHOICE What is Groovy?
     	(*) un fw
     	() un lenguaje
     	( ) una herramienta
@@ -39,10 +38,9 @@ class CreateQuestionWithAnswersFromTextSpec extends Specification {
     @Unroll
     void "Given a full text generate the questions with their answers"() {
     	given:
-    	def fullQuestions = """\
-        #MULTIPLE_CHOICE What is Groovy?
-        () un fw
-        (*) un lenguaje
+    	def fullQuestions = """ #MULTIPLE_CHOICE What is Groovy?
+        (*) un fw
+        () un lenguaje
         ( ) una herramienta
         #MULTIPLE_RESPONSE What is Grails?
         [*] un framework

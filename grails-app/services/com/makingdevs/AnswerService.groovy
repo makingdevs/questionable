@@ -8,6 +8,7 @@ class AnswerService {
 	def buildAnswerFromText(simpleText){    
 		def answerType = getAnswerType(simpleText)
 		def answer
+		//log.error ">>>>>>>>>>>>>>>>>>>>>>>> " + answerType[0]
 		if(answerType){ 
 			def description = (simpleText - answerType[0])?.trim()
 			if(description)

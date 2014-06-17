@@ -53,7 +53,7 @@ class QuestionService {
     def questionType = QuestionType.valueOf(typeQuestionInString)
     if(questionType){
       question = new Question(questionType:questionType,
-                                  description:(simpleText-questionType).trim())
+                              description:(simpleText-questionType).trim())
     }else
         throw new RuntimeException("Cannot parse question '$simpleText'")
     question

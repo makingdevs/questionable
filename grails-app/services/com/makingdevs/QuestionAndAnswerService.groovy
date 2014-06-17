@@ -30,7 +30,11 @@ class QuestionAndAnswerService {
     }
 
     def createQuestionsWithAnswersFromSimpleText(fullQuestions){
+      
       def questionsAndAnswersList = (fullQuestions =~ /#\w+[\s\w+]+\??[\n\w+]*\n|[^#].+/)
+      questionsAndAnswersList.each{
+        log.error "::::::::::${it}::::::::::"
+      }
       def questions = []
       def answers = []
 
@@ -45,8 +49,10 @@ class QuestionAndAnswerService {
               def question = questionService.buildQuestionFromText(it.trim())
               questions << question
             }
-            else
+            else{
+              log.error "----------------->>>>> ${it}"
               answers << answerService.buildAnswerFromText(it.trim())
+            }
           }
         }   
       }

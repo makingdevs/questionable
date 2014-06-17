@@ -26,9 +26,9 @@ class QuestionaryController {
 
   def addQuestion(){
     def questionary = Questionary.get(params.questionary)
-      def answer = new Answer(description:params.description)
-      question.answers+=[answer]
-      redirect(controller: "question", action: "show", id:question.id)
+    def answer = new Answer(description:params.description)
+    question.answers+=[answer]
+    redirect(controller:"question",action:"show",id:question.id)
   }
 
   def buscar(){
