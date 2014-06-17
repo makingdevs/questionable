@@ -8,7 +8,10 @@ class TextQuestionaryController {
 
 	def create(){
 		def questionary = new Questionary(params)
-		log.error params.questionsAndAnswers
+    def questionValue = params.questionsAndAnswers
+    log.error questionValue
+    def regex = questionValue =~ /#\w+[\s\w+]+\??[\n\w+]*[\n|\r]|[^#].+/
+    log.error regex[0]
 		
 		def questions = questionAndAnswerService.createQuestionsWithAnswersFromSimpleText(params.questionsAndAnswers)		
 		/*
