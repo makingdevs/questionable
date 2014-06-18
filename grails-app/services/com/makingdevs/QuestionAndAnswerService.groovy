@@ -1,8 +1,6 @@
 package com.makingdevs
 
 import grails.transaction.Transactional
-import java.text.Normalizer
-import java.text.Normalizer.Form
 
 @Transactional
 class QuestionAndAnswerService {
@@ -18,12 +16,11 @@ class QuestionAndAnswerService {
       
       lines = lines*.trim()      
 
-      for(def i=1;i<lines.size();i++){
-        def j = i-1
-        if(lines[j]==~ /\#.+/){        
-          while(!(isThisLineAnswer(lines[i]))){
-            lines[j]+='\n'+lines[i]
-            lines-=lines[i]         
+      for(def i=0;i<lines.size();i++){        
+        if(lines[i]==~ /\#.+/){        
+          while(lines[i+1] && !(isThisLineAnswer(lines[i+1]))){
+            lines[i]+='\n'+lines[i+1]
+            lines-=lines[i+1]
           }
         }
       }
@@ -54,12 +51,11 @@ class QuestionAndAnswerService {
       def lines = fullQuestions.split('\n|\t')
       lines = lines*.trim()
       
-      for(def i=1;i<lines.size();i++){
-        def j = i-1
-        if(lines[j]==~ /\#.+/){        
-          while(!(isThisLineAnswer(lines[i]))){
-            lines[j]+='\n'+lines[i]
-            lines-=lines[i]         
+      for(def i=0;i<lines.size();i++){        
+        if(lines[i]==~ /\#.+/){        
+          while(lines[i+1] && !(isThisLineAnswer(lines[i+1]))){
+            lines[i]+='\n'+lines[i+1]
+            lines-=lines[i+1] 
           }
         }
       } 

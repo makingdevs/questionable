@@ -67,7 +67,7 @@ class CreateQuestionWithAnswersFromTextSpec extends Specification {
         questions[1].answers.size() == 2
     }
     
-    /*
+    
     @Unroll
     void "Test creation with simple String"() {
     	given:
@@ -90,5 +90,5 @@ class CreateQuestionWithAnswersFromTextSpec extends Specification {
         questions.size() == 2
         questions[0].answers.size() == 3 
         questions[1].answers.size() == 2
-    }*/
+    }
 }
