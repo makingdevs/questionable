@@ -8,21 +8,17 @@ class TextQuestionaryController {
 
 	def create(){
 		def questionary = new Questionary(params)
-    def questionValue = params.questionsAndAnswers
-    log.error questionValue
-    def regex = questionValue =~ /#\w+[\s\w+]+\??[\n\w+]*[\n|\r]|[^#].+/
-    log.error regex[0]
+    def questionValue = params.questionsAndAnswers        		
+		def questions = questionAndAnswerService.createQuestionsWithAnswersFromSimpleText(params.questionsAndAnswers)
 		
-		def questions = questionAndAnswerService.createQuestionsWithAnswersFromSimpleText(params.questionsAndAnswers)		
-		/*
 		questions.each{ question ->
-			questionary.questions << question
-		}	
+			questionary.addToQuestions(question)			
+		}
+
 		if(questionary.save(flush:true))
-			redirect action:"showQuestionary",id:questionary.id
+			redirect controller:"questionary",action:"showQuestionary",id:questionary.id
 		else
-			render view:"index"*/
-		render("Lista de preguntas")
+			render view:"index"		
 	}
 
 }
