@@ -39,6 +39,7 @@
         </dl>
         <g:link class="btn btn-info" action="list" controller="question"><i class="icon-arrow-left icon-white"></i> Regresar</g:link>
         <g:link class="btn btn-info" action="edit" controller="question" id="${question.id}"><i class=" icon-edit icon-white"></i> Editar</g:link>
+        <g:link class="btn btn-info" action="show" controller="question" id="${question.id}"><i class=" icon-plus-sign icon-white"></i> Agregar respuestas</g:link>
       </div>
     </div>
   </div>
