@@ -14,10 +14,13 @@
           <div class="control-grou">
             <g:textArea name="description" class="span6" value="${question.description}" rows="10" maxlength="1000" required=""></g:textArea>
             <input type="hidden" value="${question.id}" name="id" />
-          </div>
+            <h5>Tags</h5>
+            <g:textArea name="tags" class="span6" value="${question.tags.join(',')}"
+            rows="2" maxlength="1000"></g:textArea>
+          </div>          
           <div class="control">
-            <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Aceptar</button>
-            <g:link class="btn btn-info" action="detail" controller="question" id="${question.id}"><i class="icon-remove icon-white"></i> Cancelar</g:link>
+            <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i>Aceptar</button>
+            <g:link class="btn btn-info" action="detail" controller="question" id="${question.id}"><i class="icon-remove icon-white"></i>Cancelar</g:link>
           </div>
         </g:form>
       </div>

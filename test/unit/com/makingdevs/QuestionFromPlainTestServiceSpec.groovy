@@ -12,7 +12,9 @@ class QuestionFromPlainTestServiceSpec extends Specification {
   @Unroll
   void "Create question from text plain"() {
     given:
-      def simpleText = _simpleText
+      def simpleText = _simpleText      
+    and:
+      Question.metaClass.setTags{ tags->  }
     when:
       def question = service.buildQuestionFromText(simpleText)
     then:
@@ -26,6 +28,8 @@ class QuestionFromPlainTestServiceSpec extends Specification {
     "#OPEN What is Groovy?"               || "What is Groovy?" | QuestionType.OPEN
     "#MULTIPLE_RESPONSE What is Groovy?"  || "What is Groovy?" | QuestionType.MULTIPLE_RESPONSE
     "#MULTIPLE_RESPONSE What is Groovy?\nMark all possibilities"  || "What is Groovy?\nMark all possibilities" | QuestionType.MULTIPLE_RESPONSE
+    "#MULTIPLE_CHOICE ¿Qué es Grails? [spring,groovy,grails]"     || "¿Qué es Grails?" | QuestionType.MULTIPLE_CHOICE
+    "#OPEN ¿Qué es Groovy?\nMark all possibilities [spring,groovy,grails]"     || "¿Qué es Groovy?\nMark all possibilities" | QuestionType.OPEN
   }
 
 }

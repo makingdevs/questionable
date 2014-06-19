@@ -48,14 +48,29 @@ class QuestionService {
 
   def buildQuestionFromText(simpleText){    
     Question question
-    simpleText -= simpleText[0]
-    def typeQuestionInString = simpleText.split(" ")[0]      
-    def questionType = QuestionType.valueOf(typeQuestionInString.trim())
-    if(questionType){
-      question = new Question(questionType:questionType,
-                              description:(simpleText-questionType).trim())
-    }else
+    if(simpleText){    
+      simpleText = simpleText.trim()
+      def tagsList =  (simpleText =~ /\[.+\]$/)
+      def tags = ""
+      if(tagsList){
+        tags = tagsList[0]
+        simpleText -= tags
+      }        
+
+      simpleText -= simpleText[0]
+      def typeQuestionInString = simpleText.split(" ")[0]      
+      def questionType = QuestionType.valueOf(typeQuestionInString.trim())
+      if(questionType){
+        question = new Question(questionType:questionType,
+                                description:(simpleText-questionType).trim())
+        if(tags)
+          question.setTags((tags- "[" - "]").split(",") as List)
+      }else
         throw new RuntimeException("Cannot parse question '$simpleText'")
+    }
+    else
+      throw new RuntimeException("Cannot parse an empty question")
+
     question
   }
 

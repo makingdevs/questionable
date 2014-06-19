@@ -83,7 +83,7 @@ class QuestionAndAnswerService {
   }
 
   def isThisLineAnswer(line){
-    line ==~ /[\([\*|\ ]?\)|\[[\*|\s]?\]].+|F\*?|V\*?$/
+    line ==~ /[\([\*|\ ]?\)|\[[\*|\s]?\]].+|F\*?$|V\*?$/
   }
   
 }

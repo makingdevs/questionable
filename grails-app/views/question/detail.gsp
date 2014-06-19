@@ -32,14 +32,23 @@
               <ul>
               <g:each in="${question?.answers}" var="respuestas" status="i">
                 <li>${respuestas.description} -- ${respuestas.solution}</li>
-              </g:each> 
+              </g:each>
               </ul>
             </dd>
+          </g:else>
+          <g:if test="${question?.tags}">
+            <dt>Tags</dt>
+            <dd>
+              ${question.tags.join(',')}
+            </dd>
+          </g:if>
+          <g:else>
+            <p class="muted">La pregunta no tiene tags</p>
           </g:else>
         </dl>
         <g:link class="btn btn-info" action="list" controller="question"><i class="icon-arrow-left icon-white"></i> Regresar</g:link>
         <g:link class="btn btn-info" action="edit" controller="question" id="${question.id}"><i class=" icon-edit icon-white"></i> Editar</g:link>
-        <g:link class="btn btn-info" action="show" controller="question" id="${question.id}"><i class=" icon-plus-sign icon-white"></i> Agregar respuestas</g:link>
+        <g:link class="btn btn-info" action="show" controller="question" id="${question.id}"><i class=" icon-plus-sign icon-white"></i>Agregar respuestas</g:link>
       </div>
     </div>
   </div>

@@ -13,7 +13,9 @@
       <g:form name="questionForm" action="save">
         <div class="span6">
           <label>Description</label>
-          <g:textArea name="description" class="span12" rows="10" maxlength="1000" required=""></g:textArea>
+          <g:textArea name="description" class="span12" rows="10" maxlength="1000" required=""></g:textArea>          
+          <label>Tags</label>
+          <g:textArea name="tags" class="span12" rows="2" maxlength="1000"></g:textArea>
         </div>
         <div class="span6">
           <label>QuestionType</label>

@@ -1,7 +1,9 @@
 package com.makingdevs
 
+import org.grails.taggable.* 
+
 @groovy.transform.ToString
-class Question implements Comparable {
+class Question implements Taggable,Comparable{
 
 	String description
 	QuestionType questionType 
