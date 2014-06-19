@@ -1,20 +1,95 @@
 package com.makingdevs
 
-import grails.test.mixin.TestFor
-import spock.lang.Specification
+import grails.test.mixin.TestMixin
+import grails.test.mixin.support.GrailsUnitTestMixin
+import spock.lang.*
 
-/**
- * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
- */
 @TestFor(QuestionAndAnswerService)
+@Mock([Question,Answer])
 class QuestionAndAnswerServiceSpec extends Specification {
+	
+	@Unroll
+  def "Given a full text generate the question and answers"() {
+		given:
+			def fullQuestion = """#MULTIPLE_CHOICE What is Groovy?
+			(*) un fw
+			() un lenguaje
+			( ) una herramienta
+			"""
+		and:
+			def questionServiceMock = mockFor(QuestionService)
+			def answerServiceMock = mockFor(AnswerService)
+			questionServiceMock.demand.buildQuestionFromText{ t ->
+				new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
+			}
+			answerServiceMock.demand.buildAnswerFromText(3..3){ t ->
+				new Answer(description:"X",solution:false)
+			}
+			service.questionService = questionServiceMock.createMock()
+      service.answerService = answerServiceMock.createMock()
+   	when:
+      def question = service.createQuestionWithAnswersFromSimpleText(fullQuestion)
+      questionServiceMock.verify()
+		then:
+			question.id > 0
+			question.answers.size() == 3
+  }
 
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
-    void "test something"() {
-    }
+    
+	@Unroll
+	void "Given a full text generate the questions with their answers"() {
+		given:
+			def fullQuestions = """#MULTIPLE_CHOICE What is Groovy?
+			(*) un fw
+			() un lenguaje
+			( ) una herramienta
+			#MULTIPLE_RESPONSE What is Grails?
+			[*] un framework
+			[] una herramienta del sistema operativo
+			"""
+    and:
+			def questionServiceMock = mockFor(QuestionService)
+			def answerServiceMock = mockFor(AnswerService)
+			questionServiceMock.demand.buildQuestionFromText(2..2){ t -> 
+				new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
+			}
+			answerServiceMock.demand.buildAnswerFromText(5..5){ t ->
+				new Answer(description:"X",solution:false)
+			}
+			service.questionService = questionServiceMock.createMock()
+			service.answerService = answerServiceMock.createMock()
+    when:
+			def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestions)
+			questionServiceMock.verify()        
+    then:
+       questions.size() == 2
+       questions[0].answers.size() == 3 
+       questions[1].answers.size() == 2
+   }
+    
+    
+	@Unroll
+	void "Test creation with simple String"() {
+	 	given:
+	 	def fullQuestions = "#MULTIPLE_CHOICE What is Groovy?\n(*) un fw\n() un lenguaje\n( ) una herramienta\n#MULTIPLE_RESPONSE What is Grails?\n[*] un framework\n[] una herramienta del sistema operativo"
+	 	and:
+	    	def questionServiceMock = mockFor(QuestionService)
+	    	def answerServiceMock = mockFor(AnswerService)
+	    	questionServiceMock.demand.buildQuestionFromText(2..2){ t -> 
+	      	new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
+	    	}
+	    	answerServiceMock.demand.buildAnswerFromText(5..5){ t -> 
+	      	new Answer(description:"X",solution:false)
+	    	}
+	    	service.questionService = questionServiceMock.createMock()
+	    	service.answerService = answerServiceMock.createMock()
+	 	when:
+	    	def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestions)
+	    	questionServiceMock.verify()        
+	 	then:
+	    	questions.size() == 2
+	    	questions[0].answers.size() == 3 
+	    	questions[1].answers.size() == 2
+	}
+	
 }
