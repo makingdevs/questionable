@@ -48,16 +48,9 @@ class QuestionService {
 
   def buildQuestionFromText(simpleText){    
     Question question
-    if(simpleText){    
-      simpleText = simpleText.trim()
-      /*
-      def tagsList =  (simpleText =~ /\[.+\]$/)
-      def tags = ""
-      if(tagsList){
-        tags = tagsList[0]
-        simpleText -= tags
-      }*/
+    if(simpleText){          
       simpleText -= simpleText[0]
+      simpleText = simpleText.replaceAll("\\[.*\\]","")
       def typeQuestionInString = simpleText.split(" ")[0]      
       def questionType = QuestionType.valueOf(typeQuestionInString.trim())
       if(questionType)

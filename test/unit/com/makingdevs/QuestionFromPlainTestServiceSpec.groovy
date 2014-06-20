@@ -26,6 +26,8 @@ class QuestionFromPlainTestServiceSpec extends Specification {
     "#OPEN What is Groovy?"               || "What is Groovy?" | QuestionType.OPEN
     "#MULTIPLE_RESPONSE What is Groovy?"  || "What is Groovy?" | QuestionType.MULTIPLE_RESPONSE
     "#MULTIPLE_RESPONSE What is Groovy?\nMark all possibilities"  || "What is Groovy?\nMark all possibilities" | QuestionType.MULTIPLE_RESPONSE
+    "#MULTIPLE_CHOICE What is Grails? [spring,groovy,grails]"     || "What is Grails?" | QuestionType.MULTIPLE_CHOICE
+    "#OPEN What is EmberJS?\nWrite an answer [javascript,framework]"   || "What is EmberJS?\nWrite an answer" | QuestionType.OPEN
   }
 
   @Unroll
