@@ -50,28 +50,38 @@ class QuestionService {
     Question question
     if(simpleText){    
       simpleText = simpleText.trim()
+      /*
       def tagsList =  (simpleText =~ /\[.+\]$/)
       def tags = ""
       if(tagsList){
         tags = tagsList[0]
         simpleText -= tags
-      }        
-
+      }*/
       simpleText -= simpleText[0]
       def typeQuestionInString = simpleText.split(" ")[0]      
       def questionType = QuestionType.valueOf(typeQuestionInString.trim())
-      if(questionType){
+      if(questionType)
         question = new Question(questionType:questionType,
                                 description:(simpleText-questionType).trim())
-        if(tags)
-          question.setTags((tags- "[" - "]").split(",") as List)
-      }else
+      else
         throw new RuntimeException("Cannot parse question '$simpleText'")
     }
     else
       throw new RuntimeException("Cannot parse an empty question")
 
     question
+  }
+
+  def getTagsFromText(simpleText){
+    def tagsBetweenCrotchets = (simpleText =~ /\[.*\]/)    
+    def tagList = []       
+    
+    if(tagsBetweenCrotchets){
+      def tagsWithoutCrotchets = tagsBetweenCrotchets[0].replaceAll("\\[|\\]","")      
+      tagList = tagsWithoutCrotchets.split(",")
+    }
+    
+    tagList
   }
 
   private Answer getIfAnswerUserMatchWithAnswerQuestion(answersFromUser,answerFromQuestion){
@@ -84,5 +94,5 @@ class QuestionService {
 
   private def theSolutionIsTrue(answer){
     answer?.solution
-  }
+  }  
 }

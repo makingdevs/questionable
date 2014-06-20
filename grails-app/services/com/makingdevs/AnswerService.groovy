@@ -39,5 +39,5 @@ class AnswerService {
       return false
     else if(typeOfQuestion ==~ /\(\*\)|\[\*\]|F\*|V\*/)
       return true      
-  }
+  }  
 }
