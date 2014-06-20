@@ -5,19 +5,12 @@ import grails.transaction.Transactional
 @Transactional
 class TagsService {
 
-	def addTagsToAQuestionFromSimpleText(questionId,tags){
-		def question = Question.get(questionId)
-		question.parseTags(tags)
-		question
+	def addTagsToAQuestionFromSimpleText(question,tags){		
+		question.parseTags(tags)		
 	}
 	
-	def updateTagsToAQuestionFromSimpleText(questionId,tags){
-		def question = Question.get(questionId)
-		if(tags)
-			question.parseTags(tags)
-		else
-			question.setTags([])
-		question
+	def updateTagsToAQuestionFromSimpleText(question,tags){		
+		question.setTags(tags.tokenize(","))
 	}
-
+	
 }

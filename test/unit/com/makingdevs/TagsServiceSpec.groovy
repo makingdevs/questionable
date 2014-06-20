@@ -13,31 +13,34 @@ class TagsServiceSpec extends Specification {
 		given:
 			def tags = "groovy,grails,spring"
 			def currentTags = []
- 			def question = new Question().save(validate:false)
+			def question = new Question().save(validate:false)
  		and:
- 			Question.metaClass.parseTags = {tagsToSave ->currentTags = tagsToSave.split(",")} 			
- 			Question.metaClass.getTags = { currentTags }
-		when:
-			def questionWithTag = service.addTagsToAQuestionFromSimpleText(question.id,tags)
-		then:
-			questionWithTag.id > 0
-			questionWithTag.tags == tags.tokenize(",")
+			Question.metaClass.parseTags = {tagsToSave ->currentTags = tagsToSave.split(",")} 			
+			Question.metaClass.getTags = { currentTags }
+		when: 
+			service.addTagsToAQuestionFromSimpleText(question,tags)
+		then:			
+			question.tags == tags.tokenize(',')
 	}
 
 	@Unroll
 	def "updateTagsToQuestionFromSimpleText"(){
-		given:
-			def tags = ""
-			def currentTags = []
+		given:			
+			def tags = _tags
+			def currentTags = _currentTags
 			def question = new Question().save(validate:false)
 		and:
 			Question.metaClass.parseTags = {tagsToSave -> currentTags = tagsToSave.split(",")}
 			Question.metaClass.setTags = {listOfTags -> currentTags = listOfTags}
 			Question.metaClass.getTags = { currentTags }
 		when:
-			def questionUpdated = service.updateTagsToAQuestionFromSimpleText(question.id,tags)
+			service.updateTagsToAQuestionFromSimpleText(question,tags)
 		then:
-			questionUpdated.tags == []
+			question.tags == currentTags
+		where:
+			_tags						|| _currentTags
+			''							||	[]
+			'groovy,grails'	||	['groovy','grails']
 	}
-
+	
 }

@@ -9,7 +9,7 @@ class QuestionController {
   def save(){
     def pregunta = new Question(params)
     if(pregunta.save(flush:true)){
-      tagsService.addTagsToAQuestionFromSimpleText(pregunta.id,params.tags)
+      tagsService.addTagsToAQuestionFromSimpleText(pregunta,params.tags)
       redirect action:"show", id:pregunta.id
     }else{
       render view:"create"
@@ -27,9 +27,9 @@ class QuestionController {
   }
 
   def update(){
-    def question = Question.get(params.id)
+    def question = Question.get(params.id)    
     question.description=params.description
-    tagsService.updateTagsToAQuestionFromSimpleText(params.id,params.tags)
+    tagsService.updateTagsToAQuestionFromSimpleText(question,params.tags)    
     question.save(flush:true)
     redirect(action: "detail", id:question.id)
   }
