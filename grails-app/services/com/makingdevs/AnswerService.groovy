@@ -7,8 +7,7 @@ class AnswerService {
 
 	def buildAnswerFromText(simpleText){    
 		def answerType = getAnswerType(simpleText)
-		def answer
-		//log.error ">>>>>>>>>>>>>>>>>>>>>>>> " + answerType[0]
+		def answer		
 		if(answerType){ 
 			def description = (simpleText - answerType[0])?.trim()
 			if(description)
@@ -27,7 +26,7 @@ class AnswerService {
 	}
 
 	private def getAnswerType(plainText){
-    (plainText =~ /\(\*\)|\[\*\]|F\*|V\*|\(\)|\(\s\)|\[\]|\[\s\]|F|V/)
+    (plainText =~ /\(\*\)|\[\*\]|^F\*$|V\*$|\(\)|\(\s\)|\[\]|\[\s\]|^F$|^V$/)
   }
 
   private def getDescriptionTrueOrFalse(trueOrFalseValue){

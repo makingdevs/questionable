@@ -71,7 +71,7 @@ class QuestionService {
     
     if(tagsBetweenCrotchets){
       def tagsWithoutCrotchets = tagsBetweenCrotchets[0].replaceAll("\\[|\\]","")      
-      tagList = tagsWithoutCrotchets.split(",")
+      tagList = tagsWithoutCrotchets.split(",") as List
     }
     
     tagList

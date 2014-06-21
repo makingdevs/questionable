@@ -4,7 +4,6 @@ import grails.test.mixin.TestMixin
 import grails.test.mixin.support.GrailsUnitTestMixin
 import spock.lang.*
 
-
 @TestFor(QuestionService)
 @Mock([Question])
 class QuestionFromPlainTestServiceSpec extends Specification {
@@ -43,6 +42,7 @@ class QuestionFromPlainTestServiceSpec extends Specification {
     "#MULTIPLE_CHOICE What is Spring? [spring,framework]"       || ["spring","framework"]
     "#MULTIPLE_RESPONSE What is Grails? [groovy,grails,spring]" || ["groovy","grails","spring"]
     "#OPEN What is JavaScript? [javascript]"                    || ["javascript"]
+    "#MULTIPLE_RESPONSE What is AngularJS?"                     || []
   }
 
 }
