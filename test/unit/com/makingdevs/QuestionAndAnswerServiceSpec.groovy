@@ -4,141 +4,140 @@ import grails.test.mixin.TestMixin
 import grails.test.mixin.support.GrailsUnitTestMixin
 import spock.lang.*
 
+
 @TestFor(QuestionAndAnswerService)
 @Mock([Question,Answer])
 class QuestionAndAnswerServiceSpec extends Specification {
-	
-	@Unroll	
+
+  @Unroll	
   def "Given a full text generate the question and answers"() {
-		given:
-			def fullQuestion = """#MULTIPLE_CHOICE What is Groovy?
-			(*) un fw
-			() un lenguaje
-			( ) una herramienta
-			"""
-		and:
-			def questionServiceMock = mockFor(QuestionService)
-			def answerServiceMock = mockFor(AnswerService)			
-			questionServiceMock.demand.buildQuestionFromText{ t ->				
-				new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
-			}
+    given:
+      def fullQuestion = """#MULTIPLE_CHOICE What is Groovy?
+      (*) un fw
+      () un lenguaje
+      ( ) una herramienta
+    """
+    and:
+      def questionServiceMock = mockFor(QuestionService)
+      def answerServiceMock = mockFor(AnswerService)
+      questionServiceMock.demand.buildQuestionFromText{ t ->
+        new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
+      }
 
-			questionServiceMock.demand.getTagsFromText(){ l -> []}
+      questionServiceMock.demand.getTagsFromText(){ l -> []}
 
-			answerServiceMock.demand.buildAnswerFromText(3..3){ t ->
-				new Answer(description:"X",solution:false)
-			}
-			service.questionService = questionServiceMock.createMock()
+      answerServiceMock.demand.buildAnswerFromText(3..3){ t ->
+        new Answer(description:"X",solution:false)
+      }
+      service.questionService = questionServiceMock.createMock()
       service.answerService = answerServiceMock.createMock()
       Question.metaClass.setTags = {tagsList ->}
-   	when:
+    when:
       def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestion)
       questionServiceMock.verify()
-		then:
-			questions[0].id > 0
-			questions[0].answers.size() == 3
-  }
-   
-	@Unroll
-	def "Given a full text generate the questions with their answers"() {
-		given:
-			def fullQuestions = """#MULTIPLE_CHOICE What is Groovy?
-			(*) un fw
-			() un lenguaje
-			( ) una herramienta
-			#MULTIPLE_RESPONSE What is Grails?
-			[*] un framework
-			[] una herramienta del sistema operativo
-			"""
-    and:
-			def questionServiceMock = mockFor(QuestionService)
-			def answerServiceMock = mockFor(AnswerService)			
-			questionServiceMock.demand.buildQuestionFromText(){ t ->
-				new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
-			}
-			questionServiceMock.demand.getTagsFromText(){ l -> []}
-			
-			questionServiceMock.demand.buildQuestionFromText{ t ->
-				new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
-			}
-			questionServiceMock.demand.getTagsFromText() { l -> []}
-			answerServiceMock.demand.buildAnswerFromText(5..5){ t ->
-				new Answer(description:"X",solution:false)
-			}
-			service.questionService = questionServiceMock.createMock()
-			service.answerService = answerServiceMock.createMock()
-			Question.metaClass.setTags = {tagsList ->}
-    when:
-			def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestions)
-			questionServiceMock.verify()        
     then:
-       questions.size() == 2
-       questions[0].answers.size() == 3 
-       questions[1].answers.size() == 2
-   }
-    
-    
-	@Unroll	
-	def "Test creation with simple String"() {
-		given:
-	 		def fullQuestions = "#MULTIPLE_CHOICE What is Groovy?\n(*) un fw\n() un lenguaje\n( ) una herramienta\n#MULTIPLE_RESPONSE What is Grails?\n[*] un framework\n[] una herramienta del sistema operativo"
-	 	and:
-			def questionServiceMock = mockFor(QuestionService)
-			def answerServiceMock = mockFor(AnswerService)			
-			questionServiceMock.demand.buildQuestionFromText(){ t ->
-				new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
-			}
-			questionServiceMock.demand.getTagsFromText() { l -> []}			
-			questionServiceMock.demand.buildQuestionFromText{ t ->
-				new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
-			}
-			questionServiceMock.demand.getTagsFromText() { l -> []}
+      questions[0].id > 0
+      questions[0].answers.size() == 3
+  }
 
-			answerServiceMock.demand.buildAnswerFromText(5..5){ t ->
-				new Answer(description:"X",solution:false)
-			}
-			service.questionService = questionServiceMock.createMock()
-			service.answerService = answerServiceMock.createMock()
-			Question.metaClass.setTags = {tagsList ->}
-		when:
-			def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestions)
-	 	then:
-	    questions.size() == 2
-	    questions[0].answers.size() == 3 
-			questions[1].answers.size() == 2
-	}
-
-	
-	@Unroll
-	def "Given a text generate the question with their answers and tags"() {
-		given:
-			def fullQuestion = _fullQuestion
+  @Unroll
+  def "Given a full text generate the questions with their answers"(){
+    given:
+      def fullQuestions = """#MULTIPLE_CHOICE What is Groovy?
+      (*) un fw
+      () un lenguaje
+      ( ) una herramienta
+      #MULTIPLE_RESPONSE What is Grails?
+      [*] un framework
+      [] una herramienta del sistema operativo
+    """
     and:
-			def currentTags = []
-			def questionServiceMock = mockFor(QuestionService)
-			def answerServiceMock = mockFor(AnswerService)			
-			questionServiceMock.demand.buildQuestionFromText(1..1){ t -> 
-				new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
-			}
-			questionServiceMock.demand.getTagsFromText() { l -> []}
+      def questionServiceMock = mockFor(QuestionService)
+      def answerServiceMock = mockFor(AnswerService)			
+      questionServiceMock.demand.buildQuestionFromText(){ t ->
+        new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
+      }
+      questionServiceMock.demand.getTagsFromText(){ l -> []}
 
-			answerServiceMock.demand.buildAnswerFromText(2..2){ t ->
-				new Answer(description:"X",solution:false)
-			}
-			service.questionService = questionServiceMock.createMock()
-			service.answerService = answerServiceMock.createMock()
-			Question.metaClass.setTags = { currentTags = _currentTags}
-			Question.metaClass.getTags = { currentTags }
+      questionServiceMock.demand.buildQuestionFromText{ t ->
+        new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
+      }
+
+      questionServiceMock.demand.getTagsFromText() { l -> []}
+      answerServiceMock.demand.buildAnswerFromText(5..5){ t ->
+        new Answer(description:"X",solution:false)
+      }
+      service.questionService = questionServiceMock.createMock()
+      service.answerService = answerServiceMock.createMock()
+      Question.metaClass.setTags = {tagsList ->}
     when:
-			def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestion)
-			questionServiceMock.verify()			
-		then:
-			questions.size() == 1
-			questions[0].answers.size() == 2
-			questions[0].tags == _currentTags
-		where:
-			_fullQuestion																																		|| _currentTags
-			"#MULTIPLE_CHOICE What is Groovy? [groovy,language]\n() un fw\n(*) un lenguaje"	|| ['groovy','language']
-   }
-	
+      def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestions)
+      questionServiceMock.verify()        
+    then:
+      questions.size() == 2
+      questions[0].answers.size() == 3 
+      questions[1].answers.size() == 2
+  }
+
+  @Unroll	
+  def "Test creation with simple String"() {
+    given:
+      def fullQuestions = "#MULTIPLE_CHOICE What is Groovy?\n(*) un fw\n() un lenguaje\n( ) una herramienta\n#MULTIPLE_RESPONSE What is Grails?\n[*] un framework\n[] una herramienta del sistema operativo"
+    and:
+      def questionServiceMock = mockFor(QuestionService)
+      def answerServiceMock = mockFor(AnswerService)			
+      questionServiceMock.demand.buildQuestionFromText(){ t ->
+        new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
+      }
+      questionServiceMock.demand.getTagsFromText() { l -> []}			
+      questionServiceMock.demand.buildQuestionFromText{ t ->
+        new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
+      }
+      questionServiceMock.demand.getTagsFromText() { l -> []}
+
+      answerServiceMock.demand.buildAnswerFromText(5..5){ t ->
+        new Answer(description:"X",solution:false)
+      }
+      service.questionService = questionServiceMock.createMock()
+      service.answerService = answerServiceMock.createMock()
+      Question.metaClass.setTags = {tagsList ->}
+    when:
+      def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestions)
+    then:
+      questions.size() == 2
+      questions[0].answers.size() == 3 
+      questions[1].answers.size() == 2
+  }
+
+  @Unroll
+  def "Given a text generate the question with their answers and tags"() {
+    given:
+      def fullQuestion = _fullQuestion
+    and:
+      def currentTags = []
+      def questionServiceMock = mockFor(QuestionService)
+      def answerServiceMock = mockFor(AnswerService)			
+      questionServiceMock.demand.buildQuestionFromText(1..1){ t -> 
+        new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
+      }
+      questionServiceMock.demand.getTagsFromText() { l -> []}
+
+      answerServiceMock.demand.buildAnswerFromText(2..2){ t ->
+        new Answer(description:"X",solution:false)
+      }
+      service.questionService = questionServiceMock.createMock()
+      service.answerService = answerServiceMock.createMock()
+      Question.metaClass.setTags = { currentTags = _currentTags}
+      Question.metaClass.getTags = { currentTags }
+    when:
+      def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestion)
+      questionServiceMock.verify()			
+    then:
+      questions.size() == 1
+      questions[0].answers.size() == 2
+      questions[0].tags == _currentTags
+    where:
+      _fullQuestion                                                                   ||  _currentTags
+      "#MULTIPLE_CHOICE What is Groovy? [groovy,language]\n() un fw\n(*) un lenguaje" ||  ['groovy','language']
+  }
 }
