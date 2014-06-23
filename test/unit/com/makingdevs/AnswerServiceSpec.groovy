@@ -15,7 +15,7 @@ class AnswerServiceSpec extends Specification {
     given:
       def simpleText =  _simpleText
     when:
-      def answers = service.buildAnswerFromText(simpleText)
+      def answer = service.buildAnswerFromText(simpleText)
     then:
       answer.description == _description
       answer.solution == _solution

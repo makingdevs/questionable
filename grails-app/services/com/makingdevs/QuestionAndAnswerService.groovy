@@ -2,10 +2,11 @@ package com.makingdevs
 
 import grails.transaction.Transactional
 
+
 @Transactional
 class QuestionAndAnswerService {
 
-	def questionService
+  def questionService
   def answerService
 
   def createQuestionsWithAnswersFromSimpleText(fullQuestions){            

@@ -4,6 +4,7 @@ import grails.test.mixin.TestMixin
 import grails.test.mixin.support.GrailsUnitTestMixin
 import spock.lang.*
 
+
 @TestFor(QuestionService)
 @Mock([Question])
 class QuestionFromPlainTestServiceSpec extends Specification {
