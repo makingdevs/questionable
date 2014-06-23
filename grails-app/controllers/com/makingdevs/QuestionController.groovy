@@ -44,4 +44,7 @@ class QuestionController {
     [question:question]
   }
 
+  def search(){
+        
+  }
 }

@@ -66,15 +66,19 @@ class QuestionService {
   }
 
   def getTagsFromText(simpleText){
-    def tagsBetweenCrotchets = (simpleText =~ /\[.*\]/)    
+    def tagsBetweenSquareBrackets = (simpleText =~ /\[.*\]/)    
     def tagList = []       
     
-    if(tagsBetweenCrotchets){
-      def tagsWithoutCrotchets = tagsBetweenCrotchets[0].replaceAll("\\[|\\]","")      
-      tagList = tagsWithoutCrotchets.split(",") as List
+    if(tagsBetweenSquareBrackets){
+      def tagsWithoutSquareBrackets = tagsBetweenSquareBrackets[0].replaceAll("\\[|\\]","")      
+      tagList = tagsWithoutSquareBrackets.split(",") as List
     }
     
     tagList
+  }
+
+  def getQuestionsByTag(tag){
+    Question.findAllByTag(tag)
   }
 
   private Answer getIfAnswerUserMatchWithAnswerQuestion(answersFromUser,answerFromQuestion){
