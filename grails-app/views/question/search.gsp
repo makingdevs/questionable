@@ -1,25 +1,23 @@
-<%@ page import="com.makingdevs.QuestionType"%>
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<html lang="en">
 <head>
   <meta name="layout" content="bootstrap"/>
   <r:require modules="validation"/>
   <title>Search questions</title>
 </head>
-<body>
+<body>  
   <div class="container">
     <h2>Buscar preguntas</h2>
-    <div class="row-fluid"> 
-      <div class="span12"> 
-      <g:form name="searchForm" action="">
-        <div class="span6">
-          <input type="text" name=""/>
-          <input class="btn btn-primary" type="submit" value="Buscar" />
+    <g:form name="searchForm" action="">
+      <div class="row">
+        <div class="span3">
+          <input type="text" placeholder="Escribe una etiqueta" />
         </div>
-
-      </g:form>    
+        <button type="submit" class="btn btn-primary">
+          <i class="icon-search"></i> Buscar
+        </button>
       </div>
-    </div>
-  </div>
+    </g:form>    
+  </div>  
 </body>
 </html>
