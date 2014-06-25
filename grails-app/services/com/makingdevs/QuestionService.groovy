@@ -50,7 +50,24 @@ class QuestionService {
     Question question
     if(simpleText){          
       simpleText -= simpleText[0]
-      simpleText = simpleText.replaceAll("\\[.*\\]","")
+      def codeWithinText = (simpleText =~ /\<pre.*\>[\W|\w]*<\/pre\>/)      
+      def lines = simpleText.split('\n|\r')
+      
+      for(def i=0;i<lines.size();i++){
+        if(lines[i] ==~ /.*\<pre*\>.*/){
+          while(lines[i] != null && !(lines[i].trim() ==~ /.*\<\/pre\>.*/)){
+            i++
+          }
+        }
+        else{
+          lines[i] = lines[i].replaceAll("\\[.*\\]","")
+        }
+      }
+
+      simpleText = lines.join('\n')
+      
+      //simpleText = simpleText.replaceAll("\\[.*\\]","")
+
       def typeQuestionInString = simpleText.split(" ")[0]      
       def questionType = QuestionType.valueOf(typeQuestionInString.trim())
       if(questionType)

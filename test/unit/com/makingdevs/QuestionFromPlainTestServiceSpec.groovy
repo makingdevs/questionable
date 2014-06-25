@@ -30,6 +30,27 @@ class QuestionFromPlainTestServiceSpec extends Specification {
     "#OPEN What is EmberJS?\nWrite an answer [javascript,framework]"   || "What is EmberJS?\nWrite an answer" | QuestionType.OPEN
   }
 
+
+  @Unroll
+  void "Create a question with code from plain text"(){
+    given:
+      def simpleText = """#MULTIPLE_CHOICE Which is the result of the following code:
+        <pre>
+        list = [1,2,3,4,5,6,7,8,9]
+        list.each{println it}
+        </pre>"""
+    when:
+      def question = service.buildQuestionFromText(simpleText)
+    then:      
+      !question.id
+      question.description ==  """Which is the result of the following code:
+        <pre>
+        list = [1,2,3,4,5,6,7,8,9]
+        list.each{println it}
+        </pre>"""
+      question.questionType == QuestionType.MULTIPLE_CHOICE
+  }
+
   @Unroll
   void "Create tags for question from plain text"(){
     given:
@@ -44,6 +65,6 @@ class QuestionFromPlainTestServiceSpec extends Specification {
     "#MULTIPLE_RESPONSE What is Grails? [groovy,grails,spring]" || ["groovy","grails","spring"]
     "#OPEN What is JavaScript? [javascript]"                    || ["javascript"]
     "#MULTIPLE_RESPONSE What is AngularJS?"                     || []
-  }
-
+  }  
+  
 }
