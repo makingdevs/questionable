@@ -140,4 +140,49 @@ class QuestionAndAnswerServiceSpec extends Specification {
       _fullQuestion                                                                   ||  _currentTags
       "#MULTIPLE_CHOICE What is Groovy? [groovy,language]\n() un fw\n(*) un lenguaje" ||  ['groovy','language']
   }
+
+  
+  @Unroll  
+  def "Given a text with integrated code generate the question with their answers"(){
+    given:
+      def fullQuestion = """#MULTIPLE_CHOICE What is Groovy?
+      <pre>
+        def list = [3,5,3]
+        
+        println list    
+      </pre>
+      (*) un fw
+      () un lenguaje
+      ( ) una herramienta
+      """
+    and:
+      def questionServiceMock = mockFor(QuestionService)
+      def answerServiceMock = mockFor(AnswerService)
+      questionServiceMock.demand.buildQuestionFromText(){ t -> 
+        new Question(description:"""What is Groovy?
+        <pre>
+          def list = [3,5,3]
+          
+          println list
+        </pre>
+        (*) un fw
+        () un lenguaje
+        ( ) una herramienta
+      """,questionType:QuestionType.MULTIPLE_CHOICE)
+      }
+      questionServiceMock.demand.getTagsFromText() { l -> []}
+
+      answerServiceMock.demand.buildAnswerFromText(3..3){ t ->
+        new Answer(description:"X",solution:false)
+      }
+      service.questionService = questionServiceMock.createMock()
+      service.answerService = answerServiceMock.createMock()
+      Question.metaClass.setTags = { }      
+    when:
+      def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestion)
+      questionServiceMock.verify()
+    then:
+      questions.size() == 1
+      questions[0].answers.size() == 3
+  }
 }

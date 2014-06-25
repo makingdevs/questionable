@@ -18,9 +18,19 @@ class QuestionAndAnswerService {
       
     for(def i=0;i<lines.size();i++){
       if(lines[i]==~ /\#.+/){
-        while(lines[i+1] && !(isThisLineAnswer(lines[i+1]) || isThisLineAQuestion(lines[i+1]))){
-          lines[i]+='\n'+lines[i+1]
-            lines-=lines[i+1] 
+        while(lines[i+1] != null && !(isThisLineAnswer(lines[i+1]) || isThisLineAQuestion(lines[i+1]))){
+          if(isThisLineTheBeginningOfTheCode(lines[i+1])){
+            while(lines[i+1] != null && !isThisLineTheEndOfTheCode(lines[i+1])){             
+              lines[i]+="\n"+lines[i+1]
+              lines.remove(i+1)
+            }
+          }
+          if(lines[i+1] != null){            
+            lines[i]+="\n"+lines[i+1]
+            lines.remove(i+1)      
+          }
+          else
+            throw new Exception("Cannot parse the answer, close the <pre> tag")          
         }
       }
     }
@@ -58,7 +68,14 @@ class QuestionAndAnswerService {
   }
 
   def isThisLineAnswer(line){
-    line ==~ /[\([\*|\ ]?\)|\[[\*|\s]?\]].+|F\*?$|V\*?$/
+    line ==~ /(\([\*|\ ]?\)|\[[\*|\s]?\]).+|F\*?$|V\*?$/
   }
-  
+
+  def isThisLineTheBeginningOfTheCode(line){
+    line ==~ /\<pre*\>.*/
+  }   
+
+  def isThisLineTheEndOfTheCode(line){
+    line ==~ /.*\<\/pre\>.*/
+  }  
 }

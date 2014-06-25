@@ -59,14 +59,11 @@ class QuestionService {
             i++
           }
         }
-        else{
-          lines[i] = lines[i].replaceAll("\\[.*\\]","")
-        }
+        else
+          lines[i] = lines[i].replaceAll("\\[.*\\]","")        
       }
 
       simpleText = lines.join('\n')
-      
-      //simpleText = simpleText.replaceAll("\\[.*\\]","")
 
       def typeQuestionInString = simpleText.split(" ")[0]      
       def questionType = QuestionType.valueOf(typeQuestionInString.trim())
