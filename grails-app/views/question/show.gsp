@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="container">
-    <h4>${question.description}</h4>
+    <h4>${question.description.decodeHTML()}</h4>
     <h3>Tipo de Pregunta: ${question.questionType}</h3>
     <div class="row-fluid">
       <div class="span12">

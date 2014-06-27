@@ -12,7 +12,7 @@
       <div class="span12">
         <dl>
           <dt>Pregunta</dt>
-          <dd>${question.description}</dd>
+          <dd>${question.description.encodeAsHTML()}</dd>
           <dt>Tipo de Respuesta</dt>
           <dd>${question.questionType}</dd>
           <dt>Respuestas</dt>
