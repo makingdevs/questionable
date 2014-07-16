@@ -1,5 +1,5 @@
 class QuestionableGrailsPlugin {
-    def version = "0.1.10"
+    def version = "0.1.11"
     def grailsVersion = "2.3 > *"
     def pluginExcludes = [
         "grails-app/views/error.gsp",
