@@ -1,12 +1,12 @@
 package com.makingdevs
 
-import org.grails.taggable.* 
+import grails.plugins.taggable.*
 
 @groovy.transform.ToString
 class Question implements Taggable,Comparable{
 
 	String description
-	QuestionType questionType 
+	QuestionType questionType
 
 	static constraints = {
 		description blank:false, size:1..1000
