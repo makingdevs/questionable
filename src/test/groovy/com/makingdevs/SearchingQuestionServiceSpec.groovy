@@ -1,7 +1,6 @@
 package com.makingdevs
 
-import grails.test.mixin.TestMixin
-import grails.test.mixin.support.GrailsUnitTestMixin
+import grails.test.mixin.*
 import org.junit.*
 import spock.lang.*
 
@@ -12,10 +11,10 @@ class SearchingQuestionServiceSpec extends Specification {
 
   @Unroll
   def """ Get the questions given a tag """(){
-    given:      
+    given:
       def searchedTag = "groovy"
       Question.metaClass.setTags{ tagList -> }
-      Question.metaClass.static.findAllByTag = { String tag -> 
+      Question.metaClass.static.findAllByTag = { String tag ->
         [new Question(description:"What is Groovy?",questionType:QuestionType.OPEN).save()]}
       def question = new Question(description:"What is Groovy?",questionType:QuestionType.OPEN).save()
       question.setTags(['groovy'])

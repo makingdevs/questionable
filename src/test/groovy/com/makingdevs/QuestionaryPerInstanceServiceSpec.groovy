@@ -1,5 +1,6 @@
 package com.makingdevs
 
+import grails.test.mixin.*
 import static org.junit.Assert.*
 import org.junit.*
 import spock.lang.*
@@ -8,7 +9,7 @@ import spock.lang.*
 @TestFor(QuestionaryPerInstanceService)
 @Mock([Questionary, Question, QuestionaryPerInstance, AnswerPerInstance, OpenAnswerPerUser,Answer,AnswerPerUser])
 class QuestionaryPerInstanceServiceSpec extends Specification{
-  def """Crear una instancia de un cuestionario con el id del mismo 
+  def """Crear una instancia de un cuestionario con el id del mismo
   y el numero de AnswerPerInstances igual al numero de questions"""(){
     given:
       def questionary=createQuestionary()
@@ -54,7 +55,7 @@ class QuestionaryPerInstanceServiceSpec extends Specification{
     then:
       questionaryInstance.answerPerInstances.getAt(1).answerPerUsers.size()==1
       questionaryInstance.answerPerInstances.getAt(1).openAnswerPerUsers==null
-  } 
+  }
 
   def "Dada una instancia de un cuestionario agregar una respuesta MULTIOPCION dada por el usuario"(){
     given:

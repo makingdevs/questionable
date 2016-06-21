@@ -1,5 +1,6 @@
 package com.makingdevs
 
+import grails.test.mixin.*
 import static org.junit.Assert.*
 import org.junit.*
 import spock.lang.*
@@ -25,7 +26,7 @@ class QuestionServiceSpec extends Specification{
   }
 
   @Unroll
-  def """Cuando la respuesta correcta a una pregunta F/V es "#rightAnswer" 
+  def """Cuando la respuesta correcta a una pregunta F/V es "#rightAnswer"
       y se responde "#_answer" el puntaje debe ser "#rating" """(){
     given:
       def question = aTrueFalseQuestion(answer_1,solution_1,answer_2,solution_2)
@@ -35,7 +36,7 @@ class QuestionServiceSpec extends Specification{
     then:
       evaluate == rating
       question.questionType == QuestionType.TRUE_FALSE
-    where: 
+    where:
       answer_1 | solution_1 | answer_2  | solution_2  |  _answer   || rating
       "true"   |   true     |  "false"  |  false      |  "false"   || 0.0
       "true"   |   true     |  "false"  |  false      |  "true"    || 1.0
@@ -44,7 +45,7 @@ class QuestionServiceSpec extends Specification{
   }
 
   @Unroll
-  def """Siendo la pregunta de opción múltiple "'Groovy es un lenguaje de tipo:'" 
+  def """Siendo la pregunta de opción múltiple "'Groovy es un lenguaje de tipo:'"
       y la respuesta "#_answer" el puntaje debe ser "#rating" """(){
     given:
       def question = aMultipleChoiceQuestion()
@@ -62,7 +63,7 @@ class QuestionServiceSpec extends Specification{
   }
 
   @Unroll
-  def """Siendo la pregunta de multi solución "'Groovy es:'" 
+  def """Siendo la pregunta de multi solución "'Groovy es:'"
     y las respuestas "#_answer_user" el puntaje debe ser "#rating" """(){
     given:
       def listMap = [[description:"Lenguaje dinamico",solution:true],
@@ -85,9 +86,9 @@ class QuestionServiceSpec extends Specification{
       []                                                                         || 0.33
   }
 
-  
+
   @Unroll
-  def """Siendo la pregunta de multi solución "'Groovy es:'" 
+  def """Siendo la pregunta de multi solución "'Groovy es:'"
     y las respuestas "#_answer_user" el puntaje debe ser "#rating" """(){
     given:
       def listMap = [[description:"Lenguaje dinamico",solution:true],
@@ -120,7 +121,7 @@ class QuestionServiceSpec extends Specification{
       ["Lenguaje funcional" ]                                                                             || 0.25
       []                                                                                                  || 0.5
   }
-  
+
 
   private Question anOpenQuestion(){
     new Question(description:"¿Es esta una pregunta abierta?, Describa",questionType:QuestionType.OPEN).save()

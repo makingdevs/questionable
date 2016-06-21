@@ -1,7 +1,6 @@
 package com.makingdevs
 
-import grails.test.mixin.TestMixin
-import grails.test.mixin.support.GrailsUnitTestMixin
+import grails.test.mixin.*
 import spock.lang.*
 
 

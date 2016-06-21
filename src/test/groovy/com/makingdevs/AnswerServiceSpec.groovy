@@ -1,7 +1,6 @@
 package com.makingdevs
 
-import grails.test.mixin.TestMixin
-import grails.test.mixin.support.GrailsUnitTestMixin
+import grails.test.mixin.*
 import org.junit.*
 import spock.lang.*
 
@@ -9,7 +8,7 @@ import spock.lang.*
 @TestFor(AnswerService)
 @Mock([Question,Answer])
 class AnswerServiceSpec extends Specification {
-  
+
   @Unroll
   def """ Build answer from text plain "#_simpleText" """(){
     given:
@@ -33,5 +32,5 @@ class AnswerServiceSpec extends Specification {
       "F*"                                    ||  "Falso"                           | true
       "V"                                     ||  "Verdadero"                       | false
   }
-  
+
 }

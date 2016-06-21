@@ -1,6 +1,6 @@
 package com.makingdevs
 
-import grails.test.mixin.TestFor
+import grails.test.mixin.*
 import spock.lang.*
 
 @TestFor(QuestionaryPerInstanceLinkService)
@@ -53,7 +53,7 @@ class QuestionaryPerInstanceLinkServiceSpec extends Specification {
       def questionaryPerInstanceLink = service.findQuestionaryPerInstanceByCodeName(userTest.id,codeNameABucar)
     then:
       questionaryPerInstanceLink.questionaryPerInstance!=null
-      questionaryPerInstanceLink.questionaryPerInstance.questionary.codeName==codeNameABucar 
+      questionaryPerInstanceLink.questionaryPerInstance.questionary.codeName==codeNameABucar
   }
 
   private def createManyQuestionaryPerInstance(def instance){

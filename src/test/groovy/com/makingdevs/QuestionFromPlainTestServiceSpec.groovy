@@ -1,7 +1,6 @@
 package com.makingdevs
 
-import grails.test.mixin.TestMixin
-import grails.test.mixin.support.GrailsUnitTestMixin
+import grails.test.mixin.*
 import spock.lang.*
 
 
@@ -17,7 +16,7 @@ class QuestionFromPlainTestServiceSpec extends Specification {
       def question = service.buildQuestionFromText(simpleText)
     then:
       !question.id
-      question.description == _description 
+      question.description == _description
       question.questionType == _questionType
     where:
     _simpleText                           || _description      | _questionType
@@ -41,7 +40,7 @@ class QuestionFromPlainTestServiceSpec extends Specification {
         </pre>"""
     when:
       def question = service.buildQuestionFromText(simpleText)
-    then:      
+    then:
       !question.id
       question.description ==  """Which is the result of the following code:
         <pre>
@@ -54,7 +53,7 @@ class QuestionFromPlainTestServiceSpec extends Specification {
   @Unroll
   void "Create tags for question from plain text"(){
     given:
-      def simpleText = _simpleText    
+      def simpleText = _simpleText
     when:
       def tags = service.getTagsFromText(simpleText)
     then:
@@ -65,6 +64,6 @@ class QuestionFromPlainTestServiceSpec extends Specification {
     "#MULTIPLE_RESPONSE What is Grails? [groovy,grails,spring]" || ["groovy","grails","spring"]
     "#OPEN What is JavaScript? [javascript]"                    || ["javascript"]
     "#MULTIPLE_RESPONSE What is AngularJS?"                     || []
-  }  
-  
+  }
+
 }
