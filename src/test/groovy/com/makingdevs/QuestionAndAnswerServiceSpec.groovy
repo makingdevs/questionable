@@ -17,8 +17,8 @@ class QuestionAndAnswerServiceSpec extends Specification {
       ( ) una herramienta
     """
     and:
-      def questionServiceMock = mockFor(QuestionService)
-      def answerServiceMock = mockFor(AnswerService)
+      def questionServiceMock = Mock(QuestionService)
+      def answerServiceMock = Mock(AnswerService)
       questionServiceMock.demand.buildQuestionFromText{ t ->
         new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
       }
@@ -51,8 +51,8 @@ class QuestionAndAnswerServiceSpec extends Specification {
       [] una herramienta del sistema operativo
     """
     and:
-      def questionServiceMock = mockFor(QuestionService)
-      def answerServiceMock = mockFor(AnswerService)
+      def questionServiceMock = Mock(QuestionService)
+      def answerServiceMock = Mock(AnswerService)
       questionServiceMock.demand.buildQuestionFromText(){ t ->
         new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
       }
@@ -83,8 +83,8 @@ class QuestionAndAnswerServiceSpec extends Specification {
     given:
       def fullQuestions = "#MULTIPLE_CHOICE What is Groovy?\n(*) un fw\n() un lenguaje\n( ) una herramienta\n#MULTIPLE_RESPONSE What is Grails?\n[*] un framework\n[] una herramienta del sistema operativo"
     and:
-      def questionServiceMock = mockFor(QuestionService)
-      def answerServiceMock = mockFor(AnswerService)
+      def questionServiceMock = Mock(QuestionService)
+      def answerServiceMock = Mock(AnswerService)
       questionServiceMock.demand.buildQuestionFromText(){ t ->
         new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
       }
@@ -114,8 +114,8 @@ class QuestionAndAnswerServiceSpec extends Specification {
       def fullQuestion = _fullQuestion
     and:
       def currentTags = []
-      def questionServiceMock = mockFor(QuestionService)
-      def answerServiceMock = mockFor(AnswerService)
+      def questionServiceMock = Mock(QuestionService)
+      def answerServiceMock = Mock(AnswerService)
       questionServiceMock.demand.buildQuestionFromText(1..1){ t ->
         new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
       }
@@ -155,8 +155,8 @@ class QuestionAndAnswerServiceSpec extends Specification {
       ( ) una herramienta
       """
     and:
-      def questionServiceMock = mockFor(QuestionService)
-      def answerServiceMock = mockFor(AnswerService)
+      def questionServiceMock = Mock(QuestionService)
+      def answerServiceMock = Mock(AnswerService)
       questionServiceMock.demand.buildQuestionFromText(){ t ->
         new Question(description:"""What is Groovy?
         <pre>
