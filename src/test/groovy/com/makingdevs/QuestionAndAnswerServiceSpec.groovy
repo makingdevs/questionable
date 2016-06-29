@@ -149,4 +149,4 @@ class QuestionAndAnswerServiceSpec extends Specification {
       questions.size() == 1
       questions[0].answers.size() == 3
   }
-}
+
