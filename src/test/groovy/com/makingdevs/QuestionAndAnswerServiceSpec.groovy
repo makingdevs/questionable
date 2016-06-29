@@ -8,6 +8,14 @@ import spock.lang.*
 @Mock([Question,Answer])
 class QuestionAndAnswerServiceSpec extends Specification {
 
+  QuestionService questionService = Mock(QuestionService)
+  AnswerService answerService = Mock(AnswerService)
+
+  def setup(){
+    service.questionService = questionService
+    service.answerService = answerService
+  }
+
   @Unroll
   def "Given a full text generate the question and answers"() {
     given:
@@ -17,22 +25,18 @@ class QuestionAndAnswerServiceSpec extends Specification {
       ( ) una herramienta
     """
     and:
-      def questionServiceMock = Mock(QuestionService)
-      def answerServiceMock = Mock(AnswerService)
-
-     Question.metaClass.setTags = {tagsList ->}
+      Question question = new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
+      question.metaClass.setTags = {tagsList ->}
+      Answer answer = new Answer(description:"X",solution:false)
     when:
-      questionServiceMock.buildQuestionFromText >> new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
-      questionServiceMock.getTagsFromText() >> []
-      answerServiceMock.buildAnswerFromText(3..3) >> new Answer(description:"X",solution:false)
-
-      service.questionService = questionServiceMock
-      service.answerService = answerServiceMock
+      questionService.buildQuestionFromText(_) >> question
+      questionService.getTagsFromText(_) >> []
+      answerService.buildAnswerFromText(_) >> answer
       def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestion)
-      //questionServiceMock.verify()
+      questionService.verify()
     then:
       questions[0].id > 0
-      questions[0].answers.size() == 3
+      questions[0].answers.size() == 1
   }
 
   @Unroll
@@ -47,21 +51,17 @@ class QuestionAndAnswerServiceSpec extends Specification {
       [] una herramienta del sistema operativo
     """
     and:
-      def questionServiceMock = Mock(QuestionService)
-      def answerServiceMock = Mock(AnswerService)
-      questionServiceMock.buildQuestionFromText() >> new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
-      questionServiceMock.getTagsFromText() >> []
+      questionService.buildQuestionFromText(_) >> new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
+      questionService.getTagsFromText(_) >> []
 
-      questionServiceMock.buildQuestionFromText >> new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
+      questionService.buildQuestionFromText(_) >> new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
 
-      questionServiceMock.getTagsFromText() >> []
-      answerServiceMock.buildAnswerFromText(5..5) >> new Answer(description:"X",solution:false)
-      service.questionService = questionServiceMock
-      service.answerService = answerServiceMock
+      questionService.getTagsFromText(_) >> []
+      answerService.buildAnswerFromText(_) >> new Answer(description:"X",solution:false)
       Question.metaClass.setTags = {tagsList ->}
     when:
       def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestions)
-      questionServiceMock.verify()
+      questionService.verify()
     then:
       questions.size() == 2
       questions[0].answers.size() == 3
@@ -73,16 +73,12 @@ class QuestionAndAnswerServiceSpec extends Specification {
     given:
       def fullQuestions = "#MULTIPLE_CHOICE What is Groovy?\n(*) un fw\n() un lenguaje\n( ) una herramienta\n#MULTIPLE_RESPONSE What is Grails?\n[*] un framework\n[] una herramienta del sistema operativo"
     and:
-      def questionServiceMock = Mock(QuestionService)
-      def answerServiceMock = Mock(AnswerService)
-      questionServiceMock.buildQuestionFromText() >> new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
-      questionServiceMock.getTagsFromText() >> []
-      questionServiceMock.buildQuestionFromText >> new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
-      questionServiceMock.getTagsFromText() >> []
+      questionService.buildQuestionFromText(_) >> new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
+      questionService.getTagsFromText(_) >> []
+      questionService.buildQuestionFromText >> new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
+      questionService.getTagsFromText(_) >> []
 
-      answerServiceMock.buildAnswerFromText(5..5) >> new Answer(description:"X",solution:false)
-      service.questionService = questionServiceMock
-      service.answerService = answerServiceMock
+      answerService.buildAnswerFromText(_) >> new Answer(description:"X",solution:false)
       Question.metaClass.setTags = {tagsList ->}
     when:
       def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestions)
@@ -98,19 +94,15 @@ class QuestionAndAnswerServiceSpec extends Specification {
       def fullQuestion = _fullQuestion
     and:
       def currentTags = []
-      def questionServiceMock = Mock(QuestionService)
-      def answerServiceMock = Mock(AnswerService)
-      questionServiceMock.buildQuestionFromText(1..1) >> new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
-      questionServiceMock.getTagsFromText() >> []
+      questionService.buildQuestionFromText(_) >> new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
+      questionService.getTagsFromText(_) >> []
 
-      answerServiceMock.buildAnswerFromText(2..2) >> new Answer(description:"X",solution:false)
-      service.questionService = questionServiceMock
-      service.answerService = answerServiceMock
+      answerService.buildAnswerFromText(_) >> new Answer(description:"X",solution:false)
       Question.metaClass.setTags = { currentTags = _currentTags}
       Question.metaClass.getTags = { currentTags }
     when:
       def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestion)
-      questionServiceMock.verify()
+      questionService.verify()
     then:
       questions.size() == 1
       questions[0].answers.size() == 2
@@ -135,9 +127,7 @@ class QuestionAndAnswerServiceSpec extends Specification {
       ( ) una herramienta
       """
     and:
-      def questionServiceMock = Mock(QuestionService)
-      def answerServiceMock = Mock(AnswerService)
-      questionServiceMock.buildQuestionFromText() >>
+      questionService.buildQuestionFromText() >>
         new Question(description:"""What is Groovy?
         <pre>
           def list = [3,5,3]
@@ -148,15 +138,13 @@ class QuestionAndAnswerServiceSpec extends Specification {
         () un lenguaje
         ( ) una herramienta
       """,questionType:QuestionType.MULTIPLE_CHOICE)
-      questionServiceMock.getTagsFromText() >> []
+      questionService.getTagsFromText(_) >> []
 
-      answerServiceMock.buildAnswerFromText(3..3) >> new Answer(description:"X",solution:false)
-      service.questionService = questionServiceMock
-      service.answerService = answerServiceMock
+      answerService.buildAnswerFromText(_) >> new Answer(description:"X",solution:false)
       Question.metaClass.setTags = { }
     when:
       def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestion)
-      questionServiceMock.verify()
+      questionService.verify()
     then:
       questions.size() == 1
       questions[0].answers.size() == 3
