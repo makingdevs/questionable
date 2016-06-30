@@ -37,19 +37,16 @@ class QuestionAndAnswerService {
 
     lines.each{ line ->
       if(isThisLineAQuestion(line)){
-        println "IsQuestion"
         if(answers && questions){
           answers.each{ answer -> questions.last().addToAnswers(answer) }
           answers.clear()
         }
         def question = questionService.buildQuestionFromText(line.trim())
-        println "Question: ${question}"
         questions << question
         questionTags << questionService.getTagsFromText(line)
       }
       if(line.trim() && !isThisLineAQuestion(line)) {
         answers << answerService.buildAnswerFromText(line.trim())
-        println "Answers: ${answers}"
       }
     }
 
@@ -60,10 +57,9 @@ class QuestionAndAnswerService {
       throw new RuntimeException("Cannot parse answers without questions")
     }
 
-    println "Questions size: ${questions.size()}"
     questions*.save()
 
-    questions.size().times{ i -> questions[i].setTags(questionTags[i] ?: "")}
+    questions.size().times{ i -> questions[i].setTags(questionTags[i]) }
 
     questions
   }
