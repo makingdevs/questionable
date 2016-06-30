@@ -15,8 +15,9 @@ class TagsServiceSpec extends Specification {
       def currentTags = []
       def question = new Question().save(validate:false)
     and:
-      Question.metaClass.parseTags = {tagsToSave ->currentTags = tagsToSave.split(",")}
-      Question.metaClass.getTags = { currentTags }
+      currentTags = tags.split(",")
+      question.parseTags >> currentTags
+      question.getTags >> currentTags
     when:
       service.addTagsToAQuestionFromSimpleText(question,tags)
     then:
@@ -30,9 +31,10 @@ class TagsServiceSpec extends Specification {
       def currentTags = _currentTags
       def question = new Question().save(validate:false)
     and:
-      Question.metaClass.parseTags = {tagsToSave -> currentTags = tagsToSave.split(",")}
-      Question.metaClass.setTags = {listOfTags -> currentTags = listOfTags}
-      Question.metaClass.getTags = { currentTags }
+      currentTags = tags.split(",")
+      question.parseTags >> currentTags
+      question.setTags >> currentTags
+      question.getTags >> currentTags
     when:
       service.updateTagsToAQuestionFromSimpleText(question,tags)
     then:
