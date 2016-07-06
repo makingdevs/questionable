@@ -1,6 +1,5 @@
 package com.makingdevs
 
-@groovy.transform.ToString
 class Answer implements Comparable{
 
 	String description
@@ -15,5 +14,5 @@ class Answer implements Comparable{
 	int compareTo(q){
 		this.id <=> q.id
 	}
-	
+
 }

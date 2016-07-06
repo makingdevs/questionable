@@ -2,7 +2,6 @@ package com.makingdevs
 
 import grails.plugins.taggable.*
 
-@groovy.transform.ToString
 class Question implements Taggable,Comparable{
 
 	String description
