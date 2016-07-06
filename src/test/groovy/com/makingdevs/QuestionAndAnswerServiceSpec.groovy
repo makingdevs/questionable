@@ -3,17 +3,18 @@ package com.makingdevs
 import grails.test.mixin.*
 import spock.lang.*
 
-
 @TestFor(QuestionAndAnswerService)
 @Mock([Question,Answer])
 class QuestionAndAnswerServiceSpec extends Specification {
 
   QuestionService questionService = Mock(QuestionService)
   AnswerService answerService = Mock(AnswerService)
+  TagsService tagsService = Mock(TagsService)
 
   def setup(){
     service.questionService = questionService
     service.answerService = answerService
+    service.tagsService = tagsService
   }
 
   @Unroll
@@ -29,6 +30,7 @@ class QuestionAndAnswerServiceSpec extends Specification {
       Answer answer = new Answer(description:"X",solution:false)
     when:
       question.setTags >> []
+      tagsService.addTagsToAQuestionFromSimpleText(_,_)
       questionService.buildQuestionFromText(_) >> question
       questionService.getTagsFromText(_) >> []
       answerService.buildAnswerFromText(_) >> answer

@@ -8,6 +8,7 @@ class QuestionAndAnswerService {
 
   def questionService
   def answerService
+  def tagsService
 
   def createQuestionsWithAnswersFromSimpleText(fullQuestions){
     def questions = []
@@ -59,7 +60,9 @@ class QuestionAndAnswerService {
 
     questions*.save()
 
-    questions.size().times{ i -> questions[i].setTags(questionTags[i]) }
+    questions.eachWithIndex{ q, index ->
+      tagsService.addTagsToAQuestionFromSimpleText(q, questionTags[index])
+    }
 
     questions
   }
