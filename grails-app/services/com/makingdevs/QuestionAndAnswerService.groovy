@@ -52,7 +52,7 @@ class QuestionAndAnswerService {
     }
 
     if(questions){
-      answers.each { answer -> questions.last().addToAnswers(answer)}
+      answers.each { answer -> questions.last().addToAnswers(answer) }
     }
     else{
       throw new RuntimeException("Cannot parse answers without questions")
