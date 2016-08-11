@@ -5,10 +5,10 @@ import grails.transaction.Transactional
 @Transactional
 class AnswerService {
 
-  def buildAnswerFromText(simpleText){
+  Answer buildAnswerFromText(simpleText){
     def answerType = getAnswerType(simpleText)
-    def answer
-    if(answerType){ 
+    Answer answer
+    if(answerType){
       def description = (simpleText - answerType[0])?.trim()
       if(description)
         answer = new Answer(solution:getSolution(answerType[0]),
