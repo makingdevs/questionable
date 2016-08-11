@@ -11,14 +11,14 @@ class QuestionAndAnswerService {
   def tagsService
 
   def createQuestionsWithAnswersFromSimpleText(fullQuestions){
-    def questions = []
-    def questionTags = []
-    def answers = []
+    buildQuestions(getLines(fullQuestions))
+  }
+
+  private def getLines(fullQuestions) {
     def lines = fullQuestions.split('\n|\t')
     lines = lines*.trim()
-
-    for(def i=0;i<lines.size();i++){
-      if(lines[i]==~ /\#.+/){
+    for(int i=0;i<lines.size();i++){
+      if(lines[i]==~ /\#.+/) {
         while(lines[i+1] != null && !(isThisLineAnswer(lines[i+1]) || isThisLineAQuestion(lines[i+1]))){
           if(isThisLineTheBeginningOfTheCode(lines[i+1])){
             while(lines[i+1] != null && !isThisLineTheEndOfTheCode(lines[i+1])){
@@ -34,28 +34,27 @@ class QuestionAndAnswerService {
             throw new Exception("Cannot parse the answer, close the <pre> tag")
         }
       }
+      if (!lines[i].trim()) {
+        lines.remove(i)
+      }
     }
+    lines
+  }
 
-    lines.each{ line ->
+  private List buildQuestions(def lines) {
+    List questions = []
+    List questionTags = []
+    lines.each { line ->
       if(isThisLineAQuestion(line)){
-        if(answers && questions){
-          answers.each{ answer -> questions.last().addToAnswers(answer) }
-          answers.clear()
-        }
-        def question = questionService.buildQuestionFromText(line.trim())
+        Question question = questionService.buildQuestionFromText(line.trim())
         questions << question
         questionTags << questionService.getTagsFromText(line)
+      } else if (line.trim()) {
+        Answer answer = answerService.buildAnswerFromText(line.trim())
+        if (questions) {
+          questions.last().addToAnswers(answer)
+        }
       }
-      if(line.trim() && !isThisLineAQuestion(line)) {
-        answers << answerService.buildAnswerFromText(line.trim())
-      }
-    }
-
-    if(questions){
-      answers.each { answer -> questions.last().addToAnswers(answer) }
-    }
-    else{
-      throw new RuntimeException("Cannot parse answers without questions")
     }
 
     questions*.save()
