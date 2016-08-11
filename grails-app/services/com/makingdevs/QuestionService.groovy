@@ -7,7 +7,7 @@ class QuestionService {
 
   def evaluateAnswer(question_id,answer){
     def ratings = 0
-    def question = Question.get(question_id) 
+    def question = Question.get(question_id)
     switch(question.questionType) {
 
       case QuestionType.OPEN:
@@ -17,8 +17,8 @@ class QuestionService {
 
       case QuestionType.TRUE_FALSE:
       def answer_user = Answer.get(answer)
-      question.answers.each{answerOfQuestion-> 
-      if (answerOfQuestion.description==answer_user.description&&answerOfQuestion.solution==true) 
+      question.answers.each{answerOfQuestion->
+      if (answerOfQuestion.description==answer_user.description&&answerOfQuestion.solution==true)
       ratings=1.0}
       break
 
@@ -46,13 +46,13 @@ class QuestionService {
     ratings
   }
 
-  def buildQuestionFromText(simpleText){    
+  Question buildQuestionFromText(simpleText){
     Question question
-    if(simpleText){          
+    if(simpleText){
       simpleText -= simpleText[0]
-      def codeWithinText = (simpleText =~ /\<pre.*\>[\W|\w]*<\/pre\>/)      
+      def codeWithinText = (simpleText =~ /\<pre.*\>[\W|\w]*<\/pre\>/)
       def lines = simpleText.split('\n|\r')
-      
+
       for(def i=0;i<lines.size();i++){
         if(lines[i] ==~ /.*\<pre*\>.*/){
           while(lines[i] != null && !(lines[i].trim() ==~ /.*\<\/pre\>.*/)){
@@ -60,12 +60,12 @@ class QuestionService {
           }
         }
         else
-          lines[i] = lines[i].replaceAll("\\[.*\\]","")        
+          lines[i] = lines[i].replaceAll("\\[.*\\]","")
       }
 
       simpleText = lines.join('\n')
 
-      def typeQuestionInString = simpleText.split(" ")[0]      
+      def typeQuestionInString = simpleText.split(" ")[0]
       def questionType = QuestionType.valueOf(typeQuestionInString.trim())
       if(questionType)
         question = new Question(questionType:questionType,
@@ -80,14 +80,14 @@ class QuestionService {
   }
 
   def getTagsFromText(simpleText){
-    def tagsBetweenSquareBrackets = (simpleText =~ /\[.*\]/)    
-    def tagList = []       
-    
+    def tagsBetweenSquareBrackets = (simpleText =~ /\[.*\]/)
+    def tagList = []
+
     if(tagsBetweenSquareBrackets){
-      def tagsWithoutSquareBrackets = tagsBetweenSquareBrackets[0].replaceAll("\\[|\\]","")      
+      def tagsWithoutSquareBrackets = tagsBetweenSquareBrackets[0].replaceAll("\\[|\\]","")
       tagList = tagsWithoutSquareBrackets.split(",") as List
     }
-    
+
     tagList
   }
 
@@ -105,5 +105,5 @@ class QuestionService {
 
   private def theSolutionIsTrue(answer){
     answer?.solution
-  }  
+  }
 }
