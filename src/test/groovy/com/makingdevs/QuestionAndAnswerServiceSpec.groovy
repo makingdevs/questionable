@@ -4,7 +4,7 @@ import grails.test.mixin.*
 import spock.lang.*
 
 @TestFor(QuestionAndAnswerService)
-@Mock([Question,Answer])
+@Mock([Question, Answer])
 class QuestionAndAnswerServiceSpec extends Specification {
 
   QuestionService questionService = Mock(QuestionService)
@@ -26,21 +26,73 @@ class QuestionAndAnswerServiceSpec extends Specification {
       ( ) una herramienta
     """
     and:
-      Question question = new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
       Answer answer = new Answer(description:"X",solution:false)
-    when:
-      tagsService.addTagsToAQuestionFromSimpleText(_,_)
+      Question question = Mock(Question)
+      question = new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE, answers:[])
+      question.metaClass.addToAnswers {
+        answers.add(answer)
+      }
+   when:
+      tagsService.addTagsToAQuestionFromSimpleText(_,_) >> []
       questionService.buildQuestionFromText(_) >> question
       questionService.getTagsFromText(_) >> []
       answerService.buildAnswerFromText(_) >>> [answer, answer, answer]
       def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestion)
     then:
       questions[0].id > 0
-      //questions[0].answers.size() == 3
       3 * answerService.buildAnswerFromText(_)
   }
 
-  @Ignore
+  def "Should get lines from full question"(){
+    given:"A full question"
+      def fullQuestion = """#MULTIPLE_CHOICE What is Groovy?
+        (*) un fw
+        () un lenguaje
+        ( ) una herramienta
+      """
+    when:"Process full question"
+      def lines = service.getLines(fullQuestion)
+    then:"Expect the lines"
+      lines.size() == 4
+  }
+
+  def "Should thrown an exception for question without close tag <pre>"(){
+    given:"A full question"
+      def fullQuestion = """#MULTIPLE_CHOICE What is Groovy?
+        <pre>
+          def list = [1,2,3]
+        (*) un fw
+        () un lenguaje
+        ( ) una herramienta
+      """
+    when:"Process full question"
+      def lines = service.getLines(fullQuestion)
+    then:"Expect an exception"
+      thrown Exception
+  }
+
+  def "Should build a question with answers from the lines"(){
+    given:"A lines"
+      def lines = ["#MULTIPLE_CHOICE What is Groovy?", "(*) un fw", "() un lenguaje", "( ) una herramienta"]
+    and:
+      Answer answer = new Answer(description:"X",solution:false)
+      Question question = Mock(Question)
+      question = new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE, answers:[])
+      question.metaClass.addToAnswers {
+        answers.add(answer)
+      }
+    and:
+      tagsService.addTagsToAQuestionFromSimpleText(_,_) >> []
+      questionService.buildQuestionFromText(_) >> question
+      questionService.getTagsFromText(_) >> []
+      answerService.buildAnswerFromText(_) >>> [answer, answer, answer]
+    when:"building question"
+      def questions = service.buildQuestions(lines)
+    then:"Expect a questions with answers"
+      questions.size() == 1
+      3 * answerService.buildAnswerFromText(_)
+  }
+
   @Unroll
   def "Given a full text generate the questions with their answers"(){
     given:
@@ -53,20 +105,29 @@ class QuestionAndAnswerServiceSpec extends Specification {
       [] una herramienta del sistema operativo
     """
     and:
-      Question question = new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
-      questionService.buildQuestionFromText(_) >> question
-      questionService.getTagsFromText(_) >> []
-      questionService.buildQuestionFromText(_) >> question
-      questionService.getTagsFromText(_) >> []
-      answerService.buildAnswerFromText(_) >> new Answer(description:"X",solution:false)
-      question.setTags >> []
+      Answer answerA1 = new Answer(description:"un fw",solution:true)
+      Answer answerB1 = new Answer(description:"un framework",solution:true)
+      Question questionA = Mock(Question)
+      questionA = new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE, answers:[])
+      questionA.metaClass.addToAnswers {
+        answers.add(answerA1)
+      }
+      Question questionB = Mock(Question)
+      questionB = new Question(description:"What is Grails?",questionType:QuestionType.MULTIPLE_RESPONSE, answers:[])
+      questionB.metaClass.addToAnswers {
+        answers.add(answerB1)
+      }
+
+      tagsService.addTagsToAQuestionFromSimpleText(_,_) >>> [[],[]]
+      questionService.buildQuestionFromText(_) >>> [questionA, questionB]
+      questionService.getTagsFromText(_) >>> [[],[]]
+      answerService.buildAnswerFromText(_) >>> [answerA1, answerA1, answerA1, answerB1, answerB1]
     when:
       def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestions)
-      //questionService.verify()
     then:
       questions.size() == 2
-      questions[0].answers.size() == 3
-      questions[1].answers.size() == 2
+      5 * answerService.buildAnswerFromText(_)
+      2 * questionService.buildQuestionFromText(_)
   }
 
   @Ignore
@@ -75,51 +136,55 @@ class QuestionAndAnswerServiceSpec extends Specification {
     given:
       def fullQuestions = "#MULTIPLE_CHOICE What is Groovy?\n(*) un fw\n() un lenguaje\n( ) una herramienta\n#MULTIPLE_RESPONSE What is Grails?\n[*] un framework\n[] una herramienta del sistema operativo"
     and:
-      Question question = new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
-      questionService.buildQuestionFromText(_) >> question
-      questionService.getTagsFromText(_) >> []
-      questionService.buildQuestionFromText >> question
-      questionService.getTagsFromText(_) >> []
-
-      answerService.buildAnswerFromText(_) >> new Answer(description:"X",solution:false)
-      question.setTags >> []
+      Answer answer = new Answer(description:"X",solution:false)
+      Question question = Mock(Question)
+      question = new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE, answers:[])
+      question.metaClass.addToAnswers {
+        answers.add(answer)
+      }
+      tagsService.addTagsToAQuestionFromSimpleText(_,_) >>> [[],[]]
+      questionService.buildQuestionFromText(_) >>> [question, question]
+      questionService.getTagsFromText(_) >>> [[],[]]
+      answerService.buildAnswerFromText(_) >>> [answer, answer, answer, answer, answer]
     when:
       def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestions)
     then:
       questions.size() == 2
-      questions[0].answers.size() == 3
-      questions[1].answers.size() == 2
+      5 * answerService.buildAnswerFromText(_)
+      2 * questionService.buildQuestionFromText(_)
   }
 
-  @Ignore
   @Unroll
   def "Given a text generate the question with their answers and tags"() {
     given:
       def fullQuestion = _fullQuestion
     and:
       def currentTags = []
-      Question question = new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE)
-      questionService.buildQuestionFromText(_) >> question
-      questionService.getTagsFromText(_) >> []
+      Answer answer = new Answer(description:"X",solution:false)
+      Question question = Mock(Question)
+      question = new Question(description:"What is Groovy?",questionType:QuestionType.MULTIPLE_CHOICE, answers:[])
+      question.metaClass.addToAnswers {
+        answers.add(answer)
+      }
 
-      answerService.buildAnswerFromText(_) >> new Answer(description:"X",solution:false)
-      question.setTags >> _currentTags
+      tagsService.addTagsToAQuestionFromSimpleText(_,_) >> []
+      questionService.buildQuestionFromText(_) >> question
+      questionService.getTagsFromText(_) >>> []
+      answerService.buildAnswerFromText(_) >>> [answer, answer]
+
       currentTags = _currentTags
-      question.getTags >> currentTags
+      question.metaClass.getTags { currentTags }
     when:
       def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestion)
-      //questionService.verify()
     then:
       questions.size() == 1
-      questions[0].answers.size() == 2
+      2 * answerService.buildAnswerFromText(_)
       questions[0].tags == _currentTags
     where:
       _fullQuestion                                                                   ||  _currentTags
       "#MULTIPLE_CHOICE What is Groovy? [groovy,language]\n() un fw\n(*) un lenguaje" ||  ['groovy','language']
   }
 
-
-  @Ignore
   @Unroll
   def "Given a text with integrated code generate the question with their answers"(){
     given:
@@ -134,7 +199,10 @@ class QuestionAndAnswerServiceSpec extends Specification {
       ( ) una herramienta
       """
     and:
-      Question question = new Question(description:"""What is Groovy?
+
+      Answer answer = new Answer(description:"X",solution:false)
+      Question question = Mock(Question)
+      question = new Question(description:"""What is Groovy?
         <pre>
           def list = [3,5,3]
           println list
@@ -142,18 +210,19 @@ class QuestionAndAnswerServiceSpec extends Specification {
         (*) un fw
         () un lenguaje
         ( ) una herramienta
-      """,questionType:QuestionType.MULTIPLE_CHOICE)
+      """,questionType:QuestionType.MULTIPLE_CHOICE, answers:[])
+      question.metaClass.addToAnswers {
+        answers.add(answer)
+      }
+
+      tagsService.addTagsToAQuestionFromSimpleText(_,_) >> []
       questionService.buildQuestionFromText(_) >> question
-
-      questionService.getTagsFromText(_) >> []
-
-      answerService.buildAnswerFromText(_) >> new Answer(description:"X",solution:false)
-      question.setTags >> []
+      questionService.getTagsFromText(_) >>> []
+      answerService.buildAnswerFromText(_) >>> [answer, answer, answer]
     when:
       def questions = service.createQuestionsWithAnswersFromSimpleText(fullQuestion)
-      //questionService.verify()
     then:
       questions.size() == 1
-      questions[0].answers.size() == 3
+      3 * answerService.buildAnswerFromText(_)
   }
 }
