@@ -1,7 +1,9 @@
 package grails.plugins.questionable
 
-class QuestionableGrailsPlugin {
-    def grailsVersion = "2.3 > *"
+import grails.plugins.*
+
+class QuestionableGrailsPlugin extends Plugin {
+    def grailsVersion = "3.1.8 > *"
     def pluginExcludes = [
         "grails-app/views/error.gsp",
         "grails-app/controllers/com/makingdevs/UserTestController.groovy",
@@ -16,6 +18,8 @@ class QuestionableGrailsPlugin {
     def description = '''\
 That plugin add questionarys for evaluate something
 '''
+    def profiles= ['web']
+
     def documentation = "https://github.com/makingdevs/questionable"
     def license = "APACHE"
     def organization = [ name: "MakingDevs", url: "http://makingdevs.com/" ]
@@ -33,25 +37,32 @@ That plugin add questionarys for evaluate something
 
     def scm = [ url: "https://github.com/makingdevs/questionable" ]
 
-
-    def doWithWebDescriptor = { xml ->
+    Closure doWithSpring() { {->
+      // TODO Implement runtime spring config (optional)
+    }
     }
 
-    def doWithSpring = {
+    void doWithDynamicMethods() {
+      // TODO Implement registering dynamic methods to classes (optional)
     }
 
-    def doWithDynamicMethods = { ctx ->
+    void doWithApplicationContext() {
+      // TODO Implement post initialization spring config (optional)
     }
 
-    def doWithApplicationContext = { ctx ->
+    void onChange(Map<String, Object> event) {
+      // TODO Implement code that is executed when any artefact that this plugin is
+      // watching is modified and reloaded. The event contains: event.source,
+      // event.application, event.manager, event.ctx, and event.plugin.
     }
 
-    def onChange = { event ->
+    void onConfigChange(Map<String, Object> event) {
+      // TODO Implement code that is executed when the project configuration changes.
+      // The event is the same as for 'onChange'.
     }
 
-    def onConfigChange = { event ->
+    void onShutdown(Map<String, Object> event) {
+      // TODO Implement code that is executed when the application shuts down (optional)
     }
 
-    def onShutdown = { event ->
-    }
 }
