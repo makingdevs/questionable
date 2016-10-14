@@ -1,0 +1,20 @@
+{
+  "name": "questionable",
+  "homepage": "https://github.com/makingdevs/questionable",
+  "authors": [
+    "neodevelop <juan@makingdevs.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "bootstrap-2#^3.3.7"
+  }
+}
