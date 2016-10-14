@@ -1,15 +1,16 @@
 buildscript {
-    ext {
-        grailsVersion = project.grailsVersion
-    }
-    repositories {
-        mavenLocal()
-        maven { url "https://repo.grails.org/grails/core" }
-    }
-    dependencies {
-        classpath "org.grails:grails-gradle-plugin:$grailsVersion"
-        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.8.2"
-    }
+  ext {
+    grailsVersion = project.grailsVersion
+  }
+  repositories {
+    mavenLocal()
+    maven { url "https://repo.grails.org/grails/core" }
+  }
+  dependencies {
+    classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+    classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.11.1"
+    classpath "org.grails.plugins:hibernate5:6.0.0"
+  }
 }
 
 version "0.2.0"
@@ -21,59 +22,62 @@ apply plugin:"org.grails.grails-gsp"
 apply plugin:"asset-pipeline"
 
 ext {
-    grailsVersion = project.grailsVersion
-    gradleWrapperVersion = project.gradleWrapperVersion
+  grailsVersion = project.grailsVersion
+  gradleWrapperVersion = project.gradleWrapperVersion
 }
 
 repositories {
-    mavenLocal()
-    mavenCentral()
-    maven { url "https://repo.grails.org/grails/core" }
+  mavenLocal()
+  mavenCentral()
+  maven { url "https://repo.grails.org/grails/core" }
 }
 
 dependencyManagement {
-    imports {
-        mavenBom "org.grails:grails-bom:$grailsVersion"
-    }
-    applyMavenExclusions false
+  imports {
+    mavenBom "org.grails:grails-bom:$grailsVersion"
+  }
+  applyMavenExclusions false
 }
 
 dependencies {
-    compile "org.springframework.boot:spring-boot-starter-logging"
-    compile "org.springframework.boot:spring-boot-autoconfigure"
-    compile "org.grails:grails-core"
-    compile "org.springframework.boot:spring-boot-starter-actuator"
-    compile "org.springframework.boot:spring-boot-starter-tomcat"
-    compile "org.grails:grails-dependencies"
-    compile "org.grails:grails-web-boot"
-    compile "org.grails.plugins:cache"
-    compile "org.grails.plugins:scaffolding"
+  compile "org.springframework.boot:spring-boot-starter-logging"
+  compile "org.springframework.boot:spring-boot-autoconfigure"
+  compile "org.grails:grails-core"
+  compile "org.springframework.boot:spring-boot-starter-actuator"
+  compile "org.springframework.boot:spring-boot-starter-tomcat"
+  compile "org.grails:grails-dependencies"
+  compile "org.grails:grails-web-boot"
+  compile "org.grails.plugins:cache"
+  compile "org.grails.plugins:scaffolding"
 
-    compile "org.grails.plugins:taggable:2.0.1-SNAPSHOT"
+  compile "org.grails.plugins:taggable:2.0.1-SNAPSHOT"
 
-    profile "org.grails.profiles:web-plugin:3.1.8"
-    provided "org.grails:grails-plugin-services"
-    provided "org.grails:grails-plugin-domain-class"
-    runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.8.2"
+  profile "org.grails.profiles:web-plugin:3.1.8"
+  provided "org.grails:grails-plugin-services"
+  provided "org.grails:grails-plugin-domain-class"
+  provided "org.grails.plugins:hibernate5"
+  provided "org.hibernate:hibernate-core:5.1.1.Final"
+  provided "org.hibernate:hibernate-ehcache:5.1.1.Final"
+  runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.11.1"
 
-    testCompile "org.grails:grails-plugin-testing"
-    testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+  testCompile "org.grails:grails-plugin-testing"
+  testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
 }
 grailsPublish {
-    // TODO: Provide values here
-    user = 'user'
-    key = 'key'
-    githubSlug = 'foo/bar'
-    license {
-        name = 'Apache-2.0'
-    }
-    title = "Questionable"
-    desc = "Making questionaries"
-    developers = [jjrz:"Jose Juan Reyes Zuñiga"]
-    portalUser = ""
-    portalPassword = ""
+  // TODO: Provide values here
+  user = 'user'
+  key = 'key'
+  githubSlug = 'foo/bar'
+  license {
+    name = 'Apache-2.0'
+  }
+  title = "Questionable"
+  desc = "Making questionaries"
+  developers = [jjrz:"Jose Juan Reyes Zuñiga"]
+  portalUser = ""
+  portalPassword = ""
 }
 
 assets {
-    packagePlugin = true
+  packagePlugin = true
 }
