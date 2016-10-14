@@ -1,7 +1,5 @@
 package com.makingdevs
 
-
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -26,21 +24,26 @@ class UserTestController {
     @Transactional
     def save(UserTest userTest) {
         if (userTest == null) {
+            transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
         if (userTest.hasErrors()) {
+            transactionStatus.setRollbackOnly()
             respond userTest.errors, view:'create'
             return
         }
-        
+
         userTest.save flush:true
 
-        
-        flash.message = message(code: 'default.created.message', args: [message(code: 'userTest.label', default: 'UserTest'), userTest.id])
-        redirect userTest
-        
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'userTest.label', default: 'UserTest'), userTest.id])
+                redirect userTest
+            }
+            '*' { respond userTest, [status: CREATED] }
+        }
     }
 
     def edit(UserTest userTest) {
@@ -50,11 +53,13 @@ class UserTestController {
     @Transactional
     def update(UserTest userTest) {
         if (userTest == null) {
+            transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
         if (userTest.hasErrors()) {
+            transactionStatus.setRollbackOnly()
             respond userTest.errors, view:'edit'
             return
         }
@@ -62,8 +67,8 @@ class UserTestController {
         userTest.save flush:true
 
         request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'UserTest.label', default: 'UserTest'), userTest.id])
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'userTest.label', default: 'UserTest'), userTest.id])
                 redirect userTest
             }
             '*'{ respond userTest, [status: OK] }
@@ -74,6 +79,7 @@ class UserTestController {
     def delete(UserTest userTest) {
 
         if (userTest == null) {
+            transactionStatus.setRollbackOnly()
             notFound()
             return
         }
@@ -81,8 +87,8 @@ class UserTestController {
         userTest.delete flush:true
 
         request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'UserTest.label', default: 'UserTest'), userTest.id])
+            form multipartForm {
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'userTest.label', default: 'UserTest'), userTest.id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -91,7 +97,7 @@ class UserTestController {
 
     protected void notFound() {
         request.withFormat {
-            form {
+            form multipartForm {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'userTest.label', default: 'UserTest'), params.id])
                 redirect action: "index", method: "GET"
             }
