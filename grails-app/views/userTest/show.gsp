@@ -1,4 +1,3 @@
-
 <%@ page import="com.makingdevs.UserTest" %>
 <%@ page import="com.makingdevs.Questionable" %>
 <!DOCTYPE html>
@@ -23,7 +22,7 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list userTest">
-			
+
 				<g:if test="${userTest?.atributo}">
 				<li class="fieldcontain">
 					<span id="atributo-label" class="property-label"><g:message code="userTest.atributo.label" default="Atributo" /></span>
@@ -33,7 +32,7 @@
 
 				<strong>Agrega un cuestionario</strong>
 				<g:showQuestionaryForThisInstance instance="${userTest}"/>
-					
+
 
 			</ol>
 			<g:form name="otro" url="[resource:userTest, action:'delete']" method="DELETE">

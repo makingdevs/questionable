@@ -1,7 +1,7 @@
 <%@ page import="com.makingdevs.QuestionaryPerInstanceStatus" %>
 <div>
     <h4>Tus Cuestionarios</h4>
-    <table class="table table-bordered">
+    <table class="table table-bordered table-condensed">
       <thead>
         <tr>
           <th>Titulo</th>
