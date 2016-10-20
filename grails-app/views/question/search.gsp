@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
   <meta name="layout" content="bootstrap"/>
-  <r:require modules="validation"/>
   <title>Search questions</title>
 </head>
-<body>  
+<body>
   <div class="container">
     <h2>Buscar preguntas</h2>
     <g:form name="searchForm" action="">
@@ -17,7 +16,7 @@
           <i class="icon-search"></i> Buscar
         </button>
       </div>
-    </g:form>    
-  </div>  
+    </g:form>
+  </div>
 </body>
 </html>

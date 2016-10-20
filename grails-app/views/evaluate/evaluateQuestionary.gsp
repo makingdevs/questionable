@@ -3,7 +3,6 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
-  <r:require module="syntaxhighlighter"/>
   <title>Evaluación</title>
 </head>
 <body>
@@ -43,6 +42,6 @@
         <a class="btn btn-success" href="${url}"><i class="icon-arrow-left icon-white"></i> Regresar</a>
       </div>
     </div>
-  </div>  
+  </div>
 </body>
 </html>

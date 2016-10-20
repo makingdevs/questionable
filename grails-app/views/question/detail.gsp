@@ -3,7 +3,6 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
-  <r:require modules="syntaxhighlighter"/>
   <title>Detail Question</title>
 </head>
 <body>
@@ -12,7 +11,7 @@
       <div class="span12">
         <dl>
           <dt>Pregunta</dt>
-          <dd>${question.description.encodeAsHTML()}</dd>
+          <dd>${raw(question.description)}</dd>
           <dt>Tipo de Respuesta</dt>
           <dd>${question.questionType}</dd>
           <dt>Respuestas</dt>
@@ -21,9 +20,11 @@
               <ul>
               <g:each in="${question?.answers}" var="respuestas" status="i">
                 <li>
-                  <g:link action="edit" controller="answer" id="${respuestas.id}" params="[question:question.id]">${respuestas.description} -- ${respuestas.solution}</g:link>
+                  <g:link action="edit" controller="answer" id="${respuestas.id}" params="[question:question.id]">
+                  ${raw(respuestas.description)} - <b>${respuestas.solution}</b>
+                  </g:link>
                 </li>
-              </g:each> 
+              </g:each>
               </ul>
             </dd>
           </g:if>
@@ -31,7 +32,7 @@
             <dd>
               <ul>
               <g:each in="${question?.answers}" var="respuestas" status="i">
-                <li>${respuestas.description} -- ${respuestas.solution}</li>
+                <li>${raw(respuestas.description)} -- ${respuestas.solution}</li>
               </g:each>
               </ul>
             </dd>
@@ -52,5 +53,6 @@
       </div>
     </div>
   </div>
+  <asset:javascript src="application.js"/>
 </body>
 </html>

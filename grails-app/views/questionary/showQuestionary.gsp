@@ -2,8 +2,6 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
-  <r:require module="syntaxhighlighter"/>
-  <script src='http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js' type='text/javascript'></script>
   <title>Add Questions</title>
 </head>
 <body>
@@ -15,7 +13,7 @@
           <ul>
             <g:each in="${questions?}" var="preguntas" status="i">
               <li>${preguntas.description}: <input name="id" value="${preguntas.id}" type="checkbox" /></li>
-            </g:each> 
+            </g:each>
           </ul>
           <input type="hidden" value="${questionary.id}" name="questionary" />
           <input class="btn btn-primary" type="submit" value="Agregar">

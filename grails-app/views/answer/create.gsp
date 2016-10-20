@@ -4,7 +4,6 @@
 <head>
   <title>Create answer</title>
   <meta name="layout" content="bootstrap"/>
-  <r:require module="syntaxhighlighter"/>
 </head>
 <body>
   <div class="container">

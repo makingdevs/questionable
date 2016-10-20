@@ -6,5 +6,6 @@
 </head>
 <body>
   <g:layoutBody/>
+  <asset:javascript src="${session.questionableTheme ?: 'questionable'}"/>
 </body>
 </html>

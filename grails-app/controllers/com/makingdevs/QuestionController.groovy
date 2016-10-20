@@ -27,9 +27,9 @@ class QuestionController {
   }
 
   def update(){
-    def question = Question.get(params.id)    
+    def question = Question.get(params.id)
     question.description=params.description
-    tagsService.updateTagsToAQuestionFromSimpleText(question,params.tags)    
+    tagsService.updateTagsToAQuestionFromSimpleText(question,params.tags)
     question.save(flush:true)
     redirect(action: "detail", id:question.id)
   }

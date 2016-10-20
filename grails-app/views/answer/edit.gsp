@@ -3,7 +3,6 @@
 <head>
 	<title></title>
 	<meta name="layout" content="bootstrap"/>
-	<r:require modules="syntaxhighlighter"/>
 </head>
 <body>
 	<div class="container">

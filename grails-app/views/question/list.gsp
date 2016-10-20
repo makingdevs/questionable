@@ -2,7 +2,6 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
-  <r:require module="syntaxhighlighter"/>
   <title>Show List Question </title>
 </head>
 <body>
@@ -14,7 +13,7 @@
           <ul>
           <g:each in="${listQuestion}" var="listaDePreguntas" status="i">
             <g:link controller="question" action="detail" id="${listaDePreguntas.id}"><li>${listaDePreguntas.description}</li></g:link>
-          </g:each> 
+          </g:each>
           </ul>
         </g:if>
         <g:else>
