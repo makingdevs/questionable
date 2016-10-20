@@ -15,6 +15,9 @@ spring:
 
 ---
 grails:
+    taggable:
+      tagLink:
+        table: tag_links
     mime:
         disable:
             accept:
@@ -67,6 +70,7 @@ grails:
                 staticparts: none
 ---
 hibernate:
+    dialect: org.hibernate.dialect.MySQLDialect
     cache:
         queries: false
         use_second_level_cache: true
@@ -87,8 +91,11 @@ dataSource:
 environments:
     development:
         dataSource:
-            dbCreate: create-drop
-            url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            driverClassName: com.mysql.jdbc.Driver
+            username: makingdevs
+            password: makingdevs
+            dbCreate: none
+            url: jdbc:mysql://localhost/md_qa
     test:
         dataSource:
             dbCreate: update
@@ -115,29 +122,3 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
-
-modules:
-  validation:
-    resource url:'js/jquery.validate.min.js'
-    resource url:'js/questionary/validation.js'
-  questionable:
-    resource url:'css/bootstrap-responsive.min.css'
-    resource url:'css/bootstrap.min.css'
-    resource url:'img/glyphicons-halflings-white.png'
-    resource url:'img/glyphicons-halflings.png'
-    resource url:'js/bootstrap.min.js'
-  syntaxhighlighter:
-    resource url:'js/syntaxhighlighter/shCore.js', disposition: 'head'
-    resource url:'js/syntaxhighlighter/shCore.css', disposition: 'head'
-    resource url:'js/syntaxhighlighter/shThemeMidnight.css', disposition: 'head'
-    resource url:'js/syntaxhighlighter/configSyntax.js', disposition: 'head'
-    resource url:'js/syntaxhighlighter/archivosJS/shBrushJScript.js', disposition: 'head'
-    resource url:'js/syntaxhighlighter/archivosJS/shBrushCss.js', disposition: 'head'
-    resource url:'js/syntaxhighlighter/archivosJS/shBrushGroovy.js', disposition: 'head'
-    resource url:'js/syntaxhighlighter/archivosJS/shBrushJava.js', disposition: 'head'
-    resource url:'js/syntaxhighlighter/archivosJS/shBrushRuby.js', disposition: 'head'
-    resource url:'js/syntaxhighlighter/archivosJS/shBrushPython.js', disposition: 'head'
-    resource url:'js/syntaxhighlighter/archivosJS/shBrushSql.js', disposition: 'head'
-    resource url:'js/syntaxhighlighter/archivosJS/shBrushXml.js', disposition: 'head'
-    resource url:'js/syntaxhighlighter/archivosJS/shBrushScala.js', disposition: 'head'
-
