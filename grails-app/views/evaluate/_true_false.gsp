@@ -1,5 +1,5 @@
-<strong>${question.description}</strong>
-<g:each in="${question.answers.sort()}" var="respuesta" status="a"> 
+<strong>${raw(question.description)}</strong>
+<g:each in="${question.answers.sort()}" var="respuesta" status="a">
   <label for="question[${index}].description">
   <input type="radio" name="question[${index}].description" value="${respuesta.id}" required/>
   <g:if test="${respuesta.description=='true'}">

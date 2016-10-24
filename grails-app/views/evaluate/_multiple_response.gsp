@@ -1,7 +1,7 @@
-<strong>${question.description}</strong>
-<g:each in="${question.answers.sort()}" var="respuesta" status="b"> 
+<strong>${raw(question.description)}</strong>
+<g:each in="${question.answers.sort()}" var="respuesta" status="b">
   <label class="checkbox">
-    ${respuesta?.description?.trim()}
+    ${raw(respuesta?.description?.trim())}
     <input type="checkbox" name="question[${index}].description" value="${respuesta.id}"/>
   </label>
 </g:each>
