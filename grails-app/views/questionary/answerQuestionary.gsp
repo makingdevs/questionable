@@ -3,7 +3,6 @@
 <html>
 <head>
   <meta name="layout" content="bootstrap"/>
-  <r:require modules="validation, syntaxhighlighter"/>
   <title>Answer Questionary</title>
 </head>
 <body>
@@ -39,15 +38,6 @@
       </g:form>
     </div>
   </div>
-  <r:script>
-      $("#questionaryForm").validate({
-      errorPlacement: function(error, element) {
-        error.addClass("help-inline"));
-      },
-      submitHandler: function(form) {
-        form.submit();
-      }
-    });
-  </r:script>
+
 </body>
 </html>

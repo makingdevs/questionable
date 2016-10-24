@@ -7,5 +7,6 @@
 <body>
   <g:layoutBody/>
   <asset:javascript src="${session.questionableTheme ?: 'questionable'}"/>
+  <asset:javascript src="evaluation"/>
 </body>
 </html>
