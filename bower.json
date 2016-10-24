@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "bootstrap": "bootstrap-2#^3.3.7",
-    "syntaxhighlighter": "*"
+    "syntaxhighlighter": "*",
+    "jquery-validation": "^1.11.1"
   }
 }
