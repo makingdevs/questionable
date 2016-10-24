@@ -60,7 +60,6 @@ dependencies {
   provided "org.hibernate:hibernate-ehcache:5.1.1.Final"
   runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.11.1"
   assets 'com.bertramlabs.plugins:less-asset-pipeline:2.11.1'
-  compile 'mysql:mysql-connector-java:5.1.22'
 
   testCompile "org.grails:grails-plugin-testing"
   testCompile "org.spockframework:spock-core:1.0-groovy-2.4"

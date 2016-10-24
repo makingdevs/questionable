@@ -70,7 +70,6 @@ grails:
                 staticparts: none
 ---
 hibernate:
-    dialect: org.hibernate.dialect.MySQLDialect
     cache:
         queries: false
         use_second_level_cache: true
@@ -91,11 +90,8 @@ dataSource:
 environments:
     development:
         dataSource:
-            driverClassName: com.mysql.jdbc.Driver
-            username: makingdevs
-            password: makingdevs
-            dbCreate: none
-            url: jdbc:mysql://localhost/md_qa
+            dbCreate: create-drop
+            url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     test:
         dataSource:
             dbCreate: update
